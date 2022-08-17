@@ -353,6 +353,11 @@ export namespace MessageEntity {
     /** For “pre” only, the programming language of the entity text */
     language?: string;
   }
+  export interface CustomEmojiMessageEntity extends AbstractMessageEntity {
+    type: "custom_emoji";
+    /** For “custom_emoji” only, unique identifier of the custom emoji. Use getCustomEmojiStickers to get full information about the sticker */
+    custom_emoji?: string;
+  }
 }
 
 /** This object represents one special entity in a text message. For example, hashtags, usernames, URLs, etc. */
@@ -643,6 +648,8 @@ export interface Sticker {
   file_id: string;
   /** Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file. */
   file_unique_id: string;
+  /** Type of the sticker. The type of the sticker is independent from its format, which is determined by the fields is_animated and is_video. */
+  type: "regular" | "mask" | "custom_emoji";
   /** Sticker width */
   width: number;
   /** Sticker height */
@@ -661,6 +668,8 @@ export interface Sticker {
   premium_animation?: File;
   /** For mask stickers, the position where the mask should be placed */
   mask_position?: MaskPosition;
+  /** For custom emoji stickers, unique identifier of the custom emoji */
+  custom_emoji_id?: string;
   /** File size in bytes */
   file_size?: number;
 }
@@ -671,11 +680,14 @@ export interface StickerSet {
   name: string;
   /** Sticker set title */
   title: string;
+  /** Type of stickers in the set */
+  sticker_type: "regular" | "mask" | "custom_emoji";
   /** True, if the sticker set contains animated stickers */
   is_animated: boolean;
   /** True, if the sticker set contains video stickers */
   is_video: boolean;
-  /** True, if the sticker set contains masks */
+  /** True, if the sticker set contains masks
+   * @deprecated Use `sticker_type` instead */
   contains_masks: boolean;
   /** List of all set stickers */
   stickers: Sticker[];

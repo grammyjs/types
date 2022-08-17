@@ -29,6 +29,7 @@ import {
   ParseMode,
   Poll,
   SentWebAppMessage,
+  Sticker,
   StickerSet,
 } from "./message";
 import { PassportElementError } from "./passport";
@@ -949,6 +950,12 @@ export interface InputFileProxy<F> {
       chat_id: number | string;
     }): true;
 
+    /** Use this method to get information about custom emoji stickers by their identifiers. Returns an Array of Sticker objects. */
+    getCustomEmojiStickers(args: {
+      /** List of custom emoji identifiers. At most 200 custom emoji identifiers can be specified. */
+      custom_emoji_ids: string[];
+    }): Sticker[];
+
     /** Use this method to send answers to callback queries sent from inline keyboards. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, True is returned.
 
     Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via @BotFather and accept the terms. Otherwise, you may use links like t.me/your_bot?start=XXXX that open your bot with a parameter. */
@@ -1167,9 +1174,12 @@ export interface InputFileProxy<F> {
       tgs_sticker?: F;
       /** WEBM video with the sticker, uploaded using multipart/form-data. See https://core.telegram.org/stickers#video-sticker-requirements for technical requirements */
       webm_sticker?: F;
+      /** Type of stickers in the set. Custom emoji sticker sets can't be created via the Bot API at the moment. By default, a regular sticker set is created */
+      sticker_type?: "regular" | "mask";
       /** One or more emoji corresponding to the sticker */
       emojis: string;
-      /** Pass True, if a set of mask stickers should be created */
+      /** Pass True, if a set of mask stickers should be created
+       * @deprecated Use `sticker_type` instead */
       contains_masks?: boolean;
       /** An object for position where the mask should be placed on faces */
       mask_position?: MaskPosition;
