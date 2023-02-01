@@ -153,6 +153,8 @@ export namespace Message {
     & ServiceMessage
     & MsgWith<"video_chat_participants_invited">;
   export type WebAppDataMessage = ServiceMessage & MsgWith<"web_app_data">;
+  export type UserSharedMessage = ServiceMessage & MsgWith<"user_shared">;
+  export type ChatSharedMessage = ServiceMessage & MsgWith<"chat_shared">;
 }
 
 type ReplyMessage = Message & { reply_to_message: undefined };
@@ -248,6 +250,10 @@ export interface Message extends Message.MediaMessage {
   video_chat_participants_invited?: VideoChatParticipantsInvited;
   /** Service message: data sent by a Web App */
   web_app_data?: WebAppData;
+  /** Service message: a user was shared with the bot */
+  user_shared?: UserShared;
+  /** Service message: a chat was shared with the bot */
+  chat_shared?: ChatShared;
 }
 
 /** This object represents a unique message identifier. */
@@ -714,6 +720,22 @@ export interface WebAppData {
   data: string;
   /** Text of the web_app keyboard button from which the Web App was opened. Be aware that a bad client can send arbitrary data in this field. */
   button_text: string;
+}
+
+/** This object contains information about the user whose identifier was shared with the bot using a KeyboardButtonRequestUser button. */
+export interface UserShared {
+  /** Identifier of the request */
+  request_id: number;
+  /** Identifier of the shared user. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier. The bot may not have access to the user and could be unable to use this identifier, unless the user is already known to the bot by some other means. */
+  user_id: number;
+}
+
+/** This object contains information about the chat whose identifier was shared with the bot using a KeyboardButtonRequestChat button. */
+export interface ChatShared {
+  /** Identifier of the request */
+  request_id: number;
+  /** Identifier of the shared chat. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier. The bot may not have access to the chat and could be unable to use this identifier, unless the chat is already known to the bot by some other means. */
+  chat_id: number;
 }
 
 /** This object represents a sticker. */
