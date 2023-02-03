@@ -112,6 +112,8 @@ export namespace Message {
   export type SuccessfulPaymentMessage =
     & ServiceMessage
     & MsgWith<"successful_payment">;
+  export type UserSharedMessage = ServiceMessage & MsgWith<"user_shared">;
+  export type ChatSharedMessage = ServiceMessage & MsgWith<"chat_shared">;
   export type ConnectedWebsiteMessage =
     & ServiceMessage
     & MsgWith<"connected_website">;
@@ -153,8 +155,6 @@ export namespace Message {
     & ServiceMessage
     & MsgWith<"video_chat_participants_invited">;
   export type WebAppDataMessage = ServiceMessage & MsgWith<"web_app_data">;
-  export type UserSharedMessage = ServiceMessage & MsgWith<"user_shared">;
-  export type ChatSharedMessage = ServiceMessage & MsgWith<"chat_shared">;
 }
 
 type ReplyMessage = Message & { reply_to_message: undefined };
@@ -220,6 +220,10 @@ export interface Message extends Message.MediaMessage {
   invoice?: Invoice;
   /** Message is a service message about a successful payment, information about the payment. More about payments » */
   successful_payment?: SuccessfulPayment;
+  /** Service message: a user was shared with the bot */
+  user_shared?: UserShared;
+  /** Service message: a chat was shared with the bot */
+  chat_shared?: ChatShared;
   /** The domain name of the website on which the user has logged in. More about Telegram Login » */
   connected_website?: string;
   /** Service message: the user allowed the bot added to the attachment menu to write messages */
@@ -250,10 +254,6 @@ export interface Message extends Message.MediaMessage {
   video_chat_participants_invited?: VideoChatParticipantsInvited;
   /** Service message: data sent by a Web App */
   web_app_data?: WebAppData;
-  /** Service message: a user was shared with the bot */
-  user_shared?: UserShared;
-  /** Service message: a chat was shared with the bot */
-  chat_shared?: ChatShared;
 }
 
 /** This object represents a unique message identifier. */
