@@ -690,6 +690,22 @@ export interface GeneralForumTopicHidden {}
 /** This object represents a service message about General forum topic unhidden in the chat. Currently holds no information. */
 export interface GeneralForumTopicUnhidden {}
 
+/** This object contains information about the user whose identifier was shared with the bot using a KeyboardButtonRequestUser button. */
+export interface UserShared {
+  /** Identifier of the request */
+  request_id: number;
+  /** Identifier of the shared user. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier. The bot may not have access to the user and could be unable to use this identifier, unless the user is already known to the bot by some other means. */
+  user_id: number;
+}
+
+/** This object contains information about the chat whose identifier was shared with the bot using a KeyboardButtonRequestChat button. */
+export interface ChatShared {
+  /** Identifier of the request */
+  request_id: number;
+  /** Identifier of the shared chat. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier. The bot may not have access to the chat and could be unable to use this identifier, unless the chat is already known to the bot by some other means. */
+  chat_id: number;
+}
+
 /** This object represents a service message about a user allowing a bot added to the attachment menu to write messages. Currently holds no information. */
 export interface WriteAccessAllowed {}
 
@@ -720,22 +736,6 @@ export interface WebAppData {
   data: string;
   /** Text of the web_app keyboard button from which the Web App was opened. Be aware that a bad client can send arbitrary data in this field. */
   button_text: string;
-}
-
-/** This object contains information about the user whose identifier was shared with the bot using a KeyboardButtonRequestUser button. */
-export interface UserShared {
-  /** Identifier of the request */
-  request_id: number;
-  /** Identifier of the shared user. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier. The bot may not have access to the user and could be unable to use this identifier, unless the user is already known to the bot by some other means. */
-  user_id: number;
-}
-
-/** This object contains information about the chat whose identifier was shared with the bot using a KeyboardButtonRequestChat button. */
-export interface ChatShared {
-  /** Identifier of the request */
-  request_id: number;
-  /** Identifier of the shared chat. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier. The bot may not have access to the chat and could be unable to use this identifier, unless the chat is already known to the bot by some other means. */
-  chat_id: number;
 }
 
 /** This object represents a sticker. */

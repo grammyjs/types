@@ -127,6 +127,14 @@ export namespace KeyboardButton {
     /** Text of the button. If none of the optional fields are used, it will be sent as a message when the button is pressed */
     text: string;
   }
+  export interface RequestUserButton extends CommonButton {
+    /** If specified, pressing the button will open a list of suitable users. Tapping on any user will send their identifier to the bot in a “user_shared” service message. Available in private chats only. */
+    request_user: KeyboardButtonRequestUser;
+  }
+  export interface RequestChatButton extends CommonButton {
+    /** If specified, pressing the button will open a list of suitable chats. Tapping on a chat will send its identifier to the bot in a “chat_shared” service message. Available in private chats only. */
+    request_chat: KeyboardButtonRequestChat;
+  }
   export interface RequestContactButton extends CommonButton {
     /** If True, the user's phone number will be sent as a contact when the button is pressed. Available in private chats only. */
     request_contact: boolean;
@@ -143,25 +151,17 @@ export namespace KeyboardButton {
     /** If specified, the described Web App will be launched when the button is pressed. The Web App will be able to send a “web_app_data” service message. Available in private chats only. */
     web_app: WebAppInfo;
   }
-  export interface RequestUserButton extends CommonButton {
-    /** If specified, pressing the button will open a list of suitable users. Tapping on any user will send their identifier to the bot in a “user_shared” service message. Available in private chats only. */
-    request_user: KeyboardButtonRequestUser;
-  }
-  export interface RequestChatButton extends CommonButton {
-    /** If specified, pressing the button will open a list of suitable chats. Tapping on a chat will send its identifier to the bot in a “chat_shared” service message. Available in private chats only. */
-    request_chat: KeyboardButtonRequestChat;
-  }
 }
 
 /** This object represents one button of the reply keyboard. For simple text buttons, String can be used instead of this object to specify the button text. The optional fields web_app, request_user, request_chat, request_contact, request_location, and request_poll are mutually exclusive. */
 export type KeyboardButton =
   | KeyboardButton.CommonButton
+  | KeyboardButton.RequestUserButton
+  | KeyboardButton.RequestChatButton
   | KeyboardButton.RequestContactButton
   | KeyboardButton.RequestLocationButton
   | KeyboardButton.RequestPollButton
   | KeyboardButton.WebAppButton
-  | KeyboardButton.RequestUserButton
-  | KeyboardButton.RequestChatButton
   | string;
 
 /** This object represents type of a poll, which is allowed to be created and sent when the corresponding button is pressed. */
