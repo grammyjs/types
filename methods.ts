@@ -1471,7 +1471,7 @@ export type ApiMethods<F> = {
     description: string;
     /** Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use for your internal processes. */
     payload: string;
-    /** Payment provider token, obtained via BotFather */
+    /** Payment provider token, obtained via @BotFather */
     provider_token: string;
     /** Three-letter ISO 4217 currency code, see more on currencies */
     currency: string;
