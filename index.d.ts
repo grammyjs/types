@@ -2,7 +2,7 @@ export * from "./api";
 export * from "./inline";
 export * from "./manage";
 export * from "./markup";
-export * from "./menu-button";
+export * from "./settings";
 export * from "./message";
 export * from "./passport";
 export * from "./payment";

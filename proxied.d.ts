@@ -1,10 +1,3 @@
-import { BotCommandScope, MenuButton } from "./menu-button";
-import {
-  ForceReply,
-  InlineKeyboardMarkup,
-  ReplyKeyboardMarkup,
-  ReplyKeyboardRemove,
-} from "./markup";
 import { InlineQueryResult } from "./inline";
 import {
   BotCommand,
@@ -22,6 +15,12 @@ import {
   WebhookInfo,
 } from "./manage";
 import {
+  ForceReply,
+  InlineKeyboardMarkup,
+  ReplyKeyboardMarkup,
+  ReplyKeyboardRemove,
+} from "./markup";
+import {
   GameHighScore,
   MaskPosition,
   Message,
@@ -35,6 +34,12 @@ import {
 } from "./message";
 import { PassportElementError } from "./passport";
 import { LabeledPrice, ShippingOption } from "./payment";
+import {
+  BotCommandScope,
+  BotDescription,
+  BotShortDescription,
+  MenuButton,
+} from "./settings";
 import { Update } from "./update";
 
 /** Extracts the parameters of a given method name */
@@ -250,7 +255,7 @@ export interface InputFileProxy<F> {
       /** Track name */
       title?: string;
       /** Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass "attach://<file_attach_name>" if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. */
-      thumb?: F;
+      thumbnail?: F;
       /** Sends the message silently. Users will receive a notification with no sound. */
       disable_notification?: boolean;
       /** Protects the contents of the sent message from forwarding and saving */
@@ -276,7 +281,7 @@ export interface InputFileProxy<F> {
       /** File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. */
       document: F | string;
       /** Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass "attach://<file_attach_name>" if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. */
-      thumb?: F;
+      thumbnail?: F;
       /** Document caption (may also be used when resending documents by file_id), 0-1024 characters after entities parsing */
       caption?: string;
       /** Mode for parsing entities in the document caption. See formatting options for more details. */
@@ -316,7 +321,7 @@ export interface InputFileProxy<F> {
       /** Video height */
       height?: number;
       /** Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass "attach://<file_attach_name>" if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. */
-      thumb?: F;
+      thumbnail?: F;
       /** Video caption (may also be used when resending videos by file_id), 0-1024 characters after entities parsing */
       caption?: string;
       /** Mode for parsing entities in the video caption. See formatting options for more details. */
@@ -358,7 +363,7 @@ export interface InputFileProxy<F> {
       /** Animation height */
       height?: number;
       /** Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass "attach://<file_attach_name>" if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. */
-      thumb?: F;
+      thumbnail?: F;
       /** Animation caption (may also be used when resending animation by file_id), 0-1024 characters after entities parsing */
       caption?: string;
       /** Mode for parsing entities in the animation caption. See formatting options for more details. */
@@ -429,7 +434,7 @@ export interface InputFileProxy<F> {
       /** Video width and height, i.e. diameter of the video message */
       length?: number;
       /** Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass "attach://<file_attach_name>" if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. */
-      thumb?: F;
+      thumbnail?: F;
       /** Sends the message silently. Users will receive a notification with no sound. */
       disable_notification?: boolean;
       /** Protects the contents of the sent message from forwarding and saving */
@@ -1152,6 +1157,34 @@ export interface InputFileProxy<F> {
       chat_id?: number;
     }): MenuButton;
 
+    /** Use this method to change the bot's description, which is shown in the chat with the bot if the chat is empty. Returns True on success. */
+    setMyDescription(args: {
+      /** New bot description; 0-512 characters. Pass an empty string to remove the dedicated description for the given language. */
+      description?: string;
+      /** A two-letter ISO 639-1 language code. If empty, the description will be applied to all users for whose language there is no dedicated description. */
+      language_code?: string;
+    }): true;
+
+    /** Use this method to get the current bot description for the given user language. Returns BotDescription on success. */
+    getMyDescription(args: {
+      /** A two-letter ISO 639-1 language code or an empty string */
+      language_code?: string;
+    }): BotDescription;
+
+    /** Use this method to change the bot's short description, which is shown on the bot's profile page and is sent together with the link when users share the bot. Returns True on success. */
+    setMyShortDescription(args: {
+      /** New short description for the bot; 0-120 characters. Pass an empty string to remove the dedicated short description for the given language. */
+      short_description?: string;
+      /** A two-letter ISO 639-1 language code. If empty, the short description will be applied to all users for whose language there is no dedicated short description. */
+      language_code?: string;
+    }): true;
+
+    /** Use this method to get the current bot short description for the given user language. Returns BotShortDescription on success. */
+    getMyShortDescription(args: {
+      /** A two-letter ISO 639-1 language code or an empty string */
+      language_code?: string;
+    }): BotShortDescription;
+
     /** Use this method to change the default administrator rights requested by the bot when it's added as an administrator to groups or channels. These rights will be suggested to users, but they are free to modify the list before adding the bot. Returns True on success. */
     setMyDefaultAdministratorRights(args: {
       /** An object describing new default administrator rights. If not specified, the default administrator rights will be cleared. */
@@ -1261,8 +1294,10 @@ export interface InputFileProxy<F> {
     sendSticker(args: {
       /** Unique identifier for the target chat or username of the target channel (in the format @channelusername) */
       chat_id: number | string;
-      /** Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP file from the Internet, or upload a new one using multipart/form-data. */
+      /** Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP sticker from the Internet, or upload a new .WEBP or .TGS sticker using multipart/form-data. Video stickers can only be sent by a file_id. Animated stickers can't be sent via an HTTP URL. */
       sticker: F | string;
+      /** Emoji associated with the sticker; only for uploaded stickers */
+      emoji?: string;
       /** Sends the message silently. Users will receive a notification with no sound. */
       disable_notification?: boolean;
       /** Protects the contents of the sent message from forwarding and saving */
@@ -1291,52 +1326,42 @@ export interface InputFileProxy<F> {
       custom_emoji_ids: string[];
     }): Sticker[];
 
-    /** Use this method to upload a .PNG file with a sticker for later use in createNewStickerSet and addStickerToSet methods (can be used multiple times). Returns the uploaded File on success. */
+    /** Use this method to upload a file with a sticker for later use in the createNewStickerSet and addStickerToSet methods (the file can be used multiple times). Returns the uploaded File on success. */
     uploadStickerFile(args: {
       /** User identifier of sticker file owner */
       user_id: number;
-      /** PNG image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. */
-      png_sticker: F;
+      /** Format of the sticker, must be one of “static”, “animated”, “video” */
+      sticker_format: "static" | "animated" | "video";
+      /** A file with the sticker in .WEBP, .PNG, .TGS, or .WEBM format. See https://core.telegram.org/stickers for technical requirements. /
+      sticker: F;
     }): File;
 
-    /** Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set thus created. You must use exactly one of the fields png_sticker, tgs_sticker, or webm_sticker. Returns True on success. */
+    /** Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set thus created. Returns True on success. */
     createNewStickerSet(args: {
       /** User identifier of created sticker set owner */
       user_id: number;
-      /** Short name of sticker set, to be used in t.me/addstickers/ URLs (e.g., animals). Can contain only English letters, digits and underscores. Must begin with a letter, can't contain consecutive underscores and must end in "_by_<bot username>". <bot_username> is case insensitive. 1-64 characters. */
+      /** Short name of sticker set, to be used in t.me/addstickers/ URLs (e.g., animals). Can contain only English letters, digits and underscores. Must begin with a letter, can't contain consecutive underscores and must end in "_by_<bot_username>". <bot_username> is case insensitive. 1-64 characters. */
       name: string;
       /** Sticker set title, 1-64 characters */
       title: string;
-      /** PNG image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. */
-      png_sticker?: F | string;
-      /** TGS animation with the sticker, uploaded using multipart/form-data. See https://core.telegram.org/stickers#animated-sticker-requirements for technical requirements */
-      tgs_sticker?: F;
-      /** WEBM video with the sticker, uploaded using multipart/form-data. See https://core.telegram.org/stickers#video-sticker-requirements for technical requirements */
-      webm_sticker?: F;
-      /** Type of stickers in the set, pass “regular” or “mask”. Custom emoji sticker sets can't be created via the Bot API at the moment. By default, a regular sticker set is created. */
-      sticker_type?: "regular" | "mask";
-      /** One or more emoji corresponding to the sticker */
-      emojis: string;
-      /** An object for position where the mask should be placed on faces */
-      mask_position?: MaskPosition;
+      /** Format of the sticker, must be one of “static”, “animated”, “video” */
+      sticker_format: "static" | "animated" | "video";
+      /** Type of stickers in the set, pass “regular”, “mask”, or “custom_emoji”. By default, a regular sticker set is created. */
+      sticker_type?: "regular" | "mask" | "custom_emoji";
+      /** Pass True if stickers in the sticker set must be repainted to the color of text when used in messages, the accent color if used as emoji status, white on chat photos, or another appropriate color based on context; for custom emoji sticker sets only */
+      needs_repainting?: boolean;
+      /** A list of 1-50 initial stickers to be added to the sticker set */
+      stickers: InputFileProxy<F>["InputSticker"];
     }): true;
 
-    /** Use this method to add a new sticker to a set created by the bot. You must use exactly one of the fields png_sticker, tgs_sticker, or webm_sticker. Animated stickers can be added to animated sticker sets and only to them. Animated sticker sets can have up to 50 stickers. Static sticker sets can have up to 120 stickers. Returns True on success. */
+    /** Use this method to add a new sticker to a set created by the bot. The format of the added sticker must match the format of the other stickers in the set. Emoji sticker sets can have up to 200 stickers. Animated and video sticker sets can have up to 50 stickers. Static sticker sets can have up to 120 stickers. Returns True on success. */
     addStickerToSet(args: {
       /** User identifier of sticker set owner */
       user_id: number;
       /** Sticker set name */
       name: string;
-      /** PNG image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. */
-      png_sticker?: F | string;
-      /** TGS animation with the sticker, uploaded using multipart/form-data. See https://core.telegram.org/stickers#animated-sticker-requirements for technical requirements */
-      tgs_sticker?: F;
-      /** WEBM video with the sticker, uploaded using multipart/form-data. See https://core.telegram.org/stickers#video-sticker-requirements for technical requirements */
-      webm_sticker?: F;
-      /** One or more emoji corresponding to the sticker */
-      emojis: string;
-      /** An object for position where the mask should be placed on faces */
-      mask_position?: MaskPosition;
+      /** An object with information about the added sticker. If exactly the same sticker had already been added to the set, then the set isn't changed. */
+      sticker: InputFileProxy<F>["InputSticker"];
     }): true;
 
     /** Use this method to move a sticker in a set created by the bot to a specific position. Returns True on success. */
@@ -1353,14 +1378,60 @@ export interface InputFileProxy<F> {
       sticker: string;
     }): true;
 
-    /** Use this method to set the thumbnail of a sticker set. Animated thumbnails can be set for animated sticker sets only. Video thumbnails can be set only for video sticker sets only. Returns True on success. */
-    setStickerSetThumb(args: {
+    /** Use this method to change the list of emoji assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns True on success. */
+    setStickerEmojiList(args: {
+      /** File identifier of the sticker */
+      sticker: string;
+      /** A list of 1-20 emoji associated with the sticker */
+      emoji_list: string[];
+    }): true;
+
+    /** Use this method to change search keywords assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns True on success. */
+    setStickerKeywords(args: {
+      /** File identifier of the sticker */
+      sticker: string;
+      /** A list of 0-20 search keywords for the sticker with total length of up to 64 characters */
+      keywords?: string[];
+    }): true;
+
+    /** Use this method to change the mask position of a mask sticker. The sticker must belong to a sticker set that was created by the bot. Returns True on success. */
+    setStickerMaskPosition(args: {
+      /** File identifier of the sticker */
+      sticker: string;
+      /** An object with the position where the mask should be placed on faces. Omit the parameter to remove the mask position. */
+      mask_position?: MaskPosition;
+    }): true;
+
+    /** Use this method to set the title of a created sticker set. Returns True on success. */
+    setStickerSetTitle(args: {
+      /** Sticker set name */
+      name: string;
+      /** Sticker set title, 1-64 characters */
+      title: string;
+    }): true;
+
+    /** Use this method to delete a sticker set that was created by the bot. Returns True on success. */
+    deleteStickerSet(args: {
+      /** Sticker set name */
+      name: string;
+    }): true;
+
+    /** Use this method to set the thumbnail of a regular or mask sticker set. The format of the thumbnail file must match the format of the stickers in the set. Returns True on success. */
+    setStickerSetThumbnail(args: {
       /** Sticker set name */
       name: string;
       /** User identifier of the sticker set owner */
       user_id: number;
-      /** A PNG image with the thumbnail, must be up to 128 kilobytes in size and have width and height exactly 100px, or a TGS animation with the thumbnail up to 32 kilobytes in size; see https://core.telegram.org/stickers#animated-sticker-requirements for animated sticker technical requirements, or a WEBM video with the thumbnail up to 32 kilobytes in size; see https://core.telegram.org/stickers#video-sticker-requirements for video sticker technical requirements. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. Animated sticker set thumbnails can't be uploaded via HTTP URL. */
-      thumb?: F | string;
+      /** A .WEBP or .PNG image with the thumbnail, must be up to 128 kilobytes in size and have a width and height of exactly 100px, or a .TGS animation with a thumbnail up to 32 kilobytes in size (see https://core.telegram.org/stickers#animated-sticker-requirements for animated sticker technical requirements), or a WEBM video with the thumbnail up to 32 kilobytes in size; see https://core.telegram.org/stickers#video-sticker-requirements for video sticker technical requirements. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. Animated and video sticker set thumbnails can't be uploaded via HTTP URL. */
+      thumbnail?: F | string;
+    }): true;
+
+    /** Use this method to set the thumbnail of a custom emoji sticker set. Returns True on success. */
+    setCustomEmojiStickerSetThumbnail(args: {
+      /** Sticker set name */
+      name: string;
+      /** Custom emoji identifier of a sticker from the sticker set; pass an empty string to drop the thumbnail and use the first sticker as the thumbnail. */
+      custom_emoji_id?: string;
     }): true;
 
     /** Use this method to send answers to an inline query. On success, True is returned.
@@ -1581,6 +1652,18 @@ export interface InputFileProxy<F> {
     }): GameHighScore[];
   };
 
+  /** This object describes a sticker to be added to a sticker set. */
+  InputSticker: {
+    /** The added sticker. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. Animated and video stickers can't be uploaded via HTTP URL. /
+    sticker: F | string;
+    /** List of 1-20 emoji associated with the sticker */
+    emoji_list: string[];
+    /** Position where the mask should be placed on faces. For “mask” stickers only. */
+    mask_position?: MaskPosition;
+    /** List of 0-20 search keywords for the sticker with total length of up to 64 characters. For “regular” and “custom_emoji” stickers only. */
+    keywords?: string[];
+  };
+
   /** This object represents the content of a media message to be sent. It should be one of
   - InputMediaAnimation
   - InputMediaDocument
@@ -1617,7 +1700,7 @@ export interface InputFileProxy<F> {
     /** File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass "attach://<file_attach_name>" to upload a new one using multipart/form-data under <file_attach_name> name. */
     media: F | string;
     /** Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass "attach://<file_attach_name>" if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. */
-    thumb?: F;
+    thumbnail?: F;
     /** Caption of the video to be sent, 0-1024 characters after entities parsing */
     caption?: string;
     /** Mode for parsing entities in the video caption. See formatting options for more details. */
@@ -1643,7 +1726,7 @@ export interface InputFileProxy<F> {
     /** File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass "attach://<file_attach_name>" to upload a new one using multipart/form-data under <file_attach_name> name. */
     media: F | string;
     /** Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass "attach://<file_attach_name>" if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. */
-    thumb?: F;
+    thumbnail?: F;
     /** Caption of the animation to be sent, 0-1024 characters after entities parsing */
     caption?: string;
     /** Mode for parsing entities in the animation caption. See formatting options for more details. */
@@ -1667,7 +1750,7 @@ export interface InputFileProxy<F> {
     /** File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass "attach://<file_attach_name>" to upload a new one using multipart/form-data under <file_attach_name> name. */
     media: F | string;
     /** Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass "attach://<file_attach_name>" if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. */
-    thumb?: F;
+    thumbnail?: F;
     /** Caption of the audio to be sent, 0-1024 characters after entities parsing */
     caption?: string;
     /** Mode for parsing entities in the audio caption. See formatting options for more details. */
@@ -1689,7 +1772,7 @@ export interface InputFileProxy<F> {
     /** File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass "attach://<file_attach_name>" to upload a new one using multipart/form-data under <file_attach_name> name. */
     media: F | string;
     /** Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass "attach://<file_attach_name>" if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. */
-    thumb?: F;
+    thumbnail?: F;
     /** Caption of the document to be sent, 0-1024 characters after entities parsing */
     caption?: string;
     /** Mode for parsing entities in the document caption. See formatting options for more details. */

@@ -1,5 +1,17 @@
 import { WebAppInfo } from "./markup";
 
+/** This object represents the bot's description. */
+export interface BotDescription {
+  /** The bot's description */
+  description: string;
+}
+
+/** This object represents the bot's short description. */
+export interface BotShortDescription {
+  /** The bot's short description */
+  short_description: string;
+}
+
 /** This object describes the bot's menu button in a private chat. It should be one of
 - MenuButtonCommands
 - MenuButtonWebApp
