@@ -2,7 +2,7 @@
   "name": "@grammyjs/types",
   "version": "2.12.1",
   "description": "Telegram Bot API type declarations for grammY",
-  "main": "index.js",
+  "main": "mod.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/grammyjs/types.git"
@@ -15,7 +15,7 @@
     "types"
   ],
   "author": "KnorpelSenf",
-  "types": "index.d.ts",
+  "types": "mod.d.ts",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/grammyjs/grammy/issues"
