@@ -14,6 +14,9 @@
     "api",
     "types"
   ],
+  "scripts": {
+    "prepare": "deno task backport"
+  },
   "author": "KnorpelSenf",
   "types": "mod.d.ts",
   "license": "MIT",
@@ -22,6 +25,6 @@
   },
   "homepage": "https://grammy.dev/",
   "devDependencies": {
-    "deno2node": "^1.7.2"
+    "deno-bin": "^1.31.1"
   }
 }
