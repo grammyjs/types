@@ -6,5 +6,5 @@ export * from "./settings.ts";
 export * from "./message.ts";
 export * from "./passport.ts";
 export * from "./payment.ts";
-export * from "./proxied.ts";
+export * from "./methods.ts";
 export * from "./update.ts";
