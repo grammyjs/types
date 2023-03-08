@@ -1655,7 +1655,7 @@ export interface InputFileProxy<F> {
 
   /** This object describes a sticker to be added to a sticker set. */
   InputSticker: {
-    /** The added sticker. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. Animated and video stickers can't be uploaded via HTTP URL. /
+    /** The added sticker. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. Animated and video stickers can't be uploaded via HTTP URL. */
     sticker: F | string;
     /** List of 1-20 emoji associated with the sticker */
     emoji_list: string[];
