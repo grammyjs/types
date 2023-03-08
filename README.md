@@ -71,8 +71,9 @@ grammY automatically translates calls to `sendDocument` and the like to multipar
 Consequently, the type `InputFile` is not defined in this library.
 
 Instead, grammY specifies its own version of what an `InputFile` is, hence automatically adjusting `@grammyjs/types` with a custom `InputFile` type used throughout all affected methods and interfaces.
-This is possible by what we call a _proxy type_.
-grammY then import types the proxy type called `InputProxyType` and parametrises it with its version of `InputFile`.
+This is possible by adding a type parameter to all affected types.
+grammY then import types parametrises these types with its version of `InputFile`, and re-exports the adjusted types.
+This is why you should always import Bot API as described here: <https://grammy.dev/guide/api.html#type-definitions-for-the-api>.
 
 ## Differences to the Bot API
 
