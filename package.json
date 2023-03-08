@@ -21,7 +21,7 @@
   "types": "mod.d.ts",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/grammyjs/grammy/issues"
+    "url": "https://github.com/grammyjs/types/issues"
   },
   "files": ["*.d.ts", "mod.js"],
   "homepage": "https://grammy.dev/",
