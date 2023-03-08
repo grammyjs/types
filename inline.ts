@@ -1,7 +1,7 @@
-import { Chat, User } from "./manage";
-import { InlineKeyboardMarkup } from "./markup";
-import { Location, MessageEntity, ParseMode } from "./message";
-import { LabeledPrice } from "./payment";
+import type { Chat, User } from "./manage.ts";
+import type { InlineKeyboardMarkup } from "./markup.ts";
+import type { Location, MessageEntity, ParseMode } from "./message.ts";
+import type { LabeledPrice } from "./payment.ts";
 
 /** This object represents an incoming inline query. When the user sends an empty query, your bot could return some default or trending results. */
 export interface InlineQuery {

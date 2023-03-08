@@ -72,7 +72,7 @@ Consequently, the type `InputFile` is not defined in this library.
 
 Instead, grammY specifies its own version of what an `InputFile` is, hence automatically adjusting `@grammyjs/types` with a custom `InputFile` type used throughout all affected methods and interfaces.
 This is possible by what we call a _proxy type_.
-grammY then imports the proxy type called `InputProxyType` and parametrises it with its version of `InputFile`.
+grammY then import types the proxy type called `InputProxyType` and parametrises it with its version of `InputFile`.
 
 ## Differences to the Bot API
 

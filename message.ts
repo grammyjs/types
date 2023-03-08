@@ -1,7 +1,7 @@
-import { InlineKeyboardMarkup } from "./markup";
-import { Chat, File, User } from "./manage";
-import { PassportData } from "./passport";
-import { Invoice, SuccessfulPayment } from "./payment";
+import type { InlineKeyboardMarkup } from "./markup.ts";
+import type { Chat, File, User } from "./manage.ts";
+import type { PassportData } from "./passport.ts";
+import type { Invoice, SuccessfulPayment } from "./payment.ts";
 
 type MsgWith<P extends keyof Message> = Record<P, NonNullable<Message[P]>>;
 
@@ -56,7 +56,7 @@ export namespace Message {
     /** For messages with a caption, special entities like usernames, URLs, bot commands, etc. that appear in the caption */
     caption_entities?: MessageEntity[];
   }
-  interface MediaMessage extends CaptionableMessage {
+  export interface MediaMessage extends CaptionableMessage {
     /** The unique identifier of a media message group this message belongs to */
     media_group_id?: string;
     /** True, if the message media is covered by a spoiler animation */

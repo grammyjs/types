@@ -1,4 +1,4 @@
-import { WebAppInfo } from "./markup";
+import type { WebAppInfo } from "./markup.ts";
 
 /** This object represents the bot's description. */
 export interface BotDescription {

@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/grammyjs/grammy/issues"
   },
-  "homepage": "https://grammy.dev/"
+  "homepage": "https://grammy.dev/",
+  "devDependencies": {
+    "deno2node": "^1.7.2"
+  }
 }

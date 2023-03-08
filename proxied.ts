@@ -1,5 +1,5 @@
-import { InlineQueryResult } from "./inline";
-import {
+import type { InlineQueryResult } from "./inline.ts";
+import type {
   BotCommand,
   ChatAdministratorRights,
   ChatFromGetChat,
@@ -13,14 +13,14 @@ import {
   UserFromGetMe,
   UserProfilePhotos,
   WebhookInfo,
-} from "./manage";
-import {
+} from "./manage.ts";
+import type {
   ForceReply,
   InlineKeyboardMarkup,
   ReplyKeyboardMarkup,
   ReplyKeyboardRemove,
-} from "./markup";
-import {
+} from "./markup.ts";
+import type {
   GameHighScore,
   MaskPosition,
   Message,
@@ -31,16 +31,16 @@ import {
   SentWebAppMessage,
   Sticker,
   StickerSet,
-} from "./message";
-import { PassportElementError } from "./passport";
-import { LabeledPrice, ShippingOption } from "./payment";
-import {
+} from "./message.ts";
+import type { PassportElementError } from "./passport.ts";
+import type { LabeledPrice, ShippingOption } from "./payment.ts";
+import type {
   BotCommandScope,
   BotDescription,
   BotShortDescription,
   MenuButton,
-} from "./settings";
-import { Update } from "./update";
+} from "./settings.ts";
+import type { Update } from "./update.ts";
 
 /** Extracts the parameters of a given method name */
 type Params<M extends keyof InputFileProxy<F>["Telegram"], F> = Parameters<
@@ -1332,7 +1332,7 @@ export interface InputFileProxy<F> {
       user_id: number;
       /** Format of the sticker, must be one of “static”, “animated”, “video” */
       sticker_format: "static" | "animated" | "video";
-      /** A file with the sticker in .WEBP, .PNG, .TGS, or .WEBM format. See https://core.telegram.org/stickers for technical requirements. /
+      /** A file with the sticker in .WEBP, .PNG, .TGS, or .WEBM format. See https://core.telegram.org/stickers for technical requirements. */
       sticker: F;
     }): File;
 
