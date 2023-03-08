@@ -1,3 +1,4 @@
+// deno-lint-ignore-file ban-types
 import type { InlineQueryResult } from "./inline.ts";
 import type {
   BotCommand,
