@@ -1154,20 +1154,6 @@ export type ApiMethods<F> = {
     language_code?: string;
   }): BotCommand[];
 
-  /** Use this method to change the bot's menu button in a private chat, or the default menu button. Returns True on success. */
-  setChatMenuButton(args: {
-    /** Unique identifier for the target private chat. If not specified, default bot's menu button will be changed */
-    chat_id?: number;
-    /** An object for the bot's new menu button. Defaults to MenuButtonDefault */
-    menu_button?: MenuButton;
-  }): true;
-
-  /** Use this method to get the current value of the bot's menu button in a private chat, or the default menu button. Returns MenuButton on success. */
-  getChatMenuButton(args: {
-    /** Unique identifier for the target private chat. If not specified, default bot's menu button will be returned */
-    chat_id?: number;
-  }): MenuButton;
-
   /** Use this method to change the bot's description, which is shown in the chat with the bot if the chat is empty. Returns True on success. */
   setMyDescription(args: {
     /** New bot description; 0-512 characters. Pass an empty string to remove the dedicated description for the given language. */
@@ -1195,6 +1181,20 @@ export type ApiMethods<F> = {
     /** A two-letter ISO 639-1 language code or an empty string */
     language_code?: string;
   }): BotShortDescription;
+
+  /** Use this method to change the bot's menu button in a private chat, or the default menu button. Returns True on success. */
+  setChatMenuButton(args: {
+    /** Unique identifier for the target private chat. If not specified, default bot's menu button will be changed */
+    chat_id?: number;
+    /** An object for the bot's new menu button. Defaults to MenuButtonDefault */
+    menu_button?: MenuButton;
+  }): true;
+
+  /** Use this method to get the current value of the bot's menu button in a private chat, or the default menu button. Returns MenuButton on success. */
+  getChatMenuButton(args: {
+    /** Unique identifier for the target private chat. If not specified, default bot's menu button will be returned */
+    chat_id?: number;
+  }): MenuButton;
 
   /** Use this method to change the default administrator rights requested by the bot when it's added as an administrator to groups or channels. These rights will be suggested to users, but they are free to modify the list before adding the bot. Returns True on success. */
   setMyDefaultAdministratorRights(args: {
