@@ -78,6 +78,7 @@ export declare namespace Message {
   export type GameMessage = CommonMessage & MsgWith<"game">;
   export type PollMessage = CommonMessage & MsgWith<"poll">;
   export type LocationMessage = CommonMessage & MsgWith<"location">;
+  export type StoryMessage = CommonMessage & MsgWith<"story">;
   export type VenueMessage = LocationMessage & MsgWith<"venue">;
   export type NewChatMembersMessage =
     & ServiceMessage
@@ -193,6 +194,8 @@ export interface Message extends Message.MediaMessage {
   venue?: Venue;
   /** Message is a shared location, information about the location */
   location?: Location;
+  /** Message is a forwarded story */
+  story?: Story;
   /** New members that were added to the group or supergroup and information about them (the bot itself may be one of these members) */
   new_chat_members?: User[];
   /** A member was removed from the group, information about them (this member may be the bot itself) */
@@ -581,9 +584,11 @@ export interface PollOption {
 export interface PollAnswer {
   /** Unique poll identifier */
   poll_id: string;
-  /** The user, who changed the answer to the poll */
-  user: User;
-  /** 0-based identifiers of answer options, chosen by the user. May be empty if the user retracted their vote. */
+  /** The chat that changed the answer to the poll, if the voter is anonymous */
+  voter_chat?: Chat;
+  /** The user that changed the answer to the poll, if the voter isn't anonymous */
+  user?: User;
+  /** 0-based identifiers of chosen answer options. May be empty if the vote was retracted. */
   option_ids: number[];
 }
 
@@ -650,6 +655,9 @@ export interface Venue {
   /** Google Places type of the venue. (See supported types.) */
   google_place_type?: string;
 }
+
+/** This object represents a message about a forwarded story in the chat. Currently holds no information. */
+export interface Story {}
 
 /** This object represents the content of a service message, sent whenever a user in the chat triggers a proximity alert set by another user. */
 export interface ProximityAlertTriggered {
