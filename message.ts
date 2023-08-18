@@ -70,6 +70,7 @@ export declare namespace Message {
   export type AnimationMessage = DocumentMessage & MsgWith<"animation">;
   export type PhotoMessage = MediaMessage & MsgWith<"photo">;
   export type StickerMessage = CommonMessage & MsgWith<"sticker">;
+  export type StoryMessage = CommonMessage & MsgWith<"story">;
   export type VideoMessage = MediaMessage & MsgWith<"video">;
   export type VideoNoteMessage = CommonMessage & MsgWith<"video_note">;
   export type VoiceMessage = CaptionableMessage & MsgWith<"voice">;
@@ -78,7 +79,6 @@ export declare namespace Message {
   export type GameMessage = CommonMessage & MsgWith<"game">;
   export type PollMessage = CommonMessage & MsgWith<"poll">;
   export type LocationMessage = CommonMessage & MsgWith<"location">;
-  export type StoryMessage = CommonMessage & MsgWith<"story">;
   export type VenueMessage = LocationMessage & MsgWith<"venue">;
   export type NewChatMembersMessage =
     & ServiceMessage
@@ -176,6 +176,8 @@ export interface Message extends Message.MediaMessage {
   photo?: PhotoSize[];
   /** Message is a sticker, information about the sticker */
   sticker?: Sticker;
+  /** Message is a forwarded story */
+  story?: Story;
   /** Message is a video, information about the video */
   video?: Video;
   /** Message is a video note, information about the video message */
@@ -194,8 +196,6 @@ export interface Message extends Message.MediaMessage {
   venue?: Venue;
   /** Message is a shared location, information about the location */
   location?: Location;
-  /** Message is a forwarded story */
-  story?: Story;
   /** New members that were added to the group or supergroup and information about them (the bot itself may be one of these members) */
   new_chat_members?: User[];
   /** A member was removed from the group, information about them (this member may be the bot itself) */
