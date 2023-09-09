@@ -145,7 +145,7 @@ export declare namespace Chat {
     extends PrivateChat, NonGroupGetChat, GetChat {
     /** Custom emoji identifier of emoji status of the other party in a private chat. Returned only in getChat. */
     emoji_status_custom_emoji_id?: string;
-    /** Expiration date of the emoji status of the other party in a private chat, if any. Returned only in getChat. */
+    /** Expiration date of the emoji status of the other party in a private chat in Unix time, if any. Returned only in getChat. */
     emoji_status_expiration_date?: number;
     /** Bio of the other party in a private chat. Returned only in getChat. */
     bio?: string;
@@ -368,7 +368,7 @@ export interface ChatMemberRestricted {
   can_pin_messages: boolean;
   /** True, if the user is allowed to create forum topics */
   can_manage_topics: boolean;
-  /** Date when restrictions will be lifted for this user; unix time. If 0, then the user is restricted forever */
+  /** Date when restrictions will be lifted for this user; Unix time. If 0, then the user is restricted forever */
   until_date: number;
 }
 
@@ -386,7 +386,7 @@ export interface ChatMemberBanned {
   status: "kicked";
   /** Information about the user */
   user: User;
-  /** Date when restrictions will be lifted for this user; unix time. If 0, then the user is banned forever */
+  /** Date when restrictions will be lifted for this user; Unix time. If 0, then the user is banned forever */
   until_date: number;
 }
 
