@@ -96,7 +96,7 @@ export interface InlineQueryResultPhoto {
   type: "photo";
   /** Unique identifier for this result, 1-64 bytes */
   id: string;
-  /** A valid URL of the photo. Photo must be in jpeg format. Photo size must not exceed 5MB */
+  /** A valid URL of the photo. Photo must be in JPEG format. Photo size must not exceed 5MB */
   photo_url: string;
   /** URL of the thumbnail for the photo */
   thumbnail_url: string;
@@ -144,6 +144,8 @@ export interface InlineQueryResultGif {
   caption?: string;
   /** Mode for parsing entities in the caption. See formatting options for more details. */
   parse_mode?: ParseMode;
+  /** List of special entities that appear in the caption, which can be specified instead of parse_mode */
+  caption_entities?: MessageEntity[];
   /** Inline keyboard attached to the message */
   reply_markup?: InlineKeyboardMarkup;
   /** Content of the message to be sent instead of the GIF animation */
@@ -174,6 +176,8 @@ export interface InlineQueryResultMpeg4Gif {
   caption?: string;
   /** Mode for parsing entities in the caption. See formatting options for more details. */
   parse_mode?: ParseMode;
+  /** List of special entities that appear in the caption, which can be specified instead of parse_mode */
+  caption_entities?: MessageEntity[];
   /** Inline keyboard attached to the message */
   reply_markup?: InlineKeyboardMarkup;
   /** Content of the message to be sent instead of the video animation */
@@ -182,7 +186,7 @@ export interface InlineQueryResultMpeg4Gif {
 
 /** Represents a link to a page containing an embedded video player or a video file. By default, this video file will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the video.
 
-If an InlineQueryResultVideo message contains an embedded video (e.g., YouTube), you must replace its content using input_message_content. */
+> If an InlineQueryResultVideo message contains an embedded video (e.g., YouTube), you must replace its content using input_message_content. */
 export interface InlineQueryResultVideo {
   /** Type of the result, must be video */
   type: "video";
@@ -260,6 +264,8 @@ export interface InlineQueryResultVoice {
   caption?: string;
   /** Mode for parsing entities in the voice message caption. See formatting options for more details. */
   parse_mode?: ParseMode;
+  /** List of special entities that appear in the caption, which can be specified instead of parse_mode */
+  caption_entities?: MessageEntity[];
   /** Recording duration in seconds */
   voice_duration?: number;
   /** Inline keyboard attached to the message */
@@ -320,9 +326,9 @@ export interface InlineQueryResultLocation {
   horizontal_accuracy?: number;
   /** Period in seconds for which the location can be updated, should be between 60 and 86400. */
   live_period?: number;
-  /** The direction in which user is moving, in degrees; 1-360. For active live locations only. */
+  /** For live locations, a direction in which the user is moving, in degrees. Must be between 1 and 360 if specified. */
   heading?: number;
-  /** The maximum distance for proximity alerts about approaching another chat member, in meters. For sent live locations only. */
+  /** For live locations, a maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified. */
   proximity_alert_radius?: number;
   /** Inline keyboard attached to the message */
   reply_markup?: InlineKeyboardMarkup;
@@ -452,6 +458,8 @@ export interface InlineQueryResultCachedGif {
   caption?: string;
   /** Mode for parsing entities in the caption. See formatting options for more details. */
   parse_mode?: ParseMode;
+  /** List of special entities that appear in the caption, which can be specified instead of parse_mode */
+  caption_entities?: MessageEntity[];
   /** Inline keyboard attached to the message */
   reply_markup?: InlineKeyboardMarkup;
   /** Content of the message to be sent instead of the GIF animation */
@@ -472,6 +480,8 @@ export interface InlineQueryResultCachedMpeg4Gif {
   caption?: string;
   /** Mode for parsing entities in the caption. See formatting options for more details. */
   parse_mode?: ParseMode;
+  /** List of special entities that appear in the caption, which can be specified instead of parse_mode */
+  caption_entities?: MessageEntity[];
   /** Inline keyboard attached to the message */
   reply_markup?: InlineKeyboardMarkup;
   /** Content of the message to be sent instead of the video animation */
@@ -480,8 +490,7 @@ export interface InlineQueryResultCachedMpeg4Gif {
 
 /** Represents a link to a sticker stored on the Telegram servers. By default, this sticker will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the sticker.
 
-Note: This will only work in Telegram versions released after 9 April, 2016 for static stickers and after 06 July, 2019 for animated stickers. Older clients will ignore them.
-*/
+Note: This will only work in Telegram versions released after 9 April, 2016 for static stickers and after 06 July, 2019 for animated stickers. Older clients will ignore them. */
 export interface InlineQueryResultCachedSticker {
   /** Type of the result, must be sticker */
   type: "sticker";
@@ -561,6 +570,8 @@ export interface InlineQueryResultCachedVoice {
   caption?: string;
   /** Mode for parsing entities in the voice message caption. See formatting options for more details. */
   parse_mode?: ParseMode;
+  /** List of special entities that appear in the caption, which can be specified instead of parse_mode */
+  caption_entities?: MessageEntity[];
   /** Inline keyboard attached to the message */
   reply_markup?: InlineKeyboardMarkup;
   /** Content of the message to be sent instead of the voice message */
