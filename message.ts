@@ -230,7 +230,7 @@ export interface Message extends Message.MediaMessage {
   chat_shared?: ChatShared;
   /** The domain name of the website on which the user has logged in. More about Telegram Login » */
   connected_website?: string;
-  /** Service message: the user allowed the bot added to the attachment menu to write messages */
+  /** Service message: the user allowed the bot to write messages after adding it to the attachment or side menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method requestWriteAccess */
   write_access_allowed?: WriteAccessAllowed;
   /** Telegram Passport data */
   passport_data?: PassportData;
@@ -721,10 +721,14 @@ export interface ChatShared {
   chat_id: number;
 }
 
-/** This object represents a service message about a user allowing a bot to write messages after adding the bot to the attachment menu or launching a Web App from a link. */
+/** This object represents a service message about a user allowing a bot to write messages after adding it to the attachment menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method requestWriteAccess. */
 export interface WriteAccessAllowed {
-  /** Name of the Web App which was launched from a link */
+  /** True, if the access was granted after the user accepted an explicit request from a Web App sent by the method requestWriteAccess */
+  from_request?: boolean;
+  /** Name of the Web App, if the access was granted when the Web App was launched from a link */
   web_app_name?: string;
+  /** True, if the access was granted when the bot was added to the attachment or side menu */
+  from_attachment_menu?: boolean;
 }
 
 /** This object represents a service message about a video chat scheduled in the chat. */

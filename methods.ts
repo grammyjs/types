@@ -774,14 +774,20 @@ export type ApiMethods<F> = {
     user_id: number;
     /** Pass True if the administrator's presence in the chat is hidden */
     is_anonymous?: boolean;
-    /** Pass True if the administrator can access the chat event log, chat statistics, message statistics in channels, see channel members, see anonymous administrators in supergroups and ignore slow mode. Implied by any other administrator privilege */
+    /** Pass True if the administrator can access the chat event log, chat statistics, boost list in channels, message statistics in channels, see channel members, see anonymous administrators in supergroups and ignore slow mode. Implied by any other administrator privilege */
     can_manage_chat?: boolean;
-    /** Pass True if the administrator can create channel posts, channels only */
+    /** Pass True if the administrator can post messages in the channel; channels only */
     can_post_messages?: boolean;
-    /** Pass True if the administrator can edit messages of other users and can pin messages, channels only */
+    /** Pass True if the administrator can edit messages of other users and can pin messages; channels only */
     can_edit_messages?: boolean;
     /** Pass True if the administrator can delete messages of other users */
     can_delete_messages?: boolean;
+    /** Pass True if the administrator can post stories in the channel; channels only */
+    can_post_stories?: boolean;
+    /** Pass True if the administrator can edit stories posted by other users; channels only */
+    can_edit_stories?: boolean;
+    /** Pass True if the administrator can delete stories posted by other users; channels only */
+    can_delete_stories?: boolean;
     /** Pass True if the administrator can manage video chats */
     can_manage_video_chats?: boolean;
     /** Pass True if the administrator can restrict, ban or unban chat members */

@@ -237,7 +237,7 @@ export interface ChatInviteLink {
 export interface ChatAdministratorRights {
   /** True, if the user's presence in the chat is hidden */
   is_anonymous: boolean;
-  /** True, if the administrator can access the chat event log, chat statistics, message statistics in channels, see channel members, see anonymous administrators in supergroups and ignore slow mode. Implied by any other administrator privilege */
+  /** True, if the administrator can access the chat event log, chat statistics, boost list in channels, message statistics in channels, see channel members, see anonymous administrators in supergroups and ignore slow mode. Implied by any other administrator privilege */
   can_manage_chat: boolean;
   /** True, if the administrator can delete messages of other users */
   can_delete_messages: boolean;
@@ -251,12 +251,18 @@ export interface ChatAdministratorRights {
   can_change_info: boolean;
   /** True, if the user is allowed to invite new users to the chat */
   can_invite_users: boolean;
-  /** True, if the administrator can post in the channel; channels only */
+  /** True, if the administrator can post messages in the channel; channels only */
   can_post_messages?: boolean;
   /** True, if the administrator can edit messages of other users and can pin messages; channels only */
   can_edit_messages?: boolean;
   /** True, if the user is allowed to pin messages; groups and supergroups only */
   can_pin_messages?: boolean;
+  /** True, if the administrator can post stories in the channel; channels only */
+  can_post_stories?: boolean;
+  /** True, if the administrator can edit stories posted by other users; channels only */
+  can_edit_stories?: boolean;
+  /** True, if the administrator can delete stories posted by other users; channels only */
+  can_delete_stories?: boolean;
   /** True, if the user is allowed to create, rename, close, and reopen forum topics; supergroups only */
   can_manage_topics?: boolean;
 }
@@ -298,7 +304,7 @@ export interface ChatMemberAdministrator {
   can_be_edited: boolean;
   /** True, if the user's presence in the chat is hidden */
   is_anonymous: boolean;
-  /** True, if the administrator can access the chat event log, chat statistics, message statistics in channels, see channel members, see anonymous administrators in supergroups and ignore slow mode. Implied by any other administrator privilege */
+  /** True, if the administrator can access the chat event log, chat statistics, boost list in channels, message statistics in channels, see channel members, see anonymous administrators in supergroups and ignore slow mode. Implied by any other administrator privilege */
   can_manage_chat: boolean;
   /** True, if the administrator can delete messages of other users */
   can_delete_messages: boolean;
@@ -312,12 +318,18 @@ export interface ChatMemberAdministrator {
   can_change_info: boolean;
   /** True, if the user is allowed to invite new users to the chat */
   can_invite_users: boolean;
-  /** True, if the administrator can post in the channel; channels only */
+  /** True, if the administrator can post messages in the channel; channels only */
   can_post_messages?: boolean;
   /** True, if the administrator can edit messages of other users and can pin messages; channels only */
   can_edit_messages?: boolean;
   /** True, if the user is allowed to pin messages; groups and supergroups only */
   can_pin_messages?: boolean;
+  /** True, if the administrator can post stories in the channel; channels only */
+  can_post_stories?: boolean;
+  /** True, if the administrator can edit stories posted by other users; channels only */
+  can_edit_stories?: boolean;
+  /** True, if the administrator can delete stories posted by other users; channels only */
+  can_delete_stories?: boolean;
   /** True, if the user is allowed to create, rename, close, and reopen forum topics; supergroups only */
   can_manage_topics?: boolean;
   /** Custom title for this user */
