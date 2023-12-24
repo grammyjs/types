@@ -237,13 +237,13 @@ export interface ChatInviteLink {
 export interface ChatAdministratorRights {
   /** True, if the user's presence in the chat is hidden */
   is_anonymous: boolean;
-  /** True, if the administrator can access the chat event log, chat statistics, boost list in channels, message statistics in channels, see channel members, see anonymous administrators in supergroups and ignore slow mode. Implied by any other administrator privilege */
+  /** True, if the administrator can access the chat event log, boost list in channels, see channel members, report spam messages, see anonymous administrators in supergroups and ignore slow mode. Implied by any other administrator privilege */
   can_manage_chat: boolean;
   /** True, if the administrator can delete messages of other users */
   can_delete_messages: boolean;
   /** True, if the administrator can manage video chats */
   can_manage_video_chats: boolean;
-  /** True, if the administrator can restrict, ban or unban chat members */
+  /** True, if the administrator can restrict, ban or unban chat members, or access supergroup statistics */
   can_restrict_members: boolean;
   /** True, if the administrator can add new administrators with a subset of their own privileges or demote administrators that they have promoted, directly or indirectly (promoted by administrators that were appointed by the user) */
   can_promote_members: boolean;
@@ -251,7 +251,7 @@ export interface ChatAdministratorRights {
   can_change_info: boolean;
   /** True, if the user is allowed to invite new users to the chat */
   can_invite_users: boolean;
-  /** True, if the administrator can post messages in the channel; channels only */
+  /** True, if the administrator can post messages in the channel, or access channel statistics; channels only */
   can_post_messages?: boolean;
   /** True, if the administrator can edit messages of other users and can pin messages; channels only */
   can_edit_messages?: boolean;
@@ -304,13 +304,13 @@ export interface ChatMemberAdministrator {
   can_be_edited: boolean;
   /** True, if the user's presence in the chat is hidden */
   is_anonymous: boolean;
-  /** True, if the administrator can access the chat event log, chat statistics, boost list in channels, message statistics in channels, see channel members, see anonymous administrators in supergroups and ignore slow mode. Implied by any other administrator privilege */
+  /** True, if the administrator can access the chat event log, boost list in channels, see channel members, report spam messages, see anonymous administrators in supergroups and ignore slow mode. Implied by any other administrator privilege */
   can_manage_chat: boolean;
   /** True, if the administrator can delete messages of other users */
   can_delete_messages: boolean;
   /** True, if the administrator can manage video chats */
   can_manage_video_chats: boolean;
-  /** True, if the administrator can restrict, ban or unban chat members */
+  /** True, if the administrator can restrict, ban or unban chat members, or access supergroup statistics */
   can_restrict_members: boolean;
   /** True, if the administrator can add new administrators with a subset of their own privileges or demote administrators that they have promoted, directly or indirectly (promoted by administrators that were appointed by the user) */
   can_promote_members: boolean;
@@ -318,7 +318,7 @@ export interface ChatMemberAdministrator {
   can_change_info: boolean;
   /** True, if the user is allowed to invite new users to the chat */
   can_invite_users: boolean;
-  /** True, if the administrator can post messages in the channel; channels only */
+  /** True, if the administrator can post messages in the channel, or access channel statistics; channels only */
   can_post_messages?: boolean;
   /** True, if the administrator can edit messages of other users and can pin messages; channels only */
   can_edit_messages?: boolean;
@@ -426,7 +426,7 @@ export interface ChatJoinRequest {
   chat: Chat.SupergroupChat | Chat.ChannelChat;
   /** User that sent the join request */
   from: User;
-  /** Identifier of a private chat with the user who sent the join request. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier. The bot can use this identifier for 24 hours to send messages until the join request is processed, assuming no other administrator contacted the user. */
+  /** Identifier of a private chat with the user who sent the join request. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier. The bot can use this identifier for 5 minutes to send messages until the join request is processed, assuming no other administrator contacted the user. */
   user_chat_id: number;
   /** Date the request was sent in Unix time */
   date: number;
