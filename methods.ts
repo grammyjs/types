@@ -9,8 +9,8 @@ import type {
   ChatMemberAdministrator,
   ChatMemberOwner,
   ChatPermissions,
-  File,
   ForumTopic,
+  UserChatBoosts,
   UserFromGetMe,
   UserProfilePhotos,
   WebhookInfo,
@@ -23,12 +23,15 @@ import type {
 } from "./markup.ts";
 import type {
   GameHighScore,
+  LinkPreviewOptions,
   MaskPosition,
   Message,
   MessageEntity,
   MessageId,
   ParseMode,
   Poll,
+  ReactionType,
+  ReplyParameters,
   SentWebAppMessage,
   Sticker,
   StickerSet,
@@ -67,7 +70,7 @@ export type ApiMethods<F> = {
     limit?: number;
     /** Timeout in seconds for long polling. Defaults to 0, i.e. usual short polling. Should be positive, short polling should be used for testing purposes only. */
     timeout?: number;
-    /** A list of the update types you want your bot to receive. For example, specify [“message”, “edited_channel_post”, “callback_query”] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all update types except chat_member (default). If not specified, the previous setting will be used.
+    /** A list of the update types you want your bot to receive. For example, specify ["message", "edited_channel_post", "callback_query"] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all update types except chat_member, message_reaction, and message_reaction_count (default). If not specified, the previous setting will be used.
 
     Please note that this parameter doesn't affect updates created before the call to the getUpdates, so unwanted updates may be received for a short period of time. */
     allowed_updates?: ReadonlyArray<Exclude<keyof Update, "update_id">>;
@@ -92,7 +95,7 @@ export type ApiMethods<F> = {
     ip_address?: string;
     /** The maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery, 1-100. Defaults to 40. Use lower values to limit the load on your bot's server, and higher values to increase your bot's throughput. */
     max_connections?: number;
-    /** A list of the update types you want your bot to receive. For example, specify [“message”, “edited_channel_post”, “callback_query”] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all update types except chat_member (default). If not specified, the previous setting will be used.
+    /** A list of the update types you want your bot to receive. For example, specify ["message", "edited_channel_post", "callback_query"] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all update types except chat_member, message_reaction, and message_reaction_count (default). If not specified, the previous setting will be used.
 
     Please note that this parameter doesn't affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time. */
     allowed_updates?: ReadonlyArray<Exclude<keyof Update, "update_id">>;
@@ -132,16 +135,14 @@ export type ApiMethods<F> = {
     parse_mode?: ParseMode;
     /** A list of special entities that appear in message text, which can be specified instead of parse_mode */
     entities?: MessageEntity[];
-    /** Boolean Disables link previews for links in this message */
-    disable_web_page_preview?: boolean;
+    /** Link preview generation options for the message */
+    link_preview_options?: LinkPreviewOptions;
     /** Sends the message silently. Users will receive a notification with no sound. */
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
-    /** If the message is a reply, ID of the original message */
-    reply_to_message_id?: number;
-    /** Pass True if the message should be sent even if the specified replied-to message is not found */
-    allow_sending_without_reply?: boolean;
+    /** Description of the message to reply to */
+    reply_parameters?: ReplyParameters;
     /** Additional interface options. An object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user. */
     reply_markup?:
       | InlineKeyboardMarkup
@@ -150,7 +151,7 @@ export type ApiMethods<F> = {
       | ForceReply;
   }): Message.TextMessage;
 
-  /** Use this method to forward messages of any kind. Service messages can't be forwarded. On success, the sent Message is returned. */
+  /** Use this method to forward messages of any kind. Service messages and messages with protected content can't be forwarded. On success, the sent Message is returned. */
   forwardMessage(args: {
     /** Unique identifier for the target chat or username of the target channel (in the format @channelusername) */
     chat_id: number | string;
@@ -166,7 +167,23 @@ export type ApiMethods<F> = {
     message_id: number;
   }): Message;
 
-  /** Use this method to copy messages of any kind. Service messages and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success. */
+  /** Use this method to forward multiple messages of any kind. If some of the specified messages can't be found or forwarded, they are skipped. Service messages and messages with protected content can't be forwarded. Album grouping is kept for forwarded messages. On success, an array of MessageId of the sent messages is returned. */
+  forwardMessages(args: {
+    /** Unique identifier for the target chat or username of the target channel (in the format @channelusername) */
+    chat_id: number | string;
+    /** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
+    message_thread_id?: number;
+    /** Unique identifier for the chat where the original messages were sent (or channel username in the format @channelusername) */
+    from_chat_id: number | string;
+    /** Identifiers of 1-100 messages in the chat from_chat_id to forward. The identifiers must be specified in a strictly increasing order. */
+    message_ids?: number[];
+    /** Sends the messages silently. Users will receive a notification with no sound. */
+    disable_notification?: boolean;
+    /** Protects the contents of the forwarded messages from forwarding and saving */
+    protect_content?: boolean;
+  }): MessageId[];
+
+  /** Use this method to copy messages of any kind. Service messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success. */
   copyMessage(args: {
     /** Unique identifier for the target chat or username of the target channel (in the format @channelusername) */
     chat_id: number | string;
@@ -186,10 +203,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
-    /** If the message is a reply, ID of the original message */
-    reply_to_message_id?: number;
-    /** Pass True if the message should be sent even if the specified replied-to message is not found */
-    allow_sending_without_reply?: boolean;
+    /** Description of the message to reply to */
+    reply_parameters?: ReplyParameters;
     /** Additional interface options. An object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user. */
     reply_markup?:
       | InlineKeyboardMarkup
@@ -197,6 +212,24 @@ export type ApiMethods<F> = {
       | ReplyKeyboardRemove
       | ForceReply;
   }): MessageId;
+
+  /** Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they are skipped. Service messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessages, but the copied messages don't have a link to the original message. Album grouping is kept for copied messages. On success, an array of MessageId of the sent messages is returned. */
+  copyMessages(args: {
+    /** Unique identifier for the target chat or username of the target channel (in the format @channelusername) */
+    chat_id: number | string;
+    /** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
+    message_thread_id?: number;
+    /** Unique identifier for the chat where the original messages were sent (or channel username in the format @channelusername) */
+    from_chat_id: number | string;
+    /** Identifiers of 1-100 messages in the chat from_chat_id to copy. The identifiers must be specified in a strictly increasing order. */
+    message_ids: number[];
+    /** Sends the messages silently. Users will receive a notification with no sound. */
+    disable_notification?: boolean;
+    /** Protects the contents of the sent messages from forwarding and saving */
+    protect_content?: boolean;
+    /** Pass True to copy the messages without their captions */
+    remove_caption?: boolean;
+  }): MessageId[];
 
   /** Use this method to send photos. On success, the sent Message is returned. */
   sendPhoto(args: {
@@ -218,10 +251,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
-    /** If the message is a reply, ID of the original message */
-    reply_to_message_id?: number;
-    /** Pass True if the message should be sent even if the specified replied-to message is not found */
-    allow_sending_without_reply?: boolean;
+    /** Description of the message to reply to */
+    reply_parameters?: ReplyParameters;
     /** Additional interface options. An object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user. */
     reply_markup?:
       | InlineKeyboardMarkup
@@ -258,10 +289,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
-    /** If the message is a reply, ID of the original message */
-    reply_to_message_id?: number;
-    /** Pass True if the message should be sent even if the specified replied-to message is not found */
-    allow_sending_without_reply?: boolean;
+    /** Description of the message to reply to */
+    reply_parameters?: ReplyParameters;
     /** Additional interface options. An object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user. */
     reply_markup?:
       | InlineKeyboardMarkup
@@ -292,10 +321,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
-    /** If the message is a reply, ID of the original message */
-    reply_to_message_id?: number;
-    /** Pass True if the message should be sent even if the specified replied-to message is not found */
-    allow_sending_without_reply?: boolean;
+    /** Description of the message to reply to */
+    reply_parameters?: ReplyParameters;
     /** Additional interface options. An object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user. */
     reply_markup?:
       | InlineKeyboardMarkup
@@ -334,10 +361,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
-    /** If the message is a reply, ID of the original message */
-    reply_to_message_id?: number;
-    /** Pass True if the message should be sent even if the specified replied-to message is not found */
-    allow_sending_without_reply?: boolean;
+    /** Description of the message to reply to */
+    reply_parameters?: ReplyParameters;
     /** Additional interface options. An object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user. */
     reply_markup?:
       | InlineKeyboardMarkup
@@ -374,10 +399,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
-    /** If the message is a reply, ID of the original message */
-    reply_to_message_id?: number;
-    /** Pass True if the message should be sent even if the specified replied-to message is not found */
-    allow_sending_without_reply?: boolean;
+    /** Description of the message to reply to */
+    reply_parameters?: ReplyParameters;
     /** Additional interface options. An object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user. */
     reply_markup?:
       | InlineKeyboardMarkup
@@ -406,10 +429,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
-    /** If the message is a reply, ID of the original message */
-    reply_to_message_id?: number;
-    /** Pass True if the message should be sent even if the specified replied-to message is not found */
-    allow_sending_without_reply?: boolean;
+    /** Description of the message to reply to */
+    reply_parameters?: ReplyParameters;
     /** Additional interface options. An object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user. */
     reply_markup?:
       | InlineKeyboardMarkup
@@ -437,10 +458,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
-    /** If the message is a reply, ID of the original message */
-    reply_to_message_id?: number;
-    /** Pass True if the message should be sent even if the specified replied-to message is not found */
-    allow_sending_without_reply?: boolean;
+    /** Description of the message to reply to */
+    reply_parameters?: ReplyParameters;
     /** Additional interface options. An object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user. */
     reply_markup?:
       | InlineKeyboardMarkup
@@ -466,10 +485,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent messages from forwarding and saving */
     protect_content?: boolean;
-    /** If messages are a reply, ID of the original message */
-    reply_to_message_id?: number;
-    /** Pass True if the message should be sent even if the specified replied-to message is not found */
-    allow_sending_without_reply?: boolean;
+    /** Description of the message to reply to */
+    reply_parameters?: ReplyParameters;
   }): Array<
     | Message.AudioMessage
     | Message.DocumentMessage
@@ -499,10 +516,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
-    /** If the message is a reply, ID of the original message */
-    reply_to_message_id?: number;
-    /** Pass True if the message should be sent even if the specified replied-to message is not found */
-    allow_sending_without_reply?: boolean;
+    /** Description of the message to reply to */
+    reply_parameters?: ReplyParameters;
     /** Additional interface options. An object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user. */
     reply_markup?:
       | InlineKeyboardMarkup
@@ -571,10 +586,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
-    /** If the message is a reply, ID of the original message */
-    reply_to_message_id?: number;
-    /** Pass True if the message should be sent even if the specified replied-to message is not found */
-    allow_sending_without_reply?: boolean;
+    /** Description of the message to reply to */
+    reply_parameters?: ReplyParameters;
     /** Additional interface options. An object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user. */
     reply_markup?:
       | InlineKeyboardMarkup
@@ -601,10 +614,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
-    /** If the message is a reply, ID of the original message */
-    reply_to_message_id?: number;
-    /** Pass True if the message should be sent even if the specified replied-to message is not found */
-    allow_sending_without_reply?: boolean;
+    /** Description of the message to reply to */
+    reply_parameters?: ReplyParameters;
     /** Additional interface options. An object for an inline keyboard, custom reply keyboard, instructions to remove keyboard or to force a reply from the user. */
     reply_markup?:
       | InlineKeyboardMarkup
@@ -647,10 +658,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
-    /** If the message is a reply, ID of the original message */
-    reply_to_message_id?: number;
-    /** Pass True if the message should be sent even if the specified replied-to message is not found */
-    allow_sending_without_reply?: boolean;
+    /** Description of the message to reply to */
+    reply_parameters?: ReplyParameters;
     /** Additional interface options. An object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user. */
     reply_markup?:
       | InlineKeyboardMarkup
@@ -671,10 +680,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding */
     protect_content?: boolean;
-    /** If the message is a reply, ID of the original message */
-    reply_to_message_id?: number;
-    /** Pass True if the message should be sent even if the specified replied-to message is not found */
-    allow_sending_without_reply?: boolean;
+    /** Description of the message to reply to */
+    reply_parameters?: ReplyParameters;
     /** Additional interface options. An object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user. */
     reply_markup?:
       | InlineKeyboardMarkup
@@ -682,6 +689,18 @@ export type ApiMethods<F> = {
       | ReplyKeyboardRemove
       | ForceReply;
   }): Message.DiceMessage;
+
+  /** Use this method to change the chosen reactions on a message. Service messages can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. In albums, bots must react to the first message. Returns True on success. */
+  setMessageReaction(args: {
+    /** Unique identifier for the target chat or username of the target channel (in the format @channelusername) */
+    chat_id: number | string;
+    /** Identifier of the target message */
+    message_id: number;
+    /** New list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators. */
+    reaction?: ReactionType[];
+    /** Pass True to set the reaction with a big animation */
+    is_big?: boolean;
+  }): true;
 
   /** Use this method when you need to tell the user that something is happening on the bot's side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns True on success.
 
@@ -717,6 +736,14 @@ export type ApiMethods<F> = {
     /** Limits the number of photos to be retrieved. Values between 1-100 are accepted. Defaults to 100. */
     limit?: number;
   }): UserProfilePhotos;
+
+  /** Use this method to get the list of boosts added to a chat by a user. Requires administrator rights in the chat. Returns a UserChatBoosts object. */
+  getUserChatBoosts(args: {
+    /** Unique identifier for the chat or username of the channel (in the format @channelusername) */
+    chat_id: number | string;
+    /** Unique identifier of the target user */
+    user_id: number;
+  }): UserChatBoosts;
 
   /** Use this method to get basic information about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a File object is returned. The file can then be downloaded via the link https://api.telegram.org/file/bot<token>/<file_path>, where <file_path> is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling getFile again.
 
@@ -1236,8 +1263,8 @@ export type ApiMethods<F> = {
     parse_mode?: ParseMode;
     /** A list of special entities that appear in message text, which can be specified instead of parse_mode */
     entities?: MessageEntity[];
-    /** Disables link previews for links in this message */
-    disable_web_page_preview?: boolean;
+    /** Link preview generation options for the message */
+    link_preview_options?: LinkPreviewOptions;
     /** An object for an inline keyboard. */
     reply_markup?: InlineKeyboardMarkup;
   }): (Update.Edited & Message.TextMessage) | true;
@@ -1313,6 +1340,14 @@ export type ApiMethods<F> = {
     message_id: number;
   }): true;
 
+  /** Use this method to delete multiple messages simultaneously. Returns True on success. */
+  deleteMessages(args: {
+    /** Unique identifier for the target chat or username of the target channel (in the format @channelusername) */
+    chat_id: number | string;
+    /** Identifiers of 1-100 messages to delete. See deleteMessage for limitations on which messages can be deleted */
+    message_ids: number[];
+  }): true;
+
   /** Use this method to send static .WEBP, animated .TGS, or video .WEBM stickers. On success, the sent Message is returned. */
   sendSticker(args: {
     /** Unique identifier for the target chat or username of the target channel (in the format @channelusername) */
@@ -1327,10 +1362,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
-    /** If the message is a reply, ID of the original message */
-    reply_to_message_id?: number;
-    /** Pass True if the message should be sent even if the specified replied-to message is not found */
-    allow_sending_without_reply?: boolean;
+    /** Description of the message to reply to */
+    reply_parameters?: ReplyParameters;
     /** Additional interface options. An object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user. */
     reply_markup?:
       | InlineKeyboardMarkup
@@ -1538,10 +1571,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
-    /** If the message is a reply, ID of the original message */
-    reply_to_message_id?: number;
-    /** Pass True if the message should be sent even if the specified replied-to message is not found */
-    allow_sending_without_reply?: boolean;
+    /** Description of the message to reply to */
+    reply_parameters?: ReplyParameters;
     /** An object for an inline keyboard. If empty, one 'Pay total price' button will be shown. If not empty, the first button must be a Pay button. */
     reply_markup?: InlineKeyboardMarkup;
   }): Message.InvoiceMessage;
@@ -1634,10 +1665,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
-    /** If the message is a reply, ID of the original message */
-    reply_to_message_id?: number;
-    /** Pass True if the message should be sent even if the specified replied-to message is not found */
-    allow_sending_without_reply?: boolean;
+    /** Description of the message to reply to */
+    reply_parameters?: ReplyParameters;
     /** An object for an inline keyboard. If empty, one 'Play game_title' button will be shown. If not empty, the first button must launch the game. */
     reply_markup?: InlineKeyboardMarkup;
   }): Message.GameMessage;

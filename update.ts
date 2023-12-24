@@ -1,12 +1,20 @@
 import type { ChosenInlineResult, InlineQuery } from "./inline.ts";
 import type {
   Chat,
+  ChatBoostAdded,
+  ChatBoostRemoved,
   ChatJoinRequest,
   ChatMemberUpdated,
   User,
 } from "./manage.ts";
 import type { CallbackQuery } from "./markup.ts";
-import type { Message, Poll, PollAnswer } from "./message.ts";
+import type {
+  Message,
+  MessageReactionCountUpdated,
+  MessageReactionUpdated,
+  Poll,
+  PollAnswer,
+} from "./message.ts";
 import type { PreCheckoutQuery, ShippingQuery } from "./payment.ts";
 
 /** Internal namespace used to make some message types more accurate */
@@ -60,4 +68,12 @@ export interface Update {
   chat_member?: ChatMemberUpdated;
   /** A request to join the chat has been sent. The bot must have the can_invite_users administrator right in the chat to receive these updates. */
   chat_join_request?: ChatJoinRequest;
+  /** A reaction to a message was changed by a user. The bot must be an administrator in the chat and must explicitly specify "message_reaction" in the list of allowed_updates to receive these updates. The update isn't received for reactions set by bots. */
+  message_reaction?: MessageReactionUpdated;
+  /** Reactions to a message with anonymous reactions were changed. The bot must be an administrator in the chat and must explicitly specify "message_reaction_count" in the list of allowed_updates to receive these updates. */
+  message_reaction_count?: MessageReactionCountUpdated;
+  /** A boost was added to a chat. The bot must be an administrator in the chat to receive these updates. */
+  added_chat_boost?: ChatBoostAdded;
+  /** A boost was removed from a chat. The bot must be an administrator in the chat to receive these updates. */
+  removed_chat_boost?: ChatBoostRemoved;
 }
