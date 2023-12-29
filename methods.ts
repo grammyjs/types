@@ -149,6 +149,8 @@ export type ApiMethods<F> = {
       | ReplyKeyboardMarkup
       | ReplyKeyboardRemove
       | ForceReply;
+    /** @deprecated use `reply_parameters` instead */
+    reply_to_message_id?: number;
   }): Message.TextMessage;
 
   /** Use this method to forward messages of any kind. Service messages and messages with protected content can't be forwarded. On success, the sent Message is returned. */
@@ -211,6 +213,8 @@ export type ApiMethods<F> = {
       | ReplyKeyboardMarkup
       | ReplyKeyboardRemove
       | ForceReply;
+    /** @deprecated use `reply_parameters` instead */
+    reply_to_message_id?: number;
   }): MessageId;
 
   /** Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they are skipped. Service messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessages, but the copied messages don't have a link to the original message. Album grouping is kept for copied messages. On success, an array of MessageId of the sent messages is returned. */
@@ -259,6 +263,8 @@ export type ApiMethods<F> = {
       | ReplyKeyboardMarkup
       | ReplyKeyboardRemove
       | ForceReply;
+    /** @deprecated use `reply_parameters` instead */
+    reply_to_message_id?: number;
   }): Message.PhotoMessage;
 
   /** Use this method to send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .MP3 or .M4A format. On success, the sent Message is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
@@ -297,6 +303,8 @@ export type ApiMethods<F> = {
       | ReplyKeyboardMarkup
       | ReplyKeyboardRemove
       | ForceReply;
+    /** @deprecated use `reply_parameters` instead */
+    reply_to_message_id?: number;
   }): Message.AudioMessage;
 
   /** Use this method to send general files. On success, the sent Message is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future. */
@@ -329,6 +337,8 @@ export type ApiMethods<F> = {
       | ReplyKeyboardMarkup
       | ReplyKeyboardRemove
       | ForceReply;
+    /** @deprecated use `reply_parameters` instead */
+    reply_to_message_id?: number;
   }): Message.DocumentMessage;
 
   /** Use this method to send video files, Telegram clients support MPEG4 videos (other formats may be sent as Document). On success, the sent Message is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future. */
@@ -369,6 +379,8 @@ export type ApiMethods<F> = {
       | ReplyKeyboardMarkup
       | ReplyKeyboardRemove
       | ForceReply;
+    /** @deprecated use `reply_parameters` instead */
+    reply_to_message_id?: number;
   }): Message.VideoMessage;
 
   /** Use this method to send animation files (GIF or H.264/MPEG-4 AVC video without sound). On success, the sent Message is returned. Bots can currently send animation files of up to 50 MB in size, this limit may be changed in the future. */
@@ -407,6 +419,8 @@ export type ApiMethods<F> = {
       | ReplyKeyboardMarkup
       | ReplyKeyboardRemove
       | ForceReply;
+    /** @deprecated use `reply_parameters` instead */
+    reply_to_message_id?: number;
   }): Message.AnimationMessage;
 
   /** Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .OGG file encoded with OPUS (other formats may be sent as Audio or Document). On success, the sent Message is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future. */
@@ -437,6 +451,8 @@ export type ApiMethods<F> = {
       | ReplyKeyboardMarkup
       | ReplyKeyboardRemove
       | ForceReply;
+    /** @deprecated use `reply_parameters` instead */
+    reply_to_message_id?: number;
   }): Message.VoiceMessage;
 
   /** Use this method to send video messages. On success, the sent Message is returned.
@@ -466,6 +482,8 @@ export type ApiMethods<F> = {
       | ReplyKeyboardMarkup
       | ReplyKeyboardRemove
       | ForceReply;
+    /** @deprecated use `reply_parameters` instead */
+    reply_to_message_id?: number;
   }): Message.VideoNoteMessage;
 
   /** Use this method to send a group of photos, videos, documents or audios as an album. Documents and audio files can be only grouped in an album with messages of the same type. On success, an array of Messages that were sent is returned. */
@@ -487,6 +505,8 @@ export type ApiMethods<F> = {
     protect_content?: boolean;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
+    /** @deprecated use `reply_parameters` instead */
+    reply_to_message_id?: number;
   }): Array<
     | Message.AudioMessage
     | Message.DocumentMessage
@@ -524,6 +544,8 @@ export type ApiMethods<F> = {
       | ReplyKeyboardMarkup
       | ReplyKeyboardRemove
       | ForceReply;
+    /** @deprecated use `reply_parameters` instead */
+    reply_to_message_id?: number;
   }): Message.LocationMessage;
 
   /** Use this method to edit live location messages. A location can be edited until its live_period expires or editing is explicitly disabled by a call to stopMessageLiveLocation. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. */
@@ -594,6 +616,8 @@ export type ApiMethods<F> = {
       | ReplyKeyboardMarkup
       | ReplyKeyboardRemove
       | ForceReply;
+    /** @deprecated use `reply_parameters` instead */
+    reply_to_message_id?: number;
   }): Message.VenueMessage;
 
   /** Use this method to send phone contacts. On success, the sent Message is returned. */
@@ -622,6 +646,8 @@ export type ApiMethods<F> = {
       | ReplyKeyboardMarkup
       | ReplyKeyboardRemove
       | ForceReply;
+    /** @deprecated use `reply_parameters` instead */
+    reply_to_message_id?: number;
   }): Message.ContactMessage;
 
   /** Use this method to send a native poll. On success, the sent Message is returned. */
@@ -666,6 +692,8 @@ export type ApiMethods<F> = {
       | ReplyKeyboardMarkup
       | ReplyKeyboardRemove
       | ForceReply;
+    /** @deprecated use `reply_parameters` instead */
+    reply_to_message_id?: number;
   }): Message.PollMessage;
 
   /** Use this method to send an animated emoji that will display a random value. On success, the sent Message is returned. */
@@ -688,6 +716,8 @@ export type ApiMethods<F> = {
       | ReplyKeyboardMarkup
       | ReplyKeyboardRemove
       | ForceReply;
+    /** @deprecated use `reply_parameters` instead */
+    reply_to_message_id?: number;
   }): Message.DiceMessage;
 
   /** Use this method when you need to tell the user that something is happening on the bot's side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns True on success.
@@ -1370,6 +1400,8 @@ export type ApiMethods<F> = {
       | ReplyKeyboardMarkup
       | ReplyKeyboardRemove
       | ForceReply;
+    /** @deprecated use `reply_parameters` instead */
+    reply_to_message_id?: number;
   }): Message.StickerMessage;
 
   /** Use this method to get a sticker set. On success, a StickerSet object is returned. */
@@ -1575,6 +1607,8 @@ export type ApiMethods<F> = {
     reply_parameters?: ReplyParameters;
     /** An object for an inline keyboard. If empty, one 'Pay total price' button will be shown. If not empty, the first button must be a Pay button. */
     reply_markup?: InlineKeyboardMarkup;
+    /** @deprecated use `reply_parameters` instead */
+    reply_to_message_id?: number;
   }): Message.InvoiceMessage;
 
   /** Use this method to create a link for an invoice. Returns the created invoice link as String on success. */
@@ -1669,6 +1703,8 @@ export type ApiMethods<F> = {
     reply_parameters?: ReplyParameters;
     /** An object for an inline keyboard. If empty, one 'Play game_title' button will be shown. If not empty, the first button must launch the game. */
     reply_markup?: InlineKeyboardMarkup;
+    /** @deprecated use `reply_parameters` instead */
+    reply_to_message_id?: number;
   }): Message.GameMessage;
 
   /** Use this method to set the score of the specified user in a game message. On success, if the message is not an inline message, the Message is returned, otherwise True is returned. Returns an error, if the new score is not greater than the user's current score in the chat and force is False. */
