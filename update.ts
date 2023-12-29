@@ -12,16 +12,16 @@ import type { PreCheckoutQuery, ShippingQuery } from "./payment.ts";
 /** Internal namespace used to make some message types more accurate */
 export declare namespace Update {
   /** Internal type holding properties that message updates in channels share. */
-  export interface Channel {
+  interface Channel {
     chat: Chat.ChannelChat;
   }
   /** Internal type holding properties that message updates outside of channels share. */
-  export interface NonChannel {
+  interface NonChannel {
     chat: Exclude<Chat, Chat.ChannelChat>;
     from: User;
   }
   /** Internal type holding properties that updates about edited messages share. */
-  export interface Edited {
+  interface Edited {
     /** Date the message was last edited in Unix time */
     edit_date: number;
   }

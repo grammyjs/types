@@ -79,7 +79,7 @@ export declare namespace Chat {
 
   // ==> CHATS
   /** Internal type representing private chats. */
-  export interface PrivateChat extends AbstractChat, UserNameChat {
+  interface PrivateChat extends AbstractChat, UserNameChat {
     type: "private";
     /** First name of the other party in a private chat */
     first_name: string;
@@ -87,18 +87,17 @@ export declare namespace Chat {
     last_name?: string;
   }
   /** Internal type representing group chats. */
-  export interface GroupChat extends AbstractChat, TitleChat {
+  interface GroupChat extends AbstractChat, TitleChat {
     type: "group";
   }
   /** Internal type representing super group chats. */
-  export interface SupergroupChat
-    extends AbstractChat, UserNameChat, TitleChat {
+  interface SupergroupChat extends AbstractChat, UserNameChat, TitleChat {
     type: "supergroup";
     /** True, if the supergroup chat is a forum (has topics enabled) */
     is_forum?: true;
   }
   /** Internal type representing channel chats. */
-  export interface ChannelChat extends AbstractChat, UserNameChat, TitleChat {
+  interface ChannelChat extends AbstractChat, UserNameChat, TitleChat {
     type: "channel";
   }
 
@@ -141,8 +140,7 @@ export declare namespace Chat {
 
   // ==> GET CHATS
   /** Internal type representing private chats returned from `getChat`. */
-  export interface PrivateGetChat
-    extends PrivateChat, NonGroupGetChat, GetChat {
+  interface PrivateGetChat extends PrivateChat, NonGroupGetChat, GetChat {
     /** Custom emoji identifier of emoji status of the other party in a private chat. Returned only in getChat. */
     emoji_status_custom_emoji_id?: string;
     /** Expiration date of the emoji status of the other party in a private chat in Unix time, if any. Returned only in getChat. */
@@ -155,9 +153,9 @@ export declare namespace Chat {
     has_restricted_voice_and_video_messages?: true;
   }
   /** Internal type representing group chats returned from `getChat`. */
-  export interface GroupGetChat extends GroupChat, MultiUserGetChat {}
+  interface GroupGetChat extends GroupChat, MultiUserGetChat {}
   /** Internal type representing supergroup chats returned from `getChat`. */
-  export interface SupergroupGetChat
+  interface SupergroupGetChat
     extends SupergroupChat, NonGroupGetChat, MultiUserGetChat, LargeGetChat {
     /** True, if users need to join the supergroup before they can send messages. Returned only in getChat. */
     join_to_send_messages?: true;
@@ -173,8 +171,7 @@ export declare namespace Chat {
     location?: ChatLocation;
   }
   /** Internal type representing channel chats returned from `getChat`. */
-  export interface ChannelGetChat
-    extends ChannelChat, NonGroupGetChat, LargeGetChat {}
+  interface ChannelGetChat extends ChannelChat, NonGroupGetChat, LargeGetChat {}
 }
 
 /** This object represents a chat. */

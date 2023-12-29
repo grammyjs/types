@@ -12,45 +12,43 @@ export declare namespace InlineKeyboardButton {
     /** Label text on the button */
     text: string;
   }
-  export interface UrlButton extends AbstractInlineKeyboardButton {
+  interface UrlButton extends AbstractInlineKeyboardButton {
     /** HTTP or tg:// URL to be opened when the button is pressed. Links tg://user?id=<user_id> can be used to mention a user by their ID without using a username, if this is allowed by their privacy settings. */
     url: string;
   }
-  export interface CallbackButton extends AbstractInlineKeyboardButton {
+  interface CallbackButton extends AbstractInlineKeyboardButton {
     /** Data to be sent in a callback query to the bot when button is pressed, 1-64 bytes */
     callback_data: string;
   }
-  export interface WebAppButton extends AbstractInlineKeyboardButton {
+  interface WebAppButton extends AbstractInlineKeyboardButton {
     /** Description of the Web App that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method answerWebAppQuery. Available only in private chats between a user and the bot. */
     web_app: WebAppInfo;
   }
-  export interface LoginButton extends AbstractInlineKeyboardButton {
+  interface LoginButton extends AbstractInlineKeyboardButton {
     /** An HTTPS URL used to automatically authorize the user. Can be used as a replacement for the Telegram Login Widget. */
     login_url: LoginUrl;
   }
-  export interface SwitchInlineButton extends AbstractInlineKeyboardButton {
+  interface SwitchInlineButton extends AbstractInlineKeyboardButton {
     /** If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot's username and the specified inline query in the input field. Can be empty, in which case just the bot's username will be inserted. */
     switch_inline_query: string;
   }
-  export interface SwitchInlineCurrentChatButton
-    extends AbstractInlineKeyboardButton {
+  interface SwitchInlineCurrentChatButton extends AbstractInlineKeyboardButton {
     /** If set, pressing the button will insert the bot's username and the specified inline query in the current chat's input field. Can be empty, in which case only the bot's username will be inserted.
 
     This offers a quick way for the user to open your bot in inline mode in the same chat – good for selecting something from multiple options. */
     switch_inline_query_current_chat: string;
   }
-  export interface SwitchInlineChosenChatButton
-    extends AbstractInlineKeyboardButton {
+  interface SwitchInlineChosenChatButton extends AbstractInlineKeyboardButton {
     /** If set, pressing the button will prompt the user to select one of their chats of the specified type, open that chat and insert the bot's username and the specified inline query in the input field */
     switch_inline_query_chosen_chat: SwitchInlineQueryChosenChat;
   }
-  export interface GameButton extends AbstractInlineKeyboardButton {
+  interface GameButton extends AbstractInlineKeyboardButton {
     /** Description of the game that will be launched when the user presses the button.
 
     NOTE: This type of button must always be the first button in the first row. */
     callback_game: CallbackGame;
   }
-  export interface PayButton extends AbstractInlineKeyboardButton {
+  interface PayButton extends AbstractInlineKeyboardButton {
     /** Specify True, to send a Pay button.
 
     NOTE: This type of button must always be the first button in the first row and can only be used in invoice messages. */
@@ -141,31 +139,31 @@ export interface ReplyKeyboardMarkup {
 }
 
 export declare namespace KeyboardButton {
-  export interface CommonButton {
+  interface CommonButton {
     /** Text of the button. If none of the optional fields are used, it will be sent as a message when the button is pressed */
     text: string;
   }
-  export interface RequestUserButton extends CommonButton {
+  interface RequestUserButton extends CommonButton {
     /** If specified, pressing the button will open a list of suitable users. Tapping on any user will send their identifier to the bot in a “user_shared” service message. Available in private chats only. */
     request_user: KeyboardButtonRequestUser;
   }
-  export interface RequestChatButton extends CommonButton {
+  interface RequestChatButton extends CommonButton {
     /** If specified, pressing the button will open a list of suitable chats. Tapping on a chat will send its identifier to the bot in a “chat_shared” service message. Available in private chats only. */
     request_chat: KeyboardButtonRequestChat;
   }
-  export interface RequestContactButton extends CommonButton {
+  interface RequestContactButton extends CommonButton {
     /** If True, the user's phone number will be sent as a contact when the button is pressed. Available in private chats only. */
     request_contact: boolean;
   }
-  export interface RequestLocationButton extends CommonButton {
+  interface RequestLocationButton extends CommonButton {
     /** If True, the user's current location will be sent when the button is pressed. Available in private chats only. */
     request_location: boolean;
   }
-  export interface RequestPollButton extends CommonButton {
+  interface RequestPollButton extends CommonButton {
     /** If specified, the user will be asked to create a poll and send it to the bot when the button is pressed. Available in private chats only. */
     request_poll: KeyboardButtonPollType;
   }
-  export interface WebAppButton extends CommonButton {
+  interface WebAppButton extends CommonButton {
     /** If specified, the described Web App will be launched when the button is pressed. The Web App will be able to send a “web_app_data” service message. Available in private chats only. */
     web_app: WebAppInfo;
   }

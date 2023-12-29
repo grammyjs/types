@@ -23,7 +23,7 @@ export declare namespace Message {
     /** True, if the message is sent to a forum topic */
     is_topic_message?: boolean;
   }
-  export interface CommonMessage extends ServiceMessage {
+  interface CommonMessage extends ServiceMessage {
     /** For forwarded messages, sender of the original message */
     forward_from?: User;
     /** For messages forwarded from channels or from anonymous administrators, information about the original sender chat */
@@ -64,99 +64,99 @@ export declare namespace Message {
     has_media_spoiler?: true;
   }
 
-  export type TextMessage = CommonMessage & MsgWith<"text">;
-  export type AudioMessage = CaptionableMessage & MsgWith<"audio">;
-  export type DocumentMessage = CaptionableMessage & MsgWith<"document">;
-  export type AnimationMessage = DocumentMessage & MsgWith<"animation">;
-  export type PhotoMessage = MediaMessage & MsgWith<"photo">;
-  export type StickerMessage = CommonMessage & MsgWith<"sticker">;
-  export type StoryMessage = CommonMessage & MsgWith<"story">;
-  export type VideoMessage = MediaMessage & MsgWith<"video">;
-  export type VideoNoteMessage = CommonMessage & MsgWith<"video_note">;
-  export type VoiceMessage = CaptionableMessage & MsgWith<"voice">;
-  export type ContactMessage = CommonMessage & MsgWith<"contact">;
-  export type DiceMessage = CommonMessage & MsgWith<"dice">;
-  export type GameMessage = CommonMessage & MsgWith<"game">;
-  export type PollMessage = CommonMessage & MsgWith<"poll">;
-  export type LocationMessage = CommonMessage & MsgWith<"location">;
-  export type VenueMessage = LocationMessage & MsgWith<"venue">;
-  export type NewChatMembersMessage =
+  type TextMessage = CommonMessage & MsgWith<"text">;
+  type AudioMessage = CaptionableMessage & MsgWith<"audio">;
+  type DocumentMessage = CaptionableMessage & MsgWith<"document">;
+  type AnimationMessage = DocumentMessage & MsgWith<"animation">;
+  type PhotoMessage = MediaMessage & MsgWith<"photo">;
+  type StickerMessage = CommonMessage & MsgWith<"sticker">;
+  type StoryMessage = CommonMessage & MsgWith<"story">;
+  type VideoMessage = MediaMessage & MsgWith<"video">;
+  type VideoNoteMessage = CommonMessage & MsgWith<"video_note">;
+  type VoiceMessage = CaptionableMessage & MsgWith<"voice">;
+  type ContactMessage = CommonMessage & MsgWith<"contact">;
+  type DiceMessage = CommonMessage & MsgWith<"dice">;
+  type GameMessage = CommonMessage & MsgWith<"game">;
+  type PollMessage = CommonMessage & MsgWith<"poll">;
+  type LocationMessage = CommonMessage & MsgWith<"location">;
+  type VenueMessage = LocationMessage & MsgWith<"venue">;
+  type NewChatMembersMessage =
     & ServiceMessage
     & MsgWith<"new_chat_members">;
-  export type LeftChatMemberMessage =
+  type LeftChatMemberMessage =
     & ServiceMessage
     & MsgWith<"left_chat_member">;
-  export type NewChatTitleMessage = ServiceMessage & MsgWith<"new_chat_title">;
-  export type NewChatPhotoMessage = ServiceMessage & MsgWith<"new_chat_photo">;
-  export type DeleteChatPhotoMessage =
+  type NewChatTitleMessage = ServiceMessage & MsgWith<"new_chat_title">;
+  type NewChatPhotoMessage = ServiceMessage & MsgWith<"new_chat_photo">;
+  type DeleteChatPhotoMessage =
     & ServiceMessage
     & MsgWith<"delete_chat_photo">;
-  export type GroupChatCreatedMessage =
+  type GroupChatCreatedMessage =
     & ServiceMessage
     & MsgWith<"group_chat_created">;
-  export type SupergroupChatCreated =
+  type SupergroupChatCreated =
     & ServiceMessage
     & MsgWith<"supergroup_chat_created">;
-  export type ChannelChatCreatedMessage =
+  type ChannelChatCreatedMessage =
     & ServiceMessage
     & MsgWith<"channel_chat_created">;
-  export type MessageAutoDeleteTimerChangedMessage =
+  type MessageAutoDeleteTimerChangedMessage =
     & ServiceMessage
     & MsgWith<"message_auto_delete_timer_changed">;
-  export type MigrateToChatIdMessage =
+  type MigrateToChatIdMessage =
     & ServiceMessage
     & MsgWith<"migrate_to_chat_id">;
-  export type MigrateFromChatIdMessage =
+  type MigrateFromChatIdMessage =
     & ServiceMessage
     & MsgWith<"migrate_from_chat_id">;
-  export type PinnedMessageMessage = ServiceMessage & MsgWith<"pinned_message">;
-  export type InvoiceMessage = ServiceMessage & MsgWith<"invoice">;
-  export type SuccessfulPaymentMessage =
+  type PinnedMessageMessage = ServiceMessage & MsgWith<"pinned_message">;
+  type InvoiceMessage = ServiceMessage & MsgWith<"invoice">;
+  type SuccessfulPaymentMessage =
     & ServiceMessage
     & MsgWith<"successful_payment">;
-  export type UserSharedMessage = ServiceMessage & MsgWith<"user_shared">;
-  export type ChatSharedMessage = ServiceMessage & MsgWith<"chat_shared">;
-  export type ConnectedWebsiteMessage =
+  type UserSharedMessage = ServiceMessage & MsgWith<"user_shared">;
+  type ChatSharedMessage = ServiceMessage & MsgWith<"chat_shared">;
+  type ConnectedWebsiteMessage =
     & ServiceMessage
     & MsgWith<"connected_website">;
-  export type WriteAccessAllowedMessage =
+  type WriteAccessAllowedMessage =
     & ServiceMessage
     & MsgWith<"write_access_allowed">;
-  export type PassportDataMessage = ServiceMessage & MsgWith<"passport_data">;
-  export type ProximityAlertTriggeredMessage =
+  type PassportDataMessage = ServiceMessage & MsgWith<"passport_data">;
+  type ProximityAlertTriggeredMessage =
     & ServiceMessage
     & MsgWith<"proximity_alert_triggered">;
-  export type ForumTopicCreatedMessage =
+  type ForumTopicCreatedMessage =
     & ServiceMessage
     & MsgWith<"forum_topic_created">;
-  export type ForumTopicEditedMessage =
+  type ForumTopicEditedMessage =
     & ServiceMessage
     & MsgWith<"forum_topic_edited">;
-  export type ForumTopicClosedMessage =
+  type ForumTopicClosedMessage =
     & ServiceMessage
     & MsgWith<"forum_topic_closed">;
-  export type ForumTopicReopenedMessage =
+  type ForumTopicReopenedMessage =
     & ServiceMessage
     & MsgWith<"forum_topic_reopened">;
-  export type GeneralForumTopicHiddenMessage =
+  type GeneralForumTopicHiddenMessage =
     & ServiceMessage
     & MsgWith<"general_forum_topic_hidden">;
-  export type GeneralForumTopicUnhiddenMessage =
+  type GeneralForumTopicUnhiddenMessage =
     & ServiceMessage
     & MsgWith<"general_forum_topic_unhidden">;
-  export type VideoChatScheduledMessage =
+  type VideoChatScheduledMessage =
     & ServiceMessage
     & MsgWith<"video_chat_scheduled">;
-  export type VideoChatStartedMessage =
+  type VideoChatStartedMessage =
     & ServiceMessage
     & MsgWith<"video_chat_started">;
-  export type VideoChatEndedMessage =
+  type VideoChatEndedMessage =
     & ServiceMessage
     & MsgWith<"video_chat_ended">;
-  export type VideoChatParticipantsInvitedMessage =
+  type VideoChatParticipantsInvitedMessage =
     & ServiceMessage
     & MsgWith<"video_chat_participants_invited">;
-  export type WebAppDataMessage = ServiceMessage & MsgWith<"web_app_data">;
+  type WebAppDataMessage = ServiceMessage & MsgWith<"web_app_data">;
 }
 
 type ReplyMessage = Message & { reply_to_message: undefined };
@@ -378,7 +378,7 @@ export declare namespace MessageEntity {
     /** Length of the entity in UTF-16 code units */
     length: number;
   }
-  export interface CommonMessageEntity extends AbstractMessageEntity {
+  interface CommonMessageEntity extends AbstractMessageEntity {
     type:
       | "mention"
       | "hashtag"
@@ -394,22 +394,22 @@ export declare namespace MessageEntity {
       | "spoiler"
       | "code";
   }
-  export interface PreMessageEntity extends AbstractMessageEntity {
+  interface PreMessageEntity extends AbstractMessageEntity {
     type: "pre";
     /** For “pre” only, the programming language of the entity text */
     language?: string;
   }
-  export interface TextLinkMessageEntity extends AbstractMessageEntity {
+  interface TextLinkMessageEntity extends AbstractMessageEntity {
     type: "text_link";
     /** For “text_link” only, URL that will be opened after user taps on the text */
     url: string;
   }
-  export interface TextMentionMessageEntity extends AbstractMessageEntity {
+  interface TextMentionMessageEntity extends AbstractMessageEntity {
     type: "text_mention";
     /** For “text_mention” only, the mentioned user */
     user: User;
   }
-  export interface CustomEmojiMessageEntity extends AbstractMessageEntity {
+  interface CustomEmojiMessageEntity extends AbstractMessageEntity {
     type: "custom_emoji";
     /** For “custom_emoji” only, unique identifier of the custom emoji. Use getCustomEmojiStickers to get full information about the sticker */
     custom_emoji_id: string;
