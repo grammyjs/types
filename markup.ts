@@ -1,5 +1,5 @@
 import type { ChatAdministratorRights, User } from "./manage.ts";
-import type { Message } from "./message.ts";
+import type { MaybeInaccessibleMessage } from "./message.ts";
 
 /** This object represents an inline keyboard that appears right next to the message it belongs to. */
 export interface InlineKeyboardMarkup {
@@ -110,8 +110,8 @@ export interface CallbackQuery {
   id: string;
   /** Sender */
   from: User;
-  /** Message with the callback button that originated the query. Note that message content and message date will not be available if the message is too old */
-  message?: Message;
+  /** Message sent by the bot with the callback button that originated the query */
+  message?: MaybeInaccessibleMessage;
   /** Identifier of the message sent via the bot in inline mode, that originated the query. */
   inline_message_id?: string;
   /** Global identifier, uniquely corresponding to the chat to which the message with the callback button was sent. Useful for high scores in games. */
@@ -145,9 +145,9 @@ export declare namespace KeyboardButton {
     /** Text of the button. If none of the optional fields are used, it will be sent as a message when the button is pressed */
     text: string;
   }
-  export interface RequestUserButton extends CommonButton {
-    /** If specified, pressing the button will open a list of suitable users. Tapping on any user will send their identifier to the bot in a “user_shared” service message. Available in private chats only. */
-    request_user: KeyboardButtonRequestUser;
+  export interface RequestUsersButton extends CommonButton {
+    /** If specified, pressing the button will open a list of suitable users. Identifiers of selected users will be sent to the bot in a “users_shared” service message. Available in private chats only. */
+    request_users: KeyboardButtonRequestUsers;
   }
   export interface RequestChatButton extends CommonButton {
     /** If specified, pressing the button will open a list of suitable chats. Tapping on a chat will send its identifier to the bot in a “chat_shared” service message. Available in private chats only. */
@@ -171,10 +171,10 @@ export declare namespace KeyboardButton {
   }
 }
 
-/** This object represents one button of the reply keyboard. For simple text buttons, String can be used instead of this object to specify the button text. The optional fields web_app, request_user, request_chat, request_contact, request_location, and request_poll are mutually exclusive. */
+/** This object represents one button of the reply keyboard. For simple text buttons, String can be used instead of this object to specify the button text. The optional fields web_app, request_users, request_chat, request_contact, request_location, and request_poll are mutually exclusive. */
 export type KeyboardButton =
   | KeyboardButton.CommonButton
-  | KeyboardButton.RequestUserButton
+  | KeyboardButton.RequestUsersButton
   | KeyboardButton.RequestChatButton
   | KeyboardButton.RequestContactButton
   | KeyboardButton.RequestLocationButton
@@ -222,14 +222,16 @@ export interface WebAppInfo {
   url: string;
 }
 
-/** This object defines the criteria used to request a suitable user. The identifier of the selected user will be shared with the bot when the corresponding button is pressed. */
-export interface KeyboardButtonRequestUser {
-  /** Signed 32-bit identifier of the request, which will be received back in the UserShared object. Must be unique within the message */
+/** This object defines the criteria used to request suitable users. The identifiers of the selected users will be shared with the bot when the corresponding button is pressed. */
+export interface KeyboardButtonRequestUsers {
+  /** Signed 32-bit identifier of the request that will be received back in the UsersShared object. Must be unique within the message */
   request_id: number;
-  /** Pass True to request a bot, pass False to request a regular user. If not specified, no additional restrictions are applied. */
+  /** Pass True to request bots, pass False to request regular users. If not specified, no additional restrictions are applied. */
   user_is_bot?: boolean;
-  /** Pass True to request a premium user, pass False to request a non-premium user. If not specified, no additional restrictions are applied. */
+  /** Pass True to request premium users, pass False to request non-premium users. If not specified, no additional restrictions are applied. */
   user_is_premium?: boolean;
+  /** The maximum number of users to be selected; 1-10. Defaults to 1. */
+  max_quantity?: boolean;
 }
 
 /** This object defines the criteria used to request a suitable chat. The identifier of the selected chat will be shared with the bot when the corresponding button is pressed. */

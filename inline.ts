@@ -1,6 +1,11 @@
 import type { Chat, User } from "./manage.ts";
 import type { InlineKeyboardMarkup, WebAppInfo } from "./markup.ts";
-import type { Location, MessageEntity, ParseMode } from "./message.ts";
+import type {
+  LinkPreviewOptions,
+  Location,
+  MessageEntity,
+  ParseMode,
+} from "./message.ts";
 import type { LabeledPrice } from "./payment.ts";
 
 /** This object represents an incoming inline query. When the user sends an empty query, your bot could return some default or trending results. */
@@ -622,8 +627,8 @@ export interface InputTextMessageContent {
   parse_mode?: ParseMode;
   /** List of special entities that appear in message text, which can be specified instead of parse_mode */
   entities?: MessageEntity[];
-  /** Disables link previews for links in the sent message */
-  disable_web_page_preview?: boolean;
+  /** Link preview generation options for the message */
+  link_preview_options?: LinkPreviewOptions;
 }
 
 /** Represents the content of a location message to be sent as the result of an inline query. */
