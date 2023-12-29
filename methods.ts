@@ -149,7 +149,7 @@ export type ApiMethods<F> = {
       | ReplyKeyboardMarkup
       | ReplyKeyboardRemove
       | ForceReply;
-    /** @deprecated Use `reply_parameters` instead */
+    /** @deprecated Use `reply_parameters` instead. */
     reply_to_message_id?: number;
   }): Message.TextMessage;
 
@@ -213,7 +213,7 @@ export type ApiMethods<F> = {
       | ReplyKeyboardMarkup
       | ReplyKeyboardRemove
       | ForceReply;
-    /** @deprecated Use `reply_parameters` instead */
+    /** @deprecated Use `reply_parameters` instead. */
     reply_to_message_id?: number;
   }): MessageId;
 
@@ -263,7 +263,7 @@ export type ApiMethods<F> = {
       | ReplyKeyboardMarkup
       | ReplyKeyboardRemove
       | ForceReply;
-    /** @deprecated Use `reply_parameters` instead */
+    /** @deprecated Use `reply_parameters` instead. */
     reply_to_message_id?: number;
   }): Message.PhotoMessage;
 
@@ -303,7 +303,7 @@ export type ApiMethods<F> = {
       | ReplyKeyboardMarkup
       | ReplyKeyboardRemove
       | ForceReply;
-    /** @deprecated Use `reply_parameters` instead */
+    /** @deprecated Use `reply_parameters` instead. */
     reply_to_message_id?: number;
   }): Message.AudioMessage;
 
@@ -337,7 +337,7 @@ export type ApiMethods<F> = {
       | ReplyKeyboardMarkup
       | ReplyKeyboardRemove
       | ForceReply;
-    /** @deprecated Use `reply_parameters` instead */
+    /** @deprecated Use `reply_parameters` instead. */
     reply_to_message_id?: number;
   }): Message.DocumentMessage;
 
@@ -379,7 +379,7 @@ export type ApiMethods<F> = {
       | ReplyKeyboardMarkup
       | ReplyKeyboardRemove
       | ForceReply;
-    /** @deprecated Use `reply_parameters` instead */
+    /** @deprecated Use `reply_parameters` instead. */
     reply_to_message_id?: number;
   }): Message.VideoMessage;
 
@@ -419,7 +419,7 @@ export type ApiMethods<F> = {
       | ReplyKeyboardMarkup
       | ReplyKeyboardRemove
       | ForceReply;
-    /** @deprecated Use `reply_parameters` instead */
+    /** @deprecated Use `reply_parameters` instead. */
     reply_to_message_id?: number;
   }): Message.AnimationMessage;
 
@@ -451,7 +451,7 @@ export type ApiMethods<F> = {
       | ReplyKeyboardMarkup
       | ReplyKeyboardRemove
       | ForceReply;
-    /** @deprecated Use `reply_parameters` instead */
+    /** @deprecated Use `reply_parameters` instead. */
     reply_to_message_id?: number;
   }): Message.VoiceMessage;
 
@@ -482,7 +482,7 @@ export type ApiMethods<F> = {
       | ReplyKeyboardMarkup
       | ReplyKeyboardRemove
       | ForceReply;
-    /** @deprecated Use `reply_parameters` instead */
+    /** @deprecated Use `reply_parameters` instead. */
     reply_to_message_id?: number;
   }): Message.VideoNoteMessage;
 
@@ -505,7 +505,7 @@ export type ApiMethods<F> = {
     protect_content?: boolean;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
-    /** @deprecated Use `reply_parameters` instead */
+    /** @deprecated Use `reply_parameters` instead. */
     reply_to_message_id?: number;
   }): Array<
     | Message.AudioMessage
@@ -544,7 +544,7 @@ export type ApiMethods<F> = {
       | ReplyKeyboardMarkup
       | ReplyKeyboardRemove
       | ForceReply;
-    /** @deprecated Use `reply_parameters` instead */
+    /** @deprecated Use `reply_parameters` instead. */
     reply_to_message_id?: number;
   }): Message.LocationMessage;
 
@@ -616,7 +616,7 @@ export type ApiMethods<F> = {
       | ReplyKeyboardMarkup
       | ReplyKeyboardRemove
       | ForceReply;
-    /** @deprecated Use `reply_parameters` instead */
+    /** @deprecated Use `reply_parameters` instead. */
     reply_to_message_id?: number;
   }): Message.VenueMessage;
 
@@ -646,7 +646,7 @@ export type ApiMethods<F> = {
       | ReplyKeyboardMarkup
       | ReplyKeyboardRemove
       | ForceReply;
-    /** @deprecated Use `reply_parameters` instead */
+    /** @deprecated Use `reply_parameters` instead. */
     reply_to_message_id?: number;
   }): Message.ContactMessage;
 
@@ -692,7 +692,7 @@ export type ApiMethods<F> = {
       | ReplyKeyboardMarkup
       | ReplyKeyboardRemove
       | ForceReply;
-    /** @deprecated Use `reply_parameters` instead */
+    /** @deprecated Use `reply_parameters` instead. */
     reply_to_message_id?: number;
   }): Message.PollMessage;
 
@@ -716,7 +716,7 @@ export type ApiMethods<F> = {
       | ReplyKeyboardMarkup
       | ReplyKeyboardRemove
       | ForceReply;
-    /** @deprecated Use `reply_parameters` instead */
+    /** @deprecated Use `reply_parameters` instead. */
     reply_to_message_id?: number;
   }): Message.DiceMessage;
 
@@ -1400,7 +1400,7 @@ export type ApiMethods<F> = {
       | ReplyKeyboardMarkup
       | ReplyKeyboardRemove
       | ForceReply;
-    /** @deprecated Use `reply_parameters` instead */
+    /** @deprecated Use `reply_parameters` instead. */
     reply_to_message_id?: number;
   }): Message.StickerMessage;
 
@@ -1607,7 +1607,7 @@ export type ApiMethods<F> = {
     reply_parameters?: ReplyParameters;
     /** An object for an inline keyboard. If empty, one 'Pay total price' button will be shown. If not empty, the first button must be a Pay button. */
     reply_markup?: InlineKeyboardMarkup;
-    /** @deprecated Use `reply_parameters` instead */
+    /** @deprecated Use `reply_parameters` instead. */
     reply_to_message_id?: number;
   }): Message.InvoiceMessage;
 
@@ -1703,7 +1703,7 @@ export type ApiMethods<F> = {
     reply_parameters?: ReplyParameters;
     /** An object for an inline keyboard. If empty, one 'Play game_title' button will be shown. If not empty, the first button must launch the game. */
     reply_markup?: InlineKeyboardMarkup;
-    /** @deprecated Use `reply_parameters` instead */
+    /** @deprecated Use `reply_parameters` instead. */
     reply_to_message_id?: number;
   }): Message.GameMessage;
 
