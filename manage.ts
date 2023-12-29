@@ -296,6 +296,24 @@ export interface ChatAdministratorRights {
   can_manage_topics?: boolean;
 }
 
+/** This object represents changes in the status of a chat member. */
+export interface ChatMemberUpdated {
+  /** Chat the user belongs to */
+  chat: Chat;
+  /** Performer of the action, which resulted in the change */
+  from: User;
+  /** Date the change was done in Unix time */
+  date: number;
+  /** Previous information about the chat member */
+  old_chat_member: ChatMember;
+  /** New information about the chat member */
+  new_chat_member: ChatMember;
+  /** Chat invite link, which was used by the user to join the chat; for joining by invite link events only. */
+  invite_link?: ChatInviteLink;
+  /** True, if the user joined the chat via a chat folder invite link */
+  via_chat_folder_invite_link?: boolean;
+}
+
 /** This object contains information about one member of a chat. Currently, the following 6 types of chat members are supported:
 - ChatMemberOwner
 - ChatMemberAdministrator
@@ -431,24 +449,6 @@ export interface ChatMemberBanned {
   until_date: number;
 }
 
-/** This object represents changes in the status of a chat member. */
-export interface ChatMemberUpdated {
-  /** Chat the user belongs to */
-  chat: Chat;
-  /** Performer of the action, which resulted in the change */
-  from: User;
-  /** Date the change was done in Unix time */
-  date: number;
-  /** Previous information about the chat member */
-  old_chat_member: ChatMember;
-  /** New information about the chat member */
-  new_chat_member: ChatMember;
-  /** Chat invite link, which was used by the user to join the chat; for joining by invite link events only. */
-  invite_link?: ChatInviteLink;
-  /** True, if the user joined the chat via a chat folder invite link */
-  via_chat_folder_invite_link?: boolean;
-}
-
 /** Represents a join request sent to a chat. */
 export interface ChatJoinRequest {
   /** Chat to which the request was sent */
@@ -571,11 +571,11 @@ export interface ChatBoost {
   source: ChatBoostSource;
 }
 
-/** This object represents a boost added to a chat. */
-export interface ChatBoostAdded {
+/** This object represents a boost added to a chat or changed. */
+export interface ChatBoostUpdated {
   /** Chat which was boosted */
   chat: Chat;
-  /** Infomation about the added boost */
+  /** Infomation about the chat boost */
   boost: ChatBoost;
 }
 

@@ -176,7 +176,7 @@ export type ApiMethods<F> = {
     /** Unique identifier for the chat where the original messages were sent (or channel username in the format @channelusername) */
     from_chat_id: number | string;
     /** Identifiers of 1-100 messages in the chat from_chat_id to forward. The identifiers must be specified in a strictly increasing order. */
-    message_ids?: number[];
+    message_ids: number[];
     /** Sends the messages silently. Users will receive a notification with no sound. */
     disable_notification?: boolean;
     /** Protects the contents of the forwarded messages from forwarding and saving */
@@ -690,18 +690,6 @@ export type ApiMethods<F> = {
       | ForceReply;
   }): Message.DiceMessage;
 
-  /** Use this method to change the chosen reactions on a message. Service messages can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. In albums, bots must react to the first message. Returns True on success. */
-  setMessageReaction(args: {
-    /** Unique identifier for the target chat or username of the target channel (in the format @channelusername) */
-    chat_id: number | string;
-    /** Identifier of the target message */
-    message_id: number;
-    /** New list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators. */
-    reaction?: ReactionType[];
-    /** Pass True to set the reaction with a big animation */
-    is_big?: boolean;
-  }): true;
-
   /** Use this method when you need to tell the user that something is happening on the bot's side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns True on success.
 
   Example: The ImageBot needs some time to process a request and upload the image. Instead of sending a text message along the lines of "Retrieving image, please wait...", the bot may use sendChatAction with action = upload_photo. The user will see a "sending photo" status for the bot.
@@ -727,6 +715,18 @@ export type ApiMethods<F> = {
     message_thread_id?: number;
   }): true;
 
+  /** Use this method to change the chosen reactions on a message. Service messages can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. In albums, bots must react to the first message. Returns True on success. */
+  setMessageReaction(args: {
+    /** Unique identifier for the target chat or username of the target channel (in the format @channelusername) */
+    chat_id: number | string;
+    /** Identifier of the target message */
+    message_id: number;
+    /** New list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators. */
+    reaction?: ReactionType[];
+    /** Pass True to set the reaction with a big animation */
+    is_big?: boolean;
+  }): true;
+
   /** Use this method to get a list of profile pictures for a user. Returns a UserProfilePhotos object. */
   getUserProfilePhotos(args: {
     /** Unique identifier of the target user */
@@ -736,14 +736,6 @@ export type ApiMethods<F> = {
     /** Limits the number of photos to be retrieved. Values between 1-100 are accepted. Defaults to 100. */
     limit?: number;
   }): UserProfilePhotos;
-
-  /** Use this method to get the list of boosts added to a chat by a user. Requires administrator rights in the chat. Returns a UserChatBoosts object. */
-  getUserChatBoosts(args: {
-    /** Unique identifier for the chat or username of the channel (in the format @channelusername) */
-    chat_id: number | string;
-    /** Unique identifier of the target user */
-    user_id: number;
-  }): UserChatBoosts;
 
   /** Use this method to get basic information about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a File object is returned. The file can then be downloaded via the link https://api.telegram.org/file/bot<token>/<file_path>, where <file_path> is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling getFile again.
 
@@ -989,7 +981,7 @@ export type ApiMethods<F> = {
     chat_id: number | string;
   }): true;
 
-  /** Use this method to get up to date information about the chat (current name of the user for one-on-one conversations, current username of a user, group or channel, etc.). Returns a Chat object on success. */
+  /** Use this method to get up to date information about the chat. Returns a Chat object on success. */
   getChat(args: {
     /** Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername) */
     chat_id: number | string;
@@ -1153,19 +1145,13 @@ export type ApiMethods<F> = {
     cache_time?: number;
   }): true;
 
-  /** Use this method to change the bot's name. Returns True on success. */
-  setMyName(args: {
-    /** New bot name; 0-64 characters. Pass an empty string to remove the dedicated name for the given language. */
-    name?: string;
-    /** A two-letter ISO 639-1 language code. If empty, the name will be shown to all users for whose language there is no dedicated name. */
-    language_code?: string;
-  }): true;
-
-  /** Use this method to get the current bot name for the given user language. Returns BotName on success. */
-  getMyName(args: {
-    /** A two-letter ISO 639-1 language code or an empty string */
-    language_code?: string;
-  }): BotName;
+  /** Use this method to get the list of boosts added to a chat by a user. Requires administrator rights in the chat. Returns a UserChatBoosts object. */
+  getUserChatBoosts(args: {
+    /** Unique identifier for the chat or username of the channel (in the format @channelusername) */
+    chat_id: number | string;
+    /** Unique identifier of the target user */
+    user_id: number;
+  }): UserChatBoosts;
 
   /** Use this method to change the list of the bot's commands. See https://core.telegram.org/bots#commands for more details about bot commands. Returns True on success. */
   setMyCommands(args: {
@@ -1192,6 +1178,20 @@ export type ApiMethods<F> = {
     /** A two-letter ISO 639-1 language code or an empty string */
     language_code?: string;
   }): BotCommand[];
+
+  /** Use this method to change the bot's name. Returns True on success. */
+  setMyName(args: {
+    /** New bot name; 0-64 characters. Pass an empty string to remove the dedicated name for the given language. */
+    name?: string;
+    /** A two-letter ISO 639-1 language code. If empty, the name will be shown to all users for whose language there is no dedicated name. */
+    language_code?: string;
+  }): true;
+
+  /** Use this method to get the current bot name for the given user language. Returns BotName on success. */
+  getMyName(args: {
+    /** A two-letter ISO 639-1 language code or an empty string */
+    language_code?: string;
+  }): BotName;
 
   /** Use this method to change the bot's description, which is shown in the chat with the bot if the chat is empty. Returns True on success. */
   setMyDescription(args: {

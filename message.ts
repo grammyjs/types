@@ -18,7 +18,7 @@ export declare namespace Message {
     sender_chat?: Chat;
     /** Date the message was sent in Unix time. It is always a positive number, representing a valid date. */
     date: number;
-    /** Conversation the message belongs to */
+    /** Chat the message belongs to */
     chat: Chat;
     /** True, if the message is sent to a forum topic */
     is_topic_message?: boolean;
@@ -26,16 +26,14 @@ export declare namespace Message {
   export interface CommonMessage extends ServiceMessage {
     /** Information about the original message for forwarded messages */
     forward_origin?: MessageOrigin;
-    /** Options used for link preview generation for the message, if it is a text message and link preview options were changed */
-    link_preview_options?: LinkPreviewOptions;
-    /** For replies that quote part of the original message, the quoted part of the message */
-    quote?: TextQuote;
     /** True, if the message is a channel post that was automatically forwarded to the connected discussion group */
     is_automatic_forward?: true;
     /** For replies in the same chat and message thread, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply. */
     reply_to_message?: ReplyMessage;
     /** Information about the message that is being replied to, which may come from another chat or forum topic */
     external_reply?: ExternalReplyInfo;
+    /** For replies that quote part of the original message, the quoted part of the message */
+    quote?: TextQuote;
     /** Bot through which the message was sent */
     via_bot?: User;
     /** Date the message was last edited in Unix time */
@@ -44,6 +42,8 @@ export declare namespace Message {
     has_protected_content?: true;
     /** Signature of the post author for messages in channels, or the custom title of an anonymous group administrator */
     author_signature?: string;
+    /** Options used for link preview generation for the message, if it is a text message and link preview options were changed */
+    link_preview_options?: LinkPreviewOptions;
     /** Inline keyboard attached to the message. login_url buttons are represented as ordinary url buttons. */
     reply_markup?: InlineKeyboardMarkup;
   }
@@ -286,6 +286,32 @@ export interface SentWebAppMessage {
   inline_message_id: string;
 }
 
+/** This object describes a message that was deleted or is otherwise inaccessible to the bot. */
+export interface InaccessibleMessage extends
+  Omit<
+    // TypeScript cannot discriminate union types based on `0` and `number` so
+    // we work around this by including all other properties here. This mostly
+    // negates the benefit of having this interface in the first place, but not
+    // extending Message is not very ergonomic to use. If you have a better idea
+    // how to model this, please let us know!
+    Message,
+    "chat" | "message_id" | "date"
+  > {
+  /** Chat the message belonged to */
+  chat: Chat;
+  /** Unique message identifier inside the chat */
+  message_id: number;
+  /** Always 0. The field can be used to differentiate regular and inaccessible messages. */
+  date: 0;
+}
+
+/** This object describes a message that can be inaccessible to the bot. It can be one of
+- Message
+- InaccessibleMessage */
+export type MaybeInaccessibleMessage =
+  | Message
+  | InaccessibleMessage;
+
 /** The Bot API supports basic formatting for messages. You can use bold, italic, underlined, strikethrough, spoiler text, block quotations as well as inline links and pre-formatted code in your bots' messages. Telegram clients will render them accordingly. You can specify text entities directly, or use markdown-style or HTML-style formatting.
 
 Note that Telegram clients will display an **alert** to the user before opening an inline link ('Open this link?' together with the full URL).
@@ -385,10 +411,9 @@ pre-formatted fixed-width code block written in the Python programming language
 Please note:
 
 - Entities must not be nested, use parse mode MarkdownV2 instead.
-- There is no way to specify underline and strikethrough entities, use parse mode MarkdownV2 instead.
+- There is no way to specify “underline”, “strikethrough”, “spoiler”, “blockquote” and “custom_emoji” entities, use parse mode MarkdownV2 instead.
 - To escape characters '_', '*', '`', '[' outside of an entity, prepend the characters '\' before them.
-- Escaping inside entities is not allowed, so entity must be closed first and reopened again: use `_snake_\__case_` for italic `snake_case` and `*2*\**2=4*` for bold `2*2=4`.
-- There is no way to specify “underline”, “strikethrough”, “spoiler”, “blockquote” and “custom_emoji” entities, use parse mode MarkdownV2 instead. */
+- Escaping inside entities is not allowed, so entity must be closed first and reopened again: use `_snake_\__case_` for italic `snake_case` and `*2*\**2=4*` for bold `2*2=4`. */
 export type ParseMode = "Markdown" | "MarkdownV2" | "HTML";
 
 export declare namespace MessageEntity {
@@ -446,6 +471,68 @@ export type MessageEntity =
   | MessageEntity.PreMessageEntity
   | MessageEntity.TextLinkMessageEntity
   | MessageEntity.TextMentionMessageEntity;
+
+/** This object contains information about the quoted part of a message that is replied to by the given message. */
+export interface TextQuote {
+  /** Text of the quoted part of a message that is replied to by the given message */
+  text: string;
+  /** Special entities that appear in the quote. Currently, only bold, italic, underline, strikethrough, spoiler, and custom_emoji entities are kept in quotes. */
+  entities?: MessageEntity[];
+  /** Approximate quote position in the original message in UTF-16 code units as specified by the sender */
+  position: number;
+  /** True, if the quote was chosen manually by the message sender. Otherwise, the quote was added automatically by the server. */
+  is_manual?: true;
+}
+
+/** This object contains information about a message that is being replied to, which may come from another chat or forum topic. */
+export interface ExternalReplyInfo {
+  /** Origin of the message replied to by the given message */
+  origin: MessageOrigin;
+  /** Chat the original message belongs to. Available only if the chat is a supergroup or a channel. */
+  chat?: Chat;
+  /** Unique message identifier inside the original chat. Available only if the original chat is a supergroup or a channel. */
+  message_id?: number;
+  /** Options used for link preview generation for the original message, if it is a text message */
+  link_preview_options?: LinkPreviewOptions;
+  /** Message is an animation, information about the animation */
+  animation?: Animation;
+  /** Message is an audio file, information about the file */
+  audio?: Audio;
+  /** Message is a general file, information about the file */
+  document?: Document;
+  /** Message is a photo, available sizes of the photo */
+  photo?: PhotoSize[];
+  /** Message is a sticker, information about the sticker */
+  sticker?: Sticker;
+  /** Message is a forwarded story */
+  story?: Story;
+  /** Message is a video, information about the video */
+  video?: Video;
+  /** Message is a video note, information about the video message */
+  video_note?: VideoNote;
+  /** Message is a voice message, information about the file */
+  voice?: Voice;
+  /** True, if the message media is covered by a spoiler animation */
+  has_media_spoiler?: true;
+  /** Message is a shared contact, information about the contact */
+  contact?: Contact;
+  /** Message is a dice with random value */
+  dice?: Dice;
+  /** Message is a game, information about the game. More about games » */
+  game?: Game;
+  /** Message is a scheduled giveaway, information about the giveaway */
+  giveaway?: Giveaway;
+  /** A giveaway with public winners was completed */
+  giveaway_winners?: GiveawayWinners;
+  /** Message is an invoice for a payment, information about the invoice. More about payments » */
+  invoice?: Invoice;
+  /** Message is a shared location, information about the location */
+  location?: Location;
+  /** Message is a native poll, information about the poll */
+  poll?: Poll;
+  /** Message is a venue, information about the venue */
+  venue?: Venue;
+}
 
 /** Describes reply parameters for the message that is being sent. */
 export interface ReplyParameters {
@@ -520,94 +607,6 @@ export interface MessageOriginChannel {
   message_id: number;
   /** Signature of the original post author */
   author_signature?: string;
-}
-
-/** This object describes a message that was deleted or is otherwise inaccessible to the bot. */
-export interface InaccessibleMessage extends
-  Omit<
-    // TypeScript cannot discriminate union types based on `0` and `number` so
-    // we work around this by including all other properties here. This mostly
-    // negates the benefit of having this interface in the first place, but not
-    // extending Message is not very ergonomic to use. If you have a better idea
-    // how to model this, please let us know!
-    Message,
-    "chat" | "message_id" | "date"
-  > {
-  /** Chat the message belonged to */
-  chat: Chat;
-  /** Unique message identifier inside the chat */
-  message_id: number;
-  /** Always 0. The field can be used to differentiate regular and inaccessible messages. */
-  date: 0;
-}
-
-/** This object describes a message that can be inaccessible to the bot. It can be one of
-- Message
-- InaccessibleMessage */
-export type MaybeInaccessibleMessage =
-  | Message
-  | InaccessibleMessage;
-
-/** This object contains information about the quoted part of a message that is replied to by the given message. */
-export interface TextQuote {
-  /** Text of the quoted part of a message that is replied to by the given message */
-  text: string;
-  /** Special entities that appear in the quote. Currently, only bold, italic, underline, strikethrough, spoiler, and custom_emoji entities are kept in quotes. */
-  entities?: MessageEntity[];
-  /** Approximate quote position in the original message in UTF-16 code units as specified by the sender */
-  position: number;
-  /** True, if the quote was chosen manually by the message sender. Otherwise, the quote was added automatically by the server. */
-  is_manual?: true;
-}
-
-/** This object contains information about a message that is being replied to, which may come from another chat or forum topic. */
-export interface ExternalReplyInfo {
-  /** Origin of the message replied to by the given message */
-  origin: MessageOrigin;
-  /** Chat the original message belongs to. Available only if the chat is a supergroup or a channel. */
-  chat?: Chat;
-  /** Unique message identifier inside the original chat. Available only if the original chat is a supergroup or a channel. */
-  message_id?: number;
-  /** Options used for link preview generation for the original message, if it is a text message */
-  link_preview_options?: LinkPreviewOptions;
-  /** Message is an animation, information about the animation */
-  animation?: Animation;
-  /** Message is an audio file, information about the file */
-  audio?: Audio;
-  /** Message is a general file, information about the file */
-  document?: Document;
-  /** Message is a photo, available sizes of the photo */
-  photo?: PhotoSize[];
-  /** Message is a sticker, information about the sticker */
-  sticker?: Sticker;
-  /** Message is a forwarded story */
-  story?: Story;
-  /** Message is a video, information about the video */
-  video?: Video;
-  /** Message is a video note, information about the video message */
-  video_note?: VideoNote;
-  /** Message is a voice message, information about the file */
-  voice?: Voice;
-  /** True, if the message media is covered by a spoiler animation */
-  has_media_spoiler?: true;
-  /** Message is a shared contact, information about the contact */
-  contact?: Contact;
-  /** Message is a dice with random value */
-  dice?: Dice;
-  /** Message is a game, information about the game. More about games » */
-  game?: Game;
-  /** Message is a scheduled giveaway, information about the giveaway */
-  giveaway?: Giveaway;
-  /** A giveaway with public winners was completed */
-  giveaway_winners?: GiveawayWinners;
-  /** Message is an invoice for a payment, information about the invoice. More about payments » */
-  invoice?: Invoice;
-  /** Message is a shared location, information about the location */
-  location?: Location;
-  /** Message is a native poll, information about the poll */
-  poll?: Poll;
-  /** Message is a venue, information about the venue */
-  venue?: Venue;
 }
 
 /** This object represents one size of a photo or a file / sticker thumbnail. */
@@ -891,6 +890,53 @@ export interface GeneralForumTopicHidden {}
 /** This object represents a service message about General forum topic unhidden in the chat. Currently holds no information. */
 export interface GeneralForumTopicUnhidden {}
 
+/** This object contains information about the user whose identifier was shared with the bot using a KeyboardButtonRequestUsers button. */
+export interface UsersShared {
+  /** Identifier of the request */
+  request_id: number;
+  /** Identifiers of the shared users. The bot may not have access to the users and could be unable to use these identifiers, unless the users are already known to the bot by some other means. */
+  user_ids: number[];
+}
+
+/** This object contains information about the chat whose identifier was shared with the bot using a KeyboardButtonRequestChat button. */
+export interface ChatShared {
+  /** Identifier of the request */
+  request_id: number;
+  /** Identifier of the shared chat. The bot may not have access to the chat and could be unable to use this identifier, unless the chat is already known to the bot by some other means. */
+  chat_id: number;
+}
+
+/** This object represents a service message about a user allowing a bot to write messages after adding it to the attachment menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method requestWriteAccess. */
+export interface WriteAccessAllowed {
+  /** True, if the access was granted after the user accepted an explicit request from a Web App sent by the method requestWriteAccess */
+  from_request?: boolean;
+  /** Name of the Web App, if the access was granted when the Web App was launched from a link */
+  web_app_name?: string;
+  /** True, if the access was granted when the bot was added to the attachment or side menu */
+  from_attachment_menu?: boolean;
+}
+
+/** This object represents a service message about a video chat scheduled in the chat. */
+export interface VideoChatScheduled {
+  /** Point in time (Unix timestamp) when the video chat is supposed to be started by a chat administrator */
+  start_date: number;
+}
+
+/** This object represents a service message about a video chat started in the chat. Currently holds no information. */
+export interface VideoChatStarted {}
+
+/** This object represents a service message about a video chat ended in the chat. */
+export interface VideoChatEnded {
+  /** Video chat duration in seconds */
+  duration: number;
+}
+
+/** This object represents a service message about new members invited to a video chat. */
+export interface VideoChatParticipantsInvited {
+  /** New members that were invited to the video chat */
+  users: User[];
+}
+
 /** This object represents a service message about the creation of a scheduled giveaway. Currently holds no information. */
 export interface GiveawayCreated {}
 
@@ -950,51 +996,18 @@ export interface GiveawayCompleted {
   giveaway_message?: Message;
 }
 
-/** This object contains information about the user whose identifier was shared with the bot using a KeyboardButtonRequestUsers button. */
-export interface UsersShared {
-  /** Identifier of the request */
-  request_id: number;
-  /** Identifiers of the shared users. The bot may not have access to the users and could be unable to use these identifiers, unless the users are already known to the bot by some other means. */
-  user_ids: number[];
-}
-
-/** This object contains information about the chat whose identifier was shared with the bot using a KeyboardButtonRequestChat button. */
-export interface ChatShared {
-  /** Identifier of the request */
-  request_id: number;
-  /** Identifier of the shared chat. The bot may not have access to the chat and could be unable to use this identifier, unless the chat is already known to the bot by some other means. */
-  chat_id: number;
-}
-
-/** This object represents a service message about a user allowing a bot to write messages after adding it to the attachment menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method requestWriteAccess. */
-export interface WriteAccessAllowed {
-  /** True, if the access was granted after the user accepted an explicit request from a Web App sent by the method requestWriteAccess */
-  from_request?: boolean;
-  /** Name of the Web App, if the access was granted when the Web App was launched from a link */
-  web_app_name?: string;
-  /** True, if the access was granted when the bot was added to the attachment or side menu */
-  from_attachment_menu?: boolean;
-}
-
-/** This object represents a service message about a video chat scheduled in the chat. */
-export interface VideoChatScheduled {
-  /** Point in time (Unix timestamp) when the video chat is supposed to be started by a chat administrator */
-  start_date: number;
-}
-
-/** This object represents a service message about a video chat started in the chat. Currently holds no information. */
-export interface VideoChatStarted {}
-
-/** This object represents a service message about a video chat ended in the chat. */
-export interface VideoChatEnded {
-  /** Video chat duration in seconds */
-  duration: number;
-}
-
-/** This object represents a service message about new members invited to a video chat. */
-export interface VideoChatParticipantsInvited {
-  /** New members that were invited to the video chat */
-  users: User[];
+/** Describes the options used for link preview generation. */
+export interface LinkPreviewOptions {
+  /** True, if the link preview is disabled */
+  is_disabled?: boolean;
+  /** URL to use for the link preview. If empty, then the first URL found in the message text will be used */
+  url?: string;
+  /** True, if the media in the link preview is suppposed to be shrunk; ignored if the URL isn't explicitly specified or media size change isn't supported for the preview */
+  prefer_small_media?: boolean;
+  /** True, if the media in the link preview is suppposed to be enlarged; ignored if the URL isn't explicitly specified or media size change isn't supported for the preview */
+  prefer_large_media?: boolean;
+  /** True, if the link preview must be shown above the message text; otherwise, the link preview will be shown below the message text */
+  show_above_text?: boolean;
 }
 
 /** Describes data sent from a Web App to the bot. */
@@ -1103,20 +1116,6 @@ export interface File {
   file_size?: number;
   /** File path. Use https://api.telegram.org/file/bot<token>/<file_path> to get the file. */
   file_path?: string;
-}
-
-/** Describes the options used for link preview generation. */
-export interface LinkPreviewOptions {
-  /** True, if the link preview is disabled */
-  is_disabled?: boolean;
-  /** URL to use for the link preview. If empty, then the first URL found in the message text will be used */
-  url?: string;
-  /** True, if the media in the link preview is suppposed to be shrunk; ignored if the URL isn't explicitly specified or media size change isn't supported for the preview */
-  prefer_small_media?: boolean;
-  /** True, if the media in the link preview is suppposed to be enlarged; ignored if the URL isn't explicitly specified or media size change isn't supported for the preview */
-  prefer_large_media?: boolean;
-  /** True, if the link preview must be shown above the message text; otherwise, the link preview will be shown below the message text */
-  show_above_text?: boolean;
 }
 
 /** This object describes the type of a reaction. Currently, it can be one of */

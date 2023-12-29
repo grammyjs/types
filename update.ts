@@ -1,8 +1,8 @@
 import type { ChosenInlineResult, InlineQuery } from "./inline.ts";
 import type {
   Chat,
-  ChatBoostAdded,
   ChatBoostRemoved,
+  ChatBoostUpdated,
   ChatJoinRequest,
   ChatMemberUpdated,
   User,
@@ -48,6 +48,10 @@ export interface Update {
   channel_post?: Message & Update.Channel;
   /** New version of a channel post that is known to the bot and was edited */
   edited_channel_post?: Message & Update.Edited & Update.Channel;
+  /** A reaction to a message was changed by a user. The bot must be an administrator in the chat and must explicitly specify "message_reaction" in the list of allowed_updates to receive these updates. The update isn't received for reactions set by bots. */
+  message_reaction?: MessageReactionUpdated;
+  /** Reactions to a message with anonymous reactions were changed. The bot must be an administrator in the chat and must explicitly specify "message_reaction_count" in the list of allowed_updates to receive these updates. */
+  message_reaction_count?: MessageReactionCountUpdated;
   /** New incoming inline query */
   inline_query?: InlineQuery;
   /** The result of an inline query that was chosen by a user and sent to their chat partner. Please see our documentation on the feedback collecting for details on how to enable these updates for your bot. */
@@ -68,12 +72,8 @@ export interface Update {
   chat_member?: ChatMemberUpdated;
   /** A request to join the chat has been sent. The bot must have the can_invite_users administrator right in the chat to receive these updates. */
   chat_join_request?: ChatJoinRequest;
-  /** A reaction to a message was changed by a user. The bot must be an administrator in the chat and must explicitly specify "message_reaction" in the list of allowed_updates to receive these updates. The update isn't received for reactions set by bots. */
-  message_reaction?: MessageReactionUpdated;
-  /** Reactions to a message with anonymous reactions were changed. The bot must be an administrator in the chat and must explicitly specify "message_reaction_count" in the list of allowed_updates to receive these updates. */
-  message_reaction_count?: MessageReactionCountUpdated;
-  /** A boost was added to a chat. The bot must be an administrator in the chat to receive these updates. */
-  added_chat_boost?: ChatBoostAdded;
+  /** A chat boost was added or changed. The bot must be an administrator in the chat to receive these updates. */
+  chat_boost?: ChatBoostUpdated;
   /** A boost was removed from a chat. The bot must be an administrator in the chat to receive these updates. */
   removed_chat_boost?: ChatBoostRemoved;
 }
