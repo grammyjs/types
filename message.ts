@@ -1207,7 +1207,7 @@ export interface ReactionTypeCustomEmoji {
   /** Type of the reaction, always “custom_emoji” */
   type: "custom_emoji";
   /** Custom emoji identifier */
-  custom_emoji: string;
+  custom_emoji_id: string;
 }
 
 /** Represents a reaction added to a message along with the number of times it was added. */
