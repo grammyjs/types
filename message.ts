@@ -602,7 +602,7 @@ export interface MessageOriginChannel {
   /** Date the message was sent originally in Unix time */
   date: number;
   /** Channel chat to which the message was originally sent */
-  chat: Chat;
+  chat: Chat.ChannelChat;
   /** Unique message identifier inside the chat */
   message_id: number;
   /** Signature of the original post author */
