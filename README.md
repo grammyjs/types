@@ -2,7 +2,7 @@
 
 [grammY](https://github.com/grammyjs/grammY) makes writing Telegram bots easy. Check it out!
 
-This package just provides type annotations for the complete Telegram Bot API, and applies various transformations to make them usable for grammY. It contains no runnable code.
+This package just provides type annotations for the complete Telegram Bot API, and aims at making them usable for grammY. It contains no runnable code.
 
 Originally, this package is based on `typegram`, but since the update to Telegram Bot API 5.1, `typegram` is no longer directly updated. Instead, this package is maintained and its updates are backported to `typegram`. Hence, both packages are kept up to date with the Telegram Bot API for now.
 
