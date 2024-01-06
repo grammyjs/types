@@ -22,6 +22,7 @@ import type {
   ReplyKeyboardRemove,
 } from "./markup.ts";
 import type {
+  File,
   GameHighScore,
   LinkPreviewOptions,
   MaskPosition,
