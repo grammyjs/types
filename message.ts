@@ -23,7 +23,7 @@ export declare namespace Message {
     /** True, if the message is sent to a forum topic */
     is_topic_message?: boolean;
   }
-  export interface CommonMessage extends ServiceMessage {
+  interface CommonMessage extends ServiceMessage {
     /** Information about the original message for forwarded messages */
     forward_origin?: MessageOrigin;
     /** True, if the message is a channel post that was automatically forwarded to the connected discussion group */
@@ -47,122 +47,122 @@ export declare namespace Message {
     /** Inline keyboard attached to the message. login_url buttons are represented as ordinary url buttons. */
     reply_markup?: InlineKeyboardMarkup;
   }
-  export interface CaptionableMessage extends CommonMessage {
+  interface CaptionableMessage extends CommonMessage {
     /** Caption for the animation, audio, document, photo, video or voice */
     caption?: string;
     /** For messages with a caption, special entities like usernames, URLs, bot commands, etc. that appear in the caption */
     caption_entities?: MessageEntity[];
   }
-  export interface MediaMessage extends CaptionableMessage {
+  interface MediaMessage extends CaptionableMessage {
     /** The unique identifier of a media message group this message belongs to */
     media_group_id?: string;
     /** True, if the message media is covered by a spoiler animation */
     has_media_spoiler?: true;
   }
 
-  export type TextMessage = CommonMessage & MsgWith<"text">;
-  export type AudioMessage = CaptionableMessage & MsgWith<"audio">;
-  export type DocumentMessage = CaptionableMessage & MsgWith<"document">;
-  export type AnimationMessage = DocumentMessage & MsgWith<"animation">;
-  export type PhotoMessage = MediaMessage & MsgWith<"photo">;
-  export type StickerMessage = CommonMessage & MsgWith<"sticker">;
-  export type StoryMessage = CommonMessage & MsgWith<"story">;
-  export type VideoMessage = MediaMessage & MsgWith<"video">;
-  export type VideoNoteMessage = CommonMessage & MsgWith<"video_note">;
-  export type VoiceMessage = CaptionableMessage & MsgWith<"voice">;
-  export type ContactMessage = CommonMessage & MsgWith<"contact">;
-  export type DiceMessage = CommonMessage & MsgWith<"dice">;
-  export type GameMessage = CommonMessage & MsgWith<"game">;
-  export type PollMessage = CommonMessage & MsgWith<"poll">;
-  export type LocationMessage = CommonMessage & MsgWith<"location">;
-  export type VenueMessage = LocationMessage & MsgWith<"venue">;
-  export type NewChatMembersMessage =
+  type TextMessage = CommonMessage & MsgWith<"text">;
+  type AudioMessage = CaptionableMessage & MsgWith<"audio">;
+  type DocumentMessage = CaptionableMessage & MsgWith<"document">;
+  type AnimationMessage = DocumentMessage & MsgWith<"animation">;
+  type PhotoMessage = MediaMessage & MsgWith<"photo">;
+  type StickerMessage = CommonMessage & MsgWith<"sticker">;
+  type StoryMessage = CommonMessage & MsgWith<"story">;
+  type VideoMessage = MediaMessage & MsgWith<"video">;
+  type VideoNoteMessage = CommonMessage & MsgWith<"video_note">;
+  type VoiceMessage = CaptionableMessage & MsgWith<"voice">;
+  type ContactMessage = CommonMessage & MsgWith<"contact">;
+  type DiceMessage = CommonMessage & MsgWith<"dice">;
+  type GameMessage = CommonMessage & MsgWith<"game">;
+  type PollMessage = CommonMessage & MsgWith<"poll">;
+  type LocationMessage = CommonMessage & MsgWith<"location">;
+  type VenueMessage = LocationMessage & MsgWith<"venue">;
+  type NewChatMembersMessage =
     & ServiceMessage
     & MsgWith<"new_chat_members">;
-  export type LeftChatMemberMessage =
+  type LeftChatMemberMessage =
     & ServiceMessage
     & MsgWith<"left_chat_member">;
-  export type NewChatTitleMessage = ServiceMessage & MsgWith<"new_chat_title">;
-  export type NewChatPhotoMessage = ServiceMessage & MsgWith<"new_chat_photo">;
-  export type DeleteChatPhotoMessage =
+  type NewChatTitleMessage = ServiceMessage & MsgWith<"new_chat_title">;
+  type NewChatPhotoMessage = ServiceMessage & MsgWith<"new_chat_photo">;
+  type DeleteChatPhotoMessage =
     & ServiceMessage
     & MsgWith<"delete_chat_photo">;
-  export type GroupChatCreatedMessage =
+  type GroupChatCreatedMessage =
     & ServiceMessage
     & MsgWith<"group_chat_created">;
-  export type SupergroupChatCreated =
+  type SupergroupChatCreated =
     & ServiceMessage
     & MsgWith<"supergroup_chat_created">;
-  export type ChannelChatCreatedMessage =
+  type ChannelChatCreatedMessage =
     & ServiceMessage
     & MsgWith<"channel_chat_created">;
-  export type MessageAutoDeleteTimerChangedMessage =
+  type MessageAutoDeleteTimerChangedMessage =
     & ServiceMessage
     & MsgWith<"message_auto_delete_timer_changed">;
-  export type MigrateToChatIdMessage =
+  type MigrateToChatIdMessage =
     & ServiceMessage
     & MsgWith<"migrate_to_chat_id">;
-  export type MigrateFromChatIdMessage =
+  type MigrateFromChatIdMessage =
     & ServiceMessage
     & MsgWith<"migrate_from_chat_id">;
-  export type PinnedMessageMessage = ServiceMessage & MsgWith<"pinned_message">;
-  export type InvoiceMessage = ServiceMessage & MsgWith<"invoice">;
-  export type SuccessfulPaymentMessage =
+  type PinnedMessageMessage = ServiceMessage & MsgWith<"pinned_message">;
+  type InvoiceMessage = ServiceMessage & MsgWith<"invoice">;
+  type SuccessfulPaymentMessage =
     & ServiceMessage
     & MsgWith<"successful_payment">;
-  export type UsersSharedMessage = ServiceMessage & MsgWith<"users_shared">;
-  export type ChatSharedMessage = ServiceMessage & MsgWith<"chat_shared">;
-  export type ConnectedWebsiteMessage =
+  type UsersSharedMessage = ServiceMessage & MsgWith<"users_shared">;
+  type ChatSharedMessage = ServiceMessage & MsgWith<"chat_shared">;
+  type ConnectedWebsiteMessage =
     & ServiceMessage
     & MsgWith<"connected_website">;
-  export type WriteAccessAllowedMessage =
+  type WriteAccessAllowedMessage =
     & ServiceMessage
     & MsgWith<"write_access_allowed">;
-  export type PassportDataMessage = ServiceMessage & MsgWith<"passport_data">;
-  export type ProximityAlertTriggeredMessage =
+  type PassportDataMessage = ServiceMessage & MsgWith<"passport_data">;
+  type ProximityAlertTriggeredMessage =
     & ServiceMessage
     & MsgWith<"proximity_alert_triggered">;
-  export type ForumTopicCreatedMessage =
+  type ForumTopicCreatedMessage =
     & ServiceMessage
     & MsgWith<"forum_topic_created">;
-  export type ForumTopicEditedMessage =
+  type ForumTopicEditedMessage =
     & ServiceMessage
     & MsgWith<"forum_topic_edited">;
-  export type ForumTopicClosedMessage =
+  type ForumTopicClosedMessage =
     & ServiceMessage
     & MsgWith<"forum_topic_closed">;
-  export type ForumTopicReopenedMessage =
+  type ForumTopicReopenedMessage =
     & ServiceMessage
     & MsgWith<"forum_topic_reopened">;
-  export type GeneralForumTopicHiddenMessage =
+  type GeneralForumTopicHiddenMessage =
     & ServiceMessage
     & MsgWith<"general_forum_topic_hidden">;
-  export type GeneralForumTopicUnhiddenMessage =
+  type GeneralForumTopicUnhiddenMessage =
     & ServiceMessage
     & MsgWith<"general_forum_topic_unhidden">;
-  export type GiveawayCreatedMessage =
+  type GiveawayCreatedMessage =
     & ServiceMessage
     & MsgWith<"giveaway_created">;
-  export type GiveawayMessage = ServiceMessage & MsgWith<"giveaway">;
-  export type GiveawayWinnersMessage =
+  type GiveawayMessage = ServiceMessage & MsgWith<"giveaway">;
+  type GiveawayWinnersMessage =
     & ServiceMessage
     & MsgWith<"giveaway_winners">;
-  export type GiveawayCompletedMessage =
+  type GiveawayCompletedMessage =
     & ServiceMessage
     & MsgWith<"giveaway_completed">;
-  export type VideoChatScheduledMessage =
+  type VideoChatScheduledMessage =
     & ServiceMessage
     & MsgWith<"video_chat_scheduled">;
-  export type VideoChatStartedMessage =
+  type VideoChatStartedMessage =
     & ServiceMessage
     & MsgWith<"video_chat_started">;
-  export type VideoChatEndedMessage =
+  type VideoChatEndedMessage =
     & ServiceMessage
     & MsgWith<"video_chat_ended">;
-  export type VideoChatParticipantsInvitedMessage =
+  type VideoChatParticipantsInvitedMessage =
     & ServiceMessage
     & MsgWith<"video_chat_participants_invited">;
-  export type WebAppDataMessage = ServiceMessage & MsgWith<"web_app_data">;
+  type WebAppDataMessage = ServiceMessage & MsgWith<"web_app_data">;
 }
 
 type ReplyMessage = Message & { reply_to_message: undefined };
@@ -425,7 +425,7 @@ export declare namespace MessageEntity {
     /** Length of the entity in UTF-16 code units */
     length: number;
   }
-  export interface CommonMessageEntity extends AbstractMessageEntity {
+  interface CommonMessageEntity extends AbstractMessageEntity {
     type:
       | "mention"
       | "hashtag"
@@ -442,22 +442,22 @@ export declare namespace MessageEntity {
       | "blockquote"
       | "code";
   }
-  export interface PreMessageEntity extends AbstractMessageEntity {
+  interface PreMessageEntity extends AbstractMessageEntity {
     type: "pre";
     /** For “pre” only, the programming language of the entity text */
     language?: string;
   }
-  export interface TextLinkMessageEntity extends AbstractMessageEntity {
+  interface TextLinkMessageEntity extends AbstractMessageEntity {
     type: "text_link";
     /** For “text_link” only, URL that will be opened after user taps on the text */
     url: string;
   }
-  export interface TextMentionMessageEntity extends AbstractMessageEntity {
+  interface TextMentionMessageEntity extends AbstractMessageEntity {
     type: "text_mention";
     /** For “text_mention” only, the mentioned user */
     user: User;
   }
-  export interface CustomEmojiMessageEntity extends AbstractMessageEntity {
+  interface CustomEmojiMessageEntity extends AbstractMessageEntity {
     type: "custom_emoji";
     /** For “custom_emoji” only, unique identifier of the custom emoji. Use getCustomEmojiStickers to get full information about the sticker */
     custom_emoji_id: string;

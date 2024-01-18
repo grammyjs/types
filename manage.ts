@@ -79,7 +79,7 @@ export declare namespace Chat {
 
   // ==> CHATS
   /** Internal type representing private chats. */
-  export interface PrivateChat extends AbstractChat, UserNameChat {
+  interface PrivateChat extends AbstractChat, UserNameChat {
     type: "private";
     /** First name of the other party in a private chat */
     first_name: string;
@@ -87,18 +87,17 @@ export declare namespace Chat {
     last_name?: string;
   }
   /** Internal type representing group chats. */
-  export interface GroupChat extends AbstractChat, TitleChat {
+  interface GroupChat extends AbstractChat, TitleChat {
     type: "group";
   }
   /** Internal type representing super group chats. */
-  export interface SupergroupChat
-    extends AbstractChat, UserNameChat, TitleChat {
+  interface SupergroupChat extends AbstractChat, UserNameChat, TitleChat {
     type: "supergroup";
     /** True, if the supergroup chat is a forum (has topics enabled) */
     is_forum?: true;
   }
   /** Internal type representing channel chats. */
-  export interface ChannelChat extends AbstractChat, UserNameChat, TitleChat {
+  interface ChannelChat extends AbstractChat, UserNameChat, TitleChat {
     type: "channel";
   }
 
@@ -154,7 +153,7 @@ export declare namespace Chat {
 
   // ==> GET CHATS
   /** Internal type representing private chats returned from `getChat`. */
-  export interface PrivateGetChat
+  interface PrivateGetChat
     extends PrivateChat, GetChat, NonGroupGetChat, NonMultiUserGetChat {
     /** Bio of the other party in a private chat. Returned only in getChat. */
     bio?: string;
@@ -164,10 +163,10 @@ export declare namespace Chat {
     has_restricted_voice_and_video_messages?: true;
   }
   /** Internal type representing group chats returned from `getChat`. */
-  export interface GroupGetChat
+  interface GroupGetChat
     extends GroupChat, GetChat, NonPrivateGetChat, MultiUserGetChat {}
   /** Internal type representing supergroup chats returned from `getChat`. */
-  export interface SupergroupGetChat
+  interface SupergroupGetChat
     extends
       SupergroupChat,
       GetChat,
@@ -191,7 +190,7 @@ export declare namespace Chat {
     location?: ChatLocation;
   }
   /** Internal type representing channel chats returned from `getChat`. */
-  export interface ChannelGetChat
+  interface ChannelGetChat
     extends
       ChannelChat,
       GetChat,
