@@ -179,7 +179,7 @@ export declare namespace Chat {
     join_to_send_messages?: true;
     /** True, if all users directly joining the supergroup need to be approved by supergroup administrators. Returned only in getChat. */
     join_by_request?: true;
-    /** For supergroups, the minimum allowed delay between consecutive messages sent by each unpriviledged user; in seconds. Returned only in getChat. */
+    /** For supergroups, the minimum allowed delay between consecutive messages sent by each unprivileged user; in seconds. Returned only in getChat. */
     slow_mode_delay?: number;
     /** True, if new chat members will have access to old messages; available only to chat administrators. Returned only in getChat. */
     has_visible_history?: boolean;
@@ -579,7 +579,7 @@ export interface ChatBoost {
 export interface ChatBoostUpdated {
   /** Chat which was boosted */
   chat: Chat;
-  /** Infomation about the chat boost */
+  /** Information about the chat boost */
   boost: ChatBoost;
 }
 

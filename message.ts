@@ -308,9 +308,7 @@ export interface InaccessibleMessage extends
 /** This object describes a message that can be inaccessible to the bot. It can be one of
 - Message
 - InaccessibleMessage */
-export type MaybeInaccessibleMessage =
-  | Message
-  | InaccessibleMessage;
+export type MaybeInaccessibleMessage = Message | InaccessibleMessage;
 
 /** The Bot API supports basic formatting for messages. You can use bold, italic, underlined, strikethrough, spoiler text, block quotations as well as inline links and pre-formatted code in your bots' messages. Telegram clients will render them accordingly. You can specify text entities directly, or use markdown-style or HTML-style formatting.
 
@@ -322,7 +320,7 @@ Message entities can be nested, providing following restrictions are met:
 - blockquote entities can't be nested.
 - All other entities can't contain each other.
 
-Links `tg://user?id=<user_id>` can be used to mention a user by their ID without using a username. Please note:
+Links `tg://user?id=<user_id>` can be used to mention a user by their identifier without using a username. Please note:
 
 - These links will work only if they are used inside an inline link or in an inline keyboard button. For example, they will not work, when used in a message text.
 - Unless the user is a member of the chat where they were mentioned, these mentions are only guaranteed to work if the user has contacted the bot in private in the past or has sent a callback query to the bot via an inline button and doesn't have Forwarded Messages privacy enabled for the bot.
@@ -964,7 +962,7 @@ export interface Giveaway {
 export interface GiveawayWinners {
   /** The chat that created the giveaway */
   chat: Chat;
-  /** Identifier of the messsage with the giveaway in the chat */
+  /** Identifier of the message with the giveaway in the chat */
   giveaway_message_id: number;
   /** Point in time (Unix timestamp) when winners of the giveaway were selected */
   winners_selection_date: number;
@@ -1002,9 +1000,9 @@ export interface LinkPreviewOptions {
   is_disabled?: boolean;
   /** URL to use for the link preview. If empty, then the first URL found in the message text will be used */
   url?: string;
-  /** True, if the media in the link preview is suppposed to be shrunk; ignored if the URL isn't explicitly specified or media size change isn't supported for the preview */
+  /** True, if the media in the link preview is supposed to be shrunk; ignored if the URL isn't explicitly specified or media size change isn't supported for the preview */
   prefer_small_media?: boolean;
-  /** True, if the media in the link preview is suppposed to be enlarged; ignored if the URL isn't explicitly specified or media size change isn't supported for the preview */
+  /** True, if the media in the link preview is supposed to be enlarged; ignored if the URL isn't explicitly specified or media size change isn't supported for the preview */
   prefer_large_media?: boolean;
   /** True, if the link preview must be shown above the message text; otherwise, the link preview will be shown below the message text */
   show_above_text?: boolean;

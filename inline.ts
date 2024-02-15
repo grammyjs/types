@@ -225,9 +225,7 @@ export interface InlineQueryResultVideo {
   input_message_content?: InputMessageContent;
 }
 
-/** Represents a link to an MP3 audio file. By default, this audio file will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the audio.
-
-Note: This will only work in Telegram versions released after 9 April, 2016. Older clients will ignore them. */
+/** Represents a link to an MP3 audio file. By default, this audio file will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the audio. */
 export interface InlineQueryResultAudio {
   /** Type of the result, must be audio */
   type: "audio";
@@ -253,9 +251,7 @@ export interface InlineQueryResultAudio {
   input_message_content?: InputMessageContent;
 }
 
-/** Represents a link to a voice recording in an .OGG container encoded with OPUS. By default, this voice recording will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the the voice message.
-
-Note: This will only work in Telegram versions released after 9 April, 2016. Older clients will ignore them. */
+/** Represents a link to a voice recording in an .OGG container encoded with OPUS. By default, this voice recording will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the the voice message. */
 export interface InlineQueryResultVoice {
   /** Type of the result, must be voice */
   type: "voice";
@@ -279,9 +275,7 @@ export interface InlineQueryResultVoice {
   input_message_content?: InputMessageContent;
 }
 
-/** Represents a link to a file. By default, this file will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the file. Currently, only .PDF and .ZIP files can be sent using this method.
-
-Note: This will only work in Telegram versions released after 9 April, 2016. Older clients will ignore them. */
+/** Represents a link to a file. By default, this file will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the file. Currently, only .PDF and .ZIP files can be sent using this method. */
 export interface InlineQueryResultDocument {
   /** Type of the result, must be document */
   type: "document";
@@ -313,9 +307,7 @@ export interface InlineQueryResultDocument {
   thumbnail_height?: number;
 }
 
-/** Represents a location on a map. By default, the location will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the location.
-
-Note: This will only work in Telegram versions released after 9 April, 2016. Older clients will ignore them. */
+/** Represents a location on a map. By default, the location will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the location. */
 export interface InlineQueryResultLocation {
   /** Type of the result, must be location */
   type: "location";
@@ -347,9 +339,7 @@ export interface InlineQueryResultLocation {
   thumbnail_height?: number;
 }
 
-/** Represents a venue. By default, the venue will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the venue.
-
-Note: This will only work in Telegram versions released after 9 April, 2016. Older clients will ignore them. */
+/** Represents a venue. By default, the venue will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the venue. */
 export interface InlineQueryResultVenue {
   /** Type of the result, must be venue */
   type: "venue";
@@ -383,9 +373,7 @@ export interface InlineQueryResultVenue {
   thumbnail_height?: number;
 }
 
-/** Represents a contact with a phone number. By default, this contact will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the contact.
-
-Note: This will only work in Telegram versions released after 9 April, 2016. Older clients will ignore them. */
+/** Represents a contact with a phone number. By default, this contact will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the contact. */
 export interface InlineQueryResultContact {
   /** Type of the result, must be contact */
   type: "contact";
@@ -411,9 +399,7 @@ export interface InlineQueryResultContact {
   thumbnail_height?: number;
 }
 
-/** Represents a Game.
-
-Note: This will only work in Telegram versions released after October 1, 2016. Older clients will not display any inline results if a game result is among them. */
+/** Represents a Game. */
 export interface InlineQueryResultGame {
   /** Type of the result, must be game */
   type: "game";
@@ -493,9 +479,7 @@ export interface InlineQueryResultCachedMpeg4Gif {
   input_message_content?: InputMessageContent;
 }
 
-/** Represents a link to a sticker stored on the Telegram servers. By default, this sticker will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the sticker.
-
-Note: This will only work in Telegram versions released after 9 April, 2016 for static stickers and after 06 July, 2019 for animated stickers. Older clients will ignore them. */
+/** Represents a link to a sticker stored on the Telegram servers. By default, this sticker will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the sticker. */
 export interface InlineQueryResultCachedSticker {
   /** Type of the result, must be sticker */
   type: "sticker";
@@ -509,9 +493,7 @@ export interface InlineQueryResultCachedSticker {
   input_message_content?: InputMessageContent;
 }
 
-/** Represents a link to a file stored on the Telegram servers. By default, this file will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the file.
-
-Note: This will only work in Telegram versions released after 9 April, 2016. Older clients will ignore them. */
+/** Represents a link to a file stored on the Telegram servers. By default, this file will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the file. */
 export interface InlineQueryResultCachedDocument {
   /** Type of the result, must be document */
   type: "document";
@@ -559,9 +541,7 @@ export interface InlineQueryResultCachedVideo {
   input_message_content?: InputMessageContent;
 }
 
-/** Represents a link to a voice message stored on the Telegram servers. By default, this voice message will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the voice message.
-
-Note: This will only work in Telegram versions released after 9 April, 2016. Older clients will ignore them. */
+/** Represents a link to a voice message stored on the Telegram servers. By default, this voice message will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the voice message. */
 export interface InlineQueryResultCachedVoice {
   /** Type of the result, must be voice */
   type: "voice";
@@ -583,9 +563,7 @@ export interface InlineQueryResultCachedVoice {
   input_message_content?: InputMessageContent;
 }
 
-/** Represents a link to an MP3 audio file stored on the Telegram servers. By default, this audio file will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the audio.
-
-Note: This will only work in Telegram versions released after 9 April, 2016. Older clients will ignore them. */
+/** Represents a link to an MP3 audio file stored on the Telegram servers. By default, this audio file will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the audio. */
 export interface InlineQueryResultCachedAudio {
   /** Type of the result, must be audio */
   type: "audio";
