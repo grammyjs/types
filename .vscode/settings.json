@@ -6,5 +6,16 @@
   "deno.enable": true,
   "deno.config": "./deno.jsonc",
   "deno.lint": true,
-  "editor.defaultFormatter": "denoland.vscode-deno"
+  "[typescript]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  }
 }
