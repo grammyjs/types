@@ -34,6 +34,8 @@ export declare namespace Message {
     external_reply?: ExternalReplyInfo;
     /** For replies that quote part of the original message, the quoted part of the message */
     quote?: TextQuote;
+    /** For replies to a story, the original message */
+    reply_to_story?: Story;
     /** Bot through which the message was sent */
     via_bot?: User;
     /** Date the message was last edited in Unix time */
@@ -254,6 +256,10 @@ export interface Message extends Message.MediaMessage {
   general_forum_topic_hidden?: GeneralForumTopicHidden;
   /** Service message: the 'General' forum topic unhidden */
   general_forum_topic_unhidden?: GeneralForumTopicUnhidden;
+  /** The message is a service message about a user boosting the chat */
+  boost_added: ChatBoostAdded;
+  /** If the sender of the message boosted the chat, the number of boosts added by the user */
+  sender_boost_count: number;
   /** Service message: a scheduled giveaway was created */
   giveaway_created?: GiveawayCreated;
   /** The message is a scheduled giveaway message */
@@ -349,7 +355,9 @@ pre-formatted fixed-width code block written in the Python programming language
 `​`​`
 >Block quotation started
 >Block quotation continued
->The last line of the block quotation
+>The last line of the block quotation**
+>The second block quotation started right after the previous\r
+>The third block quotation started right after the previous
 ```
 Please note:
 
@@ -840,7 +848,12 @@ export interface Venue {
 }
 
 /** This object represents a message about a forwarded story in the chat. Currently holds no information. */
-export interface Story {}
+export interface Story {
+  /** Chat that posted the story */
+  chat: Chat;
+  /** Unique identifier for the story in the chat */
+  id: number;
+}
 
 /** This object represents the content of a service message, sent whenever a user in the chat triggers a proximity alert set by another user. */
 export interface ProximityAlertTriggered {
@@ -887,6 +900,12 @@ export interface GeneralForumTopicHidden {}
 
 /** This object represents a service message about General forum topic unhidden in the chat. Currently holds no information. */
 export interface GeneralForumTopicUnhidden {}
+
+/** This object represents a service message about a user boosting a chat. */
+export interface ChatBoostAdded {
+  /** Number of boosts added by the user */
+  boost_count: number;
+}
 
 /** This object contains information about the user whose identifier was shared with the bot using a KeyboardButtonRequestUsers button. */
 export interface UsersShared {

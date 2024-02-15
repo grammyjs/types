@@ -824,7 +824,7 @@ export type ApiMethods<F> = {
     user_id: number;
     /** Pass True if the administrator's presence in the chat is hidden */
     is_anonymous?: boolean;
-    /** Pass True if the administrator can access the chat event log, boost list in channels, see channel members, report spam messages, see anonymous administrators in supergroups and ignore slow mode. Implied by any other administrator privilege */
+    /** Pass True if the administrator can access the chat event log, get boost list, see hidden supergroup and channel members, report spam messages and ignore slow mode. Implied by any other administrator privilege. */
     can_manage_chat?: boolean;
     /** Pass True if the administrator can delete messages of other users */
     can_delete_messages?: boolean;
@@ -844,11 +844,11 @@ export type ApiMethods<F> = {
     can_edit_messages?: boolean;
     /** Pass True if the administrator can pin messages, supergroups only */
     can_pin_messages?: boolean;
-    /** Pass True if the administrator can post stories in the channel; channels only */
+    /** Pass True if the administrator can post stories to the chat */
     can_post_stories?: boolean;
-    /** Pass True if the administrator can edit stories posted by other users; channels only */
+    /** Pass True if the administrator can edit stories posted by other users */
     can_edit_stories?: boolean;
-    /** Pass True if the administrator can delete stories posted by other users; channels only */
+    /** Pass True if the administrator can delete stories posted by other users */
     can_delete_stories?: boolean;
     /** Pass True if the user is allowed to create, rename, close, and reopen forum topics, supergroups only */
     can_manage_topics?: boolean;

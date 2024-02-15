@@ -189,6 +189,10 @@ export declare namespace Chat {
     sticker_set_name?: string;
     /** For supergroups, the location to which the supergroup is connected. Returned only in getChat. */
     location?: ChatLocation;
+    /** For supergroups, the minimum number of boosts that a non-administrator user needs to add in order to ignore slow mode and chat permissions. Returned only in getChat. */
+    unrestrict_boost_count?: number;
+    /** For supergroups, the name of the group's custom emoji sticker set. Custom emoji from this set can be used by all users and bots in the group. Returned only in getChat. */
+    custom_emoji_sticker_set_name?: string;
   }
   /** Internal type representing channel chats returned from `getChat`. */
   export interface ChannelGetChat
@@ -266,7 +270,7 @@ export interface ChatInviteLink {
 export interface ChatAdministratorRights {
   /** True, if the user's presence in the chat is hidden */
   is_anonymous: boolean;
-  /** True, if the administrator can access the chat event log, boost list in channels, see channel members, report spam messages, see anonymous administrators in supergroups and ignore slow mode. Implied by any other administrator privilege */
+  /** True, if the administrator can access the chat event log, get boost list, see hidden supergroup and channel members, report spam messages and ignore slow mode. Implied by any other administrator privilege. */
   can_manage_chat: boolean;
   /** True, if the administrator can delete messages of other users */
   can_delete_messages: boolean;
@@ -286,11 +290,11 @@ export interface ChatAdministratorRights {
   can_edit_messages?: boolean;
   /** True, if the user is allowed to pin messages; groups and supergroups only */
   can_pin_messages?: boolean;
-  /** True, if the administrator can post stories in the channel; channels only */
+  /** True, if the administrator can post stories to the chat */
   can_post_stories?: boolean;
-  /** True, if the administrator can edit stories posted by other users; channels only */
+  /** True, if the administrator can edit stories posted by other users */
   can_edit_stories?: boolean;
-  /** True, if the administrator can delete stories posted by other users; channels only */
+  /** True, if the administrator can delete stories posted by other users */
   can_delete_stories?: boolean;
   /** True, if the user is allowed to create, rename, close, and reopen forum topics; supergroups only */
   can_manage_topics?: boolean;
@@ -351,7 +355,7 @@ export interface ChatMemberAdministrator {
   can_be_edited: boolean;
   /** True, if the user's presence in the chat is hidden */
   is_anonymous: boolean;
-  /** True, if the administrator can access the chat event log, boost list in channels, see channel members, report spam messages, see anonymous administrators in supergroups and ignore slow mode. Implied by any other administrator privilege */
+  /** True, if the administrator can access the chat event log, get boost list, see hidden supergroup and channel members, report spam messages and ignore slow mode. Implied by any other administrator privilege. */
   can_manage_chat: boolean;
   /** True, if the administrator can delete messages of other users */
   can_delete_messages: boolean;
@@ -371,11 +375,11 @@ export interface ChatMemberAdministrator {
   can_edit_messages?: boolean;
   /** True, if the user is allowed to pin messages; groups and supergroups only */
   can_pin_messages?: boolean;
-  /** True, if the administrator can post stories in the channel; channels only */
+  /** True, if the administrator can post stories to the chat */
   can_post_stories?: boolean;
-  /** True, if the administrator can edit stories posted by other users; channels only */
+  /** True, if the administrator can edit stories posted by other users */
   can_edit_stories?: boolean;
-  /** True, if the administrator can delete stories posted by other users; channels only */
+  /** True, if the administrator can delete stories posted by other users */
   can_delete_stories?: boolean;
   /** True, if the user is allowed to create, rename, close, and reopen forum topics; supergroups only */
   can_manage_topics?: boolean;
