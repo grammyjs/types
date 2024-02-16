@@ -132,8 +132,6 @@ export declare namespace Chat {
   interface MultiUserGetChat {
     /** Default chat member permissions, for groups and supergroups. Returned only in getChat. */
     permissions?: ChatPermissions;
-    /** True, if the bot can change the group sticker set. Returned only in getChat. */
-    can_set_sticker_set?: true;
   }
   /** Internal type holding properties that those private and channel chats returned from `getChat` share. */
   interface NonMultiUserGetChat {
@@ -181,18 +179,20 @@ export declare namespace Chat {
     join_by_request?: true;
     /** For supergroups, the minimum allowed delay between consecutive messages sent by each unprivileged user; in seconds. Returned only in getChat. */
     slow_mode_delay?: number;
+    /** For supergroups, the minimum number of boosts that a non-administrator user needs to add in order to ignore slow mode and chat permissions. Returned only in getChat. */
+    unrestrict_boost_count?: number;
     /** True, if new chat members will have access to old messages; available only to chat administrators. Returned only in getChat. */
     has_visible_history?: boolean;
     /** True, if aggressive anti-spam checks are enabled in the supergroup. The field is only available to chat administrators. Returned only in getChat. */
     has_aggressive_anti_spam_enabled?: true;
     /** For supergroups, name of group sticker set. Returned only in getChat. */
     sticker_set_name?: string;
-    /** For supergroups, the location to which the supergroup is connected. Returned only in getChat. */
-    location?: ChatLocation;
-    /** For supergroups, the minimum number of boosts that a non-administrator user needs to add in order to ignore slow mode and chat permissions. Returned only in getChat. */
-    unrestrict_boost_count?: number;
+    /** True, if the bot can change the group sticker set. Returned only in getChat. */
+    can_set_sticker_set?: true;
     /** For supergroups, the name of the group's custom emoji sticker set. Custom emoji from this set can be used by all users and bots in the group. Returned only in getChat. */
     custom_emoji_sticker_set_name?: string;
+    /** For supergroups, the location to which the supergroup is connected. Returned only in getChat. */
+    location?: ChatLocation;
   }
   /** Internal type representing channel chats returned from `getChat`. */
   export interface ChannelGetChat

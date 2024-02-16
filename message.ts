@@ -24,6 +24,8 @@ export declare namespace Message {
     is_topic_message?: boolean;
   }
   export interface CommonMessage extends ServiceMessage {
+    /** If the sender of the message boosted the chat, the number of boosts added by the user */
+    sender_boost_count?: number;
     /** Information about the original message for forwarded messages */
     forward_origin?: MessageOrigin;
     /** True, if the message is a channel post that was automatically forwarded to the connected discussion group */
@@ -124,6 +126,9 @@ export declare namespace Message {
   export type ProximityAlertTriggeredMessage =
     & ServiceMessage
     & MsgWith<"proximity_alert_triggered">;
+  export type BoostAddedMessage =
+    & ServiceMessage
+    & MsgWith<"boost_added">;
   export type ForumTopicCreatedMessage =
     & ServiceMessage
     & MsgWith<"forum_topic_created">;
@@ -244,6 +249,8 @@ export interface Message extends Message.MediaMessage {
   passport_data?: PassportData;
   /** Service message. A user in the chat triggered another user's proximity alert while sharing Live Location. */
   proximity_alert_triggered?: ProximityAlertTriggered;
+  /** Service message: user boosted the chat */
+  boost_added?: ChatBoostAdded;
   /** Service message: forum topic created */
   forum_topic_created?: ForumTopicCreated;
   /** Service message: forum topic edited */
@@ -256,10 +263,6 @@ export interface Message extends Message.MediaMessage {
   general_forum_topic_hidden?: GeneralForumTopicHidden;
   /** Service message: the 'General' forum topic unhidden */
   general_forum_topic_unhidden?: GeneralForumTopicUnhidden;
-  /** The message is a service message about a user boosting the chat */
-  boost_added: ChatBoostAdded;
-  /** If the sender of the message boosted the chat, the number of boosts added by the user */
-  sender_boost_count: number;
   /** Service message: a scheduled giveaway was created */
   giveaway_created?: GiveawayCreated;
   /** The message is a scheduled giveaway message */
