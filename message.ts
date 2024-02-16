@@ -847,7 +847,7 @@ export interface Venue {
   google_place_type?: string;
 }
 
-/** This object represents a message about a forwarded story in the chat. Currently holds no information. */
+/** This object represents a story. */
 export interface Story {
   /** Chat that posted the story */
   chat: Chat;
