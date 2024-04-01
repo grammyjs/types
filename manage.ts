@@ -1,4 +1,10 @@
-import type { Location, Message, PhotoSize, ReactionType } from "./message.ts";
+import type {
+  Location,
+  Message,
+  PhotoSize,
+  ReactionType,
+  Sticker,
+} from "./message.ts";
 import type { Update } from "./update.ts";
 
 /** Describes the current status of a webhook. */
@@ -53,6 +59,8 @@ export interface UserFromGetMe extends User {
   can_read_all_group_messages: boolean;
   /** True, if the bot supports inline queries. Returned only in getMe. */
   supports_inline_queries: boolean;
+  /** True, if the bot can be connected to a Telegram Business account to receive its messages. Returned only in getMe. */
+  can_connect_to_business?: boolean;
 }
 
 export declare namespace Chat {
@@ -154,6 +162,16 @@ export declare namespace Chat {
   /** Internal type representing private chats returned from `getChat`. */
   export interface PrivateGetChat
     extends PrivateChat, GetChat, NonGroupGetChat, NonMultiUserGetChat {
+    /** For private chats, the date of birth of the user. Returned only in getChat. */
+    birthdate?: Birthdate;
+    /** For private chats with business accounts, the intro of the business. Returned only in getChat. */
+    business_intro?: BusinessIntro;
+    /** For private chats with business accounts, the location of the business. Returned only in getChat. */
+    business_location?: BusinessLocation;
+    /** For private chats with business accounts, the opening hours of the business. Returned only in getChat. */
+    business_opening_hours?: BusinessOpeningHours;
+    /** For private chats, the personal channel of the user. Returned only in getChat. */
+    personal_chat?: Chat.ChannelChat;
     /** Bio of the other party in a private chat. Returned only in getChat. */
     bio?: string;
     /** True, if privacy settings of the other party in the private chat allows to use tg://user?id=<user_id> links only in chats with the user. Returned only in getChat. */
@@ -284,19 +302,19 @@ export interface ChatAdministratorRights {
   can_change_info: boolean;
   /** True, if the user is allowed to invite new users to the chat */
   can_invite_users: boolean;
-  /** True, if the administrator can post messages in the channel, or access channel statistics; channels only */
-  can_post_messages?: boolean;
-  /** True, if the administrator can edit messages of other users and can pin messages; channels only */
-  can_edit_messages?: boolean;
-  /** True, if the user is allowed to pin messages; groups and supergroups only */
-  can_pin_messages?: boolean;
   /** True, if the administrator can post stories to the chat */
-  can_post_stories?: boolean;
+  can_post_stories: boolean;
   /** True, if the administrator can edit stories posted by other users */
-  can_edit_stories?: boolean;
+  can_edit_stories: boolean;
   /** True, if the administrator can delete stories posted by other users */
-  can_delete_stories?: boolean;
-  /** True, if the user is allowed to create, rename, close, and reopen forum topics; supergroups only */
+  can_delete_stories: boolean;
+  /** True, if the administrator can post messages in the channel, or access channel statistics; for channels only */
+  can_post_messages?: boolean;
+  /** True, if the administrator can edit messages of other users and can pin messages; for channels only */
+  can_edit_messages?: boolean;
+  /** True, if the user is allowed to pin messages; for groups and supergroups only */
+  can_pin_messages?: boolean;
+  /** True, if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only */
   can_manage_topics?: boolean;
 }
 
@@ -369,19 +387,19 @@ export interface ChatMemberAdministrator {
   can_change_info: boolean;
   /** True, if the user is allowed to invite new users to the chat */
   can_invite_users: boolean;
-  /** True, if the administrator can post messages in the channel, or access channel statistics; channels only */
-  can_post_messages?: boolean;
-  /** True, if the administrator can edit messages of other users and can pin messages; channels only */
-  can_edit_messages?: boolean;
-  /** True, if the user is allowed to pin messages; groups and supergroups only */
-  can_pin_messages?: boolean;
   /** True, if the administrator can post stories to the chat */
-  can_post_stories?: boolean;
+  can_post_stories: boolean;
   /** True, if the administrator can edit stories posted by other users */
-  can_edit_stories?: boolean;
+  can_edit_stories: boolean;
   /** True, if the administrator can delete stories posted by other users */
-  can_delete_stories?: boolean;
-  /** True, if the user is allowed to create, rename, close, and reopen forum topics; supergroups only */
+  can_delete_stories: boolean;
+  /** True, if the administrator can post messages in the channel, or access channel statistics; for channels only */
+  can_post_messages?: boolean;
+  /** True, if the administrator can edit messages of other users and can pin messages; for channels only */
+  can_edit_messages?: boolean;
+  /** True, if the user is allowed to pin messages; for groups and supergroups only */
+  can_pin_messages?: boolean;
+  /** True, if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only */
   can_manage_topics?: boolean;
   /** Custom title for this user */
   custom_title?: string;
@@ -501,6 +519,45 @@ export interface ChatPermissions {
   can_manage_topics?: boolean;
 }
 
+export interface Birthdate {
+  /** Day of the user's birth; 1-31 */
+  day: number;
+  /** Month of the user's birth; 1-12 */
+  month: number;
+  /** Year of the user's birth */
+  year?: number;
+}
+
+export interface BusinessIntro {
+  /** Title text of the business intro */
+  title?: string;
+  /** Message text of the business intro */
+  message?: string;
+  /** Sticker of the business intro */
+  sticker?: Sticker;
+}
+
+export interface BusinessLocation {
+  /** Address of the business */
+  address: string;
+  /** Location of the business */
+  location?: Location;
+}
+
+export interface BusinessOpeningHoursInterval {
+  /** The minute's sequence number in a week, starting on Monday, marking the start of the time interval during which the business is open; 0 - 7 24 60 */
+  opening_minute: number;
+  /** The minute's sequence number in a week, starting on Monday, marking the end of the time interval during which the business is open; 0 - 8 24 60 */
+  closing_minute: number;
+}
+
+export interface BusinessOpeningHours {
+  /** Unique name of the time zone for which the opening hours are defined */
+  time_zone_name: string;
+  /** List of time intervals describing business opening hours */
+  opening_hours: BusinessOpeningHoursInterval[];
+}
+
 /** Represents a location to which a chat is connected. */
 export interface ChatLocation {
   /** The location to which the supergroup is connected. Can't be a live location. */
@@ -603,4 +660,30 @@ export interface ChatBoostRemoved {
 export interface UserChatBoosts {
   /** The list of boosts added to the chat by the user */
   boosts: ChatBoost[];
+}
+
+/** Describes the connection of the bot with a business account. */
+export interface BusinessConnection {
+  /** Unique identifier of the business connection */
+  id: string;
+  /** Business account user that created the business connection */
+  user: User;
+  /** Identifier of a private chat with the user who created the business connection. */
+  user_chat_id: number;
+  /** Date the connection was established in Unix time */
+  date: number;
+  /** True, if the bot can act on behalf of the business account in chats that were active in the last 24 hours */
+  can_reply: boolean;
+  /** True, if the connection is active */
+  is_enabled: boolean;
+}
+
+/** This object is received when messages are deleted from a connected business account. */
+export interface BusinessMessagesDeleted {
+  /** Unique identifier of the business connection */
+  business_connection_id: string;
+  /** Information about a chat in the business account. The bot may not have access to the chat or the corresponding user. */
+  chat: Chat;
+  /** A JSON-serialized list of identifiers of deleted messages in the chat of the business account */
+  message_ids: number[];
 }

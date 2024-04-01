@@ -18,6 +18,8 @@ export declare namespace Message {
     sender_chat?: Chat;
     /** Date the message was sent in Unix time. It is always a positive number, representing a valid date. */
     date: number;
+    /** Unique identifier of the business connection from which the message was received. If non-empty, the message belongs to a chat of the corresponding business account that is independent from any potential bot chat which might share the same identifier. */
+    business_connection_id?: string;
     /** Chat the message belongs to */
     chat: Chat;
     /** True, if the message is sent to a forum topic */
@@ -26,6 +28,8 @@ export declare namespace Message {
   export interface CommonMessage extends ServiceMessage {
     /** If the sender of the message boosted the chat, the number of boosts added by the user */
     sender_boost_count?: number;
+    /** The bot that actually sent the message on behalf of the business account. Available only for outgoing messages sent on behalf of the connected business account. */
+    sender_business_bot?: User;
     /** Information about the original message for forwarded messages */
     forward_origin?: MessageOrigin;
     /** True, if the message is a channel post that was automatically forwarded to the connected discussion group */
@@ -44,6 +48,8 @@ export declare namespace Message {
     edit_date?: number;
     /** True, if the message can't be forwarded */
     has_protected_content?: true;
+    /** True, if the message was sent by an implicit action, for example, as an away or a greeting business message, or as a scheduled message */
+    is_from_offline?: true;
     /** Signature of the post author for messages in channels, or the custom title of an anonymous group administrator */
     author_signature?: string;
     /** Options used for link preview generation for the message, if it is a text message and link preview options were changed */
@@ -547,9 +553,9 @@ export interface ExternalReplyInfo {
 export interface ReplyParameters {
   /** Identifier of the message that will be replied to in the current chat, or in the chat chat_id if it is specified */
   message_id: number;
-  /** If the message to be replied to is from a different chat, unique identifier for the chat or username of the channel (in the format @channelusername) */
+  /** If the message to be replied to is from a different chat, unique identifier for the chat or username of the channel (in the format @channelusername). Not supported for messages sent on behalf of a business account. */
   chat_id?: number | string;
-  /** Pass True if the message should be sent even if the specified message to be replied to is not found; can be used only for replies in the same chat and forum topic. */
+  /** Pass True if the message should be sent even if the specified message to be replied to is not found; can be used only for replies in the same chat and forum topic. Always True for messages sent on behalf of a business account. */
   allow_sending_without_reply?: boolean;
   /** Quoted part of the message to be replied to; 0-1024 characters after entities parsing. The quote must be an exact substring of the message to be replied to, including bold, italic, underline, strikethrough, spoiler, and custom_emoji entities. The message will fail to send if the quote isn't found in the original message. */
   quote?: string;
@@ -818,10 +824,10 @@ export interface Poll {
 
 /** This object represents a point on the map. */
 export interface Location {
-  /** Longitude as defined by sender */
-  longitude: number;
   /** Latitude as defined by sender */
   latitude: number;
+  /** Longitude as defined by sender */
+  longitude: number;
   /** The radius of uncertainty for the location, measured in meters; 0-1500 */
   horizontal_accuracy?: number;
   /** Time relative to the message sending date, during which the location can be updated; in seconds. For active live locations only. */
@@ -910,20 +916,40 @@ export interface ChatBoostAdded {
   boost_count: number;
 }
 
+/** This object contains information about a user that was shared with the bot using a KeyboardButtonRequestUser button. */
+export interface SharedUser {
+  /** Identifier of the shared user. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so 64-bit integers or double-precision float types are safe for storing these identifiers. The bot may not have access to the user and could be unable to use this identifier, unless the user is already known to the bot by some other means. */
+  user_id: number;
+  /** First name of the user, if the name was requested by the bot */
+  first_name?: string;
+  /** Last name of the user, if the name was requested by the bot */
+  last_name?: string;
+  /** Username of the user, if the username was requested by the bot */
+  username?: string;
+  /** Available sizes of the chat photo, if the photo was requested by the bot */
+  photo?: PhotoSize[];
+}
+
 /** This object contains information about the user whose identifier was shared with the bot using a KeyboardButtonRequestUsers button. */
 export interface UsersShared {
   /** Identifier of the request */
   request_id: number;
-  /** Identifiers of the shared users. The bot may not have access to the users and could be unable to use these identifiers, unless the users are already known to the bot by some other means. */
-  user_ids: number[];
+  /** Information about users shared with the bot. */
+  users: SharedUser[];
 }
 
-/** This object contains information about the chat whose identifier was shared with the bot using a KeyboardButtonRequestChat button. */
+/** This object contains information about a chat that was shared with the bot using a KeyboardButtonRequestChat button. */
 export interface ChatShared {
   /** Identifier of the request */
   request_id: number;
   /** Identifier of the shared chat. The bot may not have access to the chat and could be unable to use this identifier, unless the chat is already known to the bot by some other means. */
   chat_id: number;
+  /** Title of the chat, if the title was requested by the bot. */
+  title?: string;
+  /** Username of the chat, if the username was requested by the bot and available. */
+  username?: string;
+  /** Available sizes of the chat photo, if the photo was requested by the bot */
+  photo?: PhotoSize[];
 }
 
 /** This object represents a service message about a user allowing a bot to write messages after adding it to the attachment menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method requestWriteAccess. */
@@ -1078,10 +1104,6 @@ export interface StickerSet {
   title: string;
   /** Type of stickers in the set, currently one of “regular”, “mask”, “custom_emoji” */
   sticker_type: "regular" | "mask" | "custom_emoji";
-  /** True, if the sticker set contains animated stickers */
-  is_animated: boolean;
-  /** True, if the sticker set contains video stickers */
-  is_video: boolean;
   /** List of all set stickers */
   stickers: Sticker[];
   /** Sticker set thumbnail in the .WEBP, .TGS, or .WEBM format */

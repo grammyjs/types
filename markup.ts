@@ -222,7 +222,7 @@ export interface WebAppInfo {
   url: string;
 }
 
-/** This object defines the criteria used to request suitable users. The identifiers of the selected users will be shared with the bot when the corresponding button is pressed. */
+/** This object defines the criteria used to request suitable users. Information about the selected users will be shared with the bot when the corresponding button is pressed. */
 export interface KeyboardButtonRequestUsers {
   /** Signed 32-bit identifier of the request that will be received back in the UsersShared object. Must be unique within the message */
   request_id: number;
@@ -232,9 +232,15 @@ export interface KeyboardButtonRequestUsers {
   user_is_premium?: boolean;
   /** The maximum number of users to be selected; 1-10. Defaults to 1. */
   max_quantity?: number;
+  /** Pass True to request the users' first and last name */
+  request_name?: boolean;
+  /** Pass True to request the users' username */
+  request_username?: boolean;
+  /** Pass True to request the users' photo */
+  request_photo?: boolean;
 }
 
-/** This object defines the criteria used to request a suitable chat. The identifier of the selected chat will be shared with the bot when the corresponding button is pressed. */
+/** This object defines the criteria used to request a suitable chat. Information about the selected chat will be shared with the bot when the corresponding button is pressed. The bot will be granted requested rights in the chat if appropriate. */
 export interface KeyboardButtonRequestChat {
   /** Signed 32-bit identifier of the request, which will be received back in the ChatShared object. Must be unique within the message */
   request_id: number;
@@ -252,4 +258,10 @@ export interface KeyboardButtonRequestChat {
   bot_administrator_rights?: ChatAdministratorRights;
   /** Pass True to request a chat with the bot as a member. Otherwise, no additional restrictions are applied. */
   bot_is_member?: boolean;
+  /** Pass True to request the chat's title */
+  request_title?: boolean;
+  /** Pass True to request the chat's username */
+  request_username?: boolean;
+  /** Pass True to request the chat's photo */
+  request_photo?: boolean;
 }
