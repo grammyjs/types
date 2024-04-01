@@ -683,7 +683,7 @@ export interface BusinessMessagesDeleted {
   /** Unique identifier of the business connection */
   business_connection_id: string;
   /** Information about a chat in the business account. The bot may not have access to the chat or the corresponding user. */
-  chat: Chat;
+  chat: Chat.PrivateChat;
   /** A JSON-serialized list of identifiers of deleted messages in the chat of the business account */
   message_ids: number[];
 }
