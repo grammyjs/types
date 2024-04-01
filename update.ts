@@ -1,5 +1,7 @@
 import type { ChosenInlineResult, InlineQuery } from "./inline.ts";
 import type {
+  BusinessConnection,
+  BusinessMessagesDeleted,
   Chat,
   ChatBoostRemoved,
   ChatBoostUpdated,
@@ -48,6 +50,14 @@ export interface Update {
   channel_post?: Message & Update.Channel;
   /** New version of a channel post that is known to the bot and was edited. This update may at times be triggered by changes to message fields that are either unavailable or not actively used by your bot. */
   edited_channel_post?: Message & Update.Edited & Update.Channel;
+  /** The bot was connected to or disconnected from a business account, or a user edited an existing connection with the bot */
+  business_connection?: BusinessConnection;
+  /** New non-service message from a connected business account */
+  business_message?: Message;
+  /** New version of a message from a connected business account */
+  edited_business_message?: Message;
+  /** Messages were deleted from a connected business account */
+  deleted_business_messages?: BusinessMessagesDeleted;
   /** A reaction to a message was changed by a user. The bot must be an administrator in the chat and must explicitly specify "message_reaction" in the list of allowed_updates to receive these updates. The update isn't received for reactions set by bots. */
   message_reaction?: MessageReactionUpdated;
   /** Reactions to a message with anonymous reactions were changed. The bot must be an administrator in the chat and must explicitly specify "message_reaction_count" in the list of allowed_updates to receive these updates. The updates are grouped and can be sent with delay up to a few minutes. */
