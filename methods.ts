@@ -867,6 +867,8 @@ export type ApiMethods<F> = {
     can_promote_members?: boolean;
     /** Pass True if the administrator can change chat title, photo and other settings */
     can_change_info?: boolean;
+    /** Pass True if the administrator can invite new users to the chat */
+    can_invite_users?: boolean;
     /** True if the administrator can post stories to the chat */
     can_post_stories?: boolean;
     /** True if the administrator can edit stories posted by other users */
