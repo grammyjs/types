@@ -17,11 +17,11 @@ export declare namespace InlineKeyboardButton {
     url: string;
   }
   export interface CallbackButton extends AbstractInlineKeyboardButton {
-    /** Data to be sent in a callback query to the bot when button is pressed, 1-64 bytes */
+    /** Data to be sent in a callback query to the bot when button is pressed, 1-64 bytes. Not supported for messages sent on behalf of a Telegram Business account. */
     callback_data: string;
   }
   export interface WebAppButton extends AbstractInlineKeyboardButton {
-    /** Description of the Web App that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method answerWebAppQuery. Available only in private chats between a user and the bot. */
+    /** Description of the Web App that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method answerWebAppQuery. Available only in private chats between a user and the bot. Not supported for messages sent on behalf of a Telegram Business account. */
     web_app: WebAppInfo;
   }
   export interface LoginButton extends AbstractInlineKeyboardButton {
@@ -29,19 +29,19 @@ export declare namespace InlineKeyboardButton {
     login_url: LoginUrl;
   }
   export interface SwitchInlineButton extends AbstractInlineKeyboardButton {
-    /** If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot's username and the specified inline query in the input field. Can be empty, in which case just the bot's username will be inserted. */
+    /** If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot's username and the specified inline query in the input field. May be empty, in which case just the bot's username will be inserted. Not supported for messages sent on behalf of a Telegram Business account. */
     switch_inline_query: string;
   }
   export interface SwitchInlineCurrentChatButton
     extends AbstractInlineKeyboardButton {
     /** If set, pressing the button will insert the bot's username and the specified inline query in the current chat's input field. Can be empty, in which case only the bot's username will be inserted.
 
-    This offers a quick way for the user to open your bot in inline mode in the same chat – good for selecting something from multiple options. */
+    This offers a quick way for the user to open your bot in inline mode in the same chat – good for selecting something from multiple options. Not supported in channels and for messages sent on behalf of a Telegram Business account. */
     switch_inline_query_current_chat: string;
   }
   export interface SwitchInlineChosenChatButton
     extends AbstractInlineKeyboardButton {
-    /** If set, pressing the button will prompt the user to select one of their chats of the specified type, open that chat and insert the bot's username and the specified inline query in the input field */
+    /** If set, pressing the button will prompt the user to select one of their chats of the specified type, open that chat and insert the bot's username and the specified inline query in the input field. Not supported for messages sent on behalf of a Telegram Business account. */
     switch_inline_query_chosen_chat: SwitchInlineQueryChosenChat;
   }
   export interface GameButton extends AbstractInlineKeyboardButton {
@@ -122,7 +122,7 @@ export interface CallbackQuery {
   game_short_name?: string;
 }
 
-/** This object represents a custom keyboard with reply options (see Introduction to bots for details and examples). */
+/** This object represents a custom keyboard with reply options (see Introduction to bots for details and examples). Not supported in channels and for messages sent on behalf of a Telegram Business account. */
 export interface ReplyKeyboardMarkup {
   /** Array of button rows, each represented by an Array of KeyboardButton objects */
   keyboard: KeyboardButton[][];
@@ -188,7 +188,7 @@ export interface KeyboardButtonPollType {
   type?: "quiz" | "regular";
 }
 
-/** Upon receiving a message with this object, Telegram clients will remove the current custom keyboard and display the default letter-keyboard. By default, custom keyboards are displayed until a new keyboard is sent by a bot. An exception is made for one-time keyboards that are hidden immediately after the user presses a button (see ReplyKeyboardMarkup). */
+/** Upon receiving a message with this object, Telegram clients will remove the current custom keyboard and display the default letter-keyboard. By default, custom keyboards are displayed until a new keyboard is sent by a bot. An exception is made for one-time keyboards that are hidden immediately after the user presses a button (see ReplyKeyboardMarkup). Not supported in channels and for messages sent on behalf of a Telegram Business account. */
 export interface ReplyKeyboardRemove {
   /** Requests clients to remove the custom keyboard (user will not be able to summon this keyboard; if you want to hide the keyboard from sight but keep it accessible, use one_time_keyboard in ReplyKeyboardMarkup) */
   remove_keyboard: true;
@@ -198,7 +198,7 @@ export interface ReplyKeyboardRemove {
   selective?: boolean;
 }
 
-/** Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot's message and tapped 'Reply'). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice privacy mode.
+/** Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot's message and tapped 'Reply'). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice privacy mode. Not supported in channels and for messages sent on behalf of a Telegram Business account.
 
 Example: A poll bot for groups runs in privacy mode (only receives commands, replies to its messages and mentions). There could be two ways to create a new poll:
 
@@ -232,11 +232,11 @@ export interface KeyboardButtonRequestUsers {
   user_is_premium?: boolean;
   /** The maximum number of users to be selected; 1-10. Defaults to 1. */
   max_quantity?: number;
-  /** Pass True to request the users' first and last name */
+  /** Pass True to request the users' first and last names */
   request_name?: boolean;
-  /** Pass True to request the users' username */
+  /** Pass True to request the users' usernames */
   request_username?: boolean;
-  /** Pass True to request the users' photo */
+  /** Pass True to request the users' photos */
   request_photo?: boolean;
 }
 
