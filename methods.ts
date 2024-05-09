@@ -26,6 +26,7 @@ import type {
 import type {
   File,
   GameHighScore,
+  InputPollOption,
   LinkPreviewOptions,
   MaskPosition,
   Message,
