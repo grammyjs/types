@@ -135,6 +135,9 @@ export declare namespace Message {
   export type BoostAddedMessage =
     & ServiceMessage
     & MsgWith<"boost_added">;
+  export type ChatBackgroundSetMessage =
+    & ServiceMessage
+    & MsgWith<"chat_background_set">;
   export type ForumTopicCreatedMessage =
     & ServiceMessage
     & MsgWith<"forum_topic_created">;
@@ -257,6 +260,8 @@ export interface Message extends Message.MediaMessage {
   proximity_alert_triggered?: ProximityAlertTriggered;
   /** Service message: user boosted the chat */
   boost_added?: ChatBoostAdded;
+  /* Service message: chat background set */
+  chat_background_set?: ChatBackground;
   /** Service message: forum topic created */
   forum_topic_created?: ForumTopicCreated;
   /** Service message: forum topic edited */
@@ -321,6 +326,7 @@ export interface InaccessibleMessage extends
 }
 
 /** This object describes a message that can be inaccessible to the bot. It can be one of
+
 - Message
 - InaccessibleMessage */
 export type MaybeInaccessibleMessage = Message | InaccessibleMessage;
@@ -568,6 +574,7 @@ export interface ReplyParameters {
 }
 
 /** This object describes the origin of a message. It can be one of
+
 - MessageOriginUser
 - MessageOriginHiddenUser
 - MessageOriginChat
@@ -698,6 +705,14 @@ export interface Document {
   file_size?: number;
 }
 
+/** This object represents a story. */
+export interface Story {
+  /** Chat that posted the story */
+  chat: Chat;
+  /** Unique identifier for the story in the chat */
+  id: number;
+}
+
 /** This object represents a video file. */
 export interface Video {
   /** Identifier for this file, which can be used to download or reuse the file */
@@ -776,8 +791,20 @@ export interface Dice {
 export interface PollOption {
   /** Option text, 1-100 characters */
   text: string;
+  /** Special entities that appear in the option text. Currently, only custom emoji entities are allowed in poll option texts */
+  text_entities?: MessageEntity[];
   /** Number of users that voted for this option */
   voter_count: number;
+}
+
+/** This object contains information about one answer option in a poll to send. */
+export interface InputPollOption {
+  /** Option text, 1-100 characters */
+  text: string;
+  /** Mode for parsing entities in the text. See formatting options for more details. Currently, only custom emoji entities are allowed */
+  text_parse_mode?: string;
+  /** A list of special entities that appear in the poll option text. It can be specified instead of text_parse_mode */
+  text_entities?: MessageEntity[];
 }
 
 /** This object represents an answer of a user in a non-anonymous poll. */
@@ -798,6 +825,8 @@ export interface Poll {
   id: string;
   /** Poll question, 1-300 characters */
   question: string;
+  /** Special entities that appear in the question. Currently, only custom emoji entities are allowed in poll questions */
+  question_entities?: MessageEntity[];
   /** List of poll options */
   options: PollOption[];
   /** Total number of users that voted in the poll */
@@ -856,12 +885,12 @@ export interface Venue {
   google_place_type?: string;
 }
 
-/** This object represents a story. */
-export interface Story {
-  /** Chat that posted the story */
-  chat: Chat;
-  /** Unique identifier for the story in the chat */
-  id: number;
+/** Describes data sent from a Web App to the bot. */
+export interface WebAppData {
+  /** The data. Be aware that a bad client can send arbitrary data in this field. */
+  data: string;
+  /** Text of the web_app keyboard button from which the Web App was opened. Be aware that a bad client can send arbitrary data in this field. */
+  button_text: string;
 }
 
 /** This object represents the content of a service message, sent whenever a user in the chat triggers a proximity alert set by another user. */
@@ -878,6 +907,117 @@ export interface ProximityAlertTriggered {
 export interface MessageAutoDeleteTimerChanged {
   /** New auto-delete time for messages in the chat; in seconds */
   message_auto_delete_time: number;
+}
+
+/** This object represents a service message about a user boosting a chat. */
+export interface ChatBoostAdded {
+  /** Number of boosts added by the user */
+  boost_count: number;
+}
+
+/** This object describes the way a background is filled based on the selected colors. Currently, it can be one of
+
+- BackgroundFillSolid
+- BackgroundFillGradient
+- BackgroundFillFreeformGradient */
+export type BackgroundFill =
+  | BackgroundFillSolid
+  | BackgroundFillGradient
+  | BackgroundFillFreeformGradient;
+
+/** The background is filled using the selected color. */
+export interface BackgroundFillSolid {
+  /** Type of the background fill, always “solid” */
+  type: "solid";
+  /** The color of the background fill in the RGB24 format */
+  color: number;
+}
+
+/** The background is a gradient fill. */
+export interface BackgroundFillGradient {
+  /** Type of the background fill, always “gradient” */
+  type: "gradient";
+  /** Top color of the gradient in the RGB24 format */
+  top_color: number;
+  /** Bottom color of the gradient in the RGB24 format */
+  bottom_color: number;
+  /** Clockwise rotation angle of the background fill in degrees; 0-359 */
+  rotation_angle: number;
+}
+
+/** The background is a freeform gradient that rotates  after every message in the chat. */
+export interface BackgroundFillFreeformGradient {
+  /** Type of the background fill, always “freeform_gradient” */
+  type: "freeform_gradient";
+  /** A list of the 3 or 4 base colors that are used to generate the freeform gradient in the RGB24 format */
+  colors: number[];
+}
+
+/** This object describes the type of a background. Currently, it can be one of
+
+- BackgroundTypeFill
+- BackgroundTypeWallpaper
+- BackgroundTypePattern
+- BackgroundTypeChatTheme
+- BackgroundTypeFill */
+export type BackgroundType =
+  | BackgroundTypeFill
+  | BackgroundTypeWallpaper
+  | BackgroundTypePattern
+  | BackgroundTypeChatTheme;
+
+/** The background is automatically filled based on the selected colors. */
+export interface BackgroundTypeFill {
+  /** Type of the background, always “fill” */
+  type: "fill";
+  /** The background fill */
+  fill: BackgroundFill;
+  /** Dimming of the background in dark themes, as a percentage; 0-100 */
+  dark_theme_dimming: number;
+}
+
+/** The background is a wallpaper in the JPEG format. */
+export interface BackgroundTypeWallpaper {
+  /** Type of the background, always “wallpaper” */
+  type: "wallpaper";
+  /** Document with the wallpaper */
+  document: Document;
+  /** Dimming of the background in dark themes, as a percentage; 0-100 */
+  dark_theme_dimming: number;
+  /** True, if the wallpaper is downscaled to fit in a 450x450 square and then box-blurred with radius 12 */
+  is_blurred?: true;
+  /** True, if the background moves slightly when the device is tilted */
+  is_moving?: true;
+}
+
+/** The background is a PNG or TGV (gzipped subset of SVG with MIME type “application/x-tgwallpattern”) pattern to be combined with the background fill chosen by the user. */
+export interface BackgroundTypePattern {
+  /** Type of the background, always “pattern” */
+  type: "pattern";
+  /** Document with the pattern */
+  document: Document;
+  /** The background fill that is combined with the pattern */
+  fill: BackgroundFill;
+  /** Intensity of the pattern when it is shown above the filled background; 0-100 */
+  intensity: number;
+  /** True, if the background fill must be applied only to the pattern itself. All other pixels are black in this case. For dark themes only */
+  is_inverted?: true;
+  /** True, if the background moves slightly when the device is tilted */
+  is_moving?: true;
+}
+
+/** The background is taken directly from a built-in chat  theme. */
+export interface BackgroundTypeChatTheme {
+  /** Type of the background, always “chat_theme” */
+  type: "chat_theme";
+  /** Name of the chat theme, which is usually an emoji */
+  theme_name: string;
+}
+
+/** This object represents a chat background. */
+export interface ChatBackground {
+  /** Type of the background*/
+  type: BackgroundType;
 }
 
 /** This object represents a service message about a new forum topic created in the chat. */
@@ -910,15 +1050,9 @@ export interface GeneralForumTopicHidden {}
 /** This object represents a service message about General forum topic unhidden in the chat. Currently holds no information. */
 export interface GeneralForumTopicUnhidden {}
 
-/** This object represents a service message about a user boosting a chat. */
-export interface ChatBoostAdded {
-  /** Number of boosts added by the user */
-  boost_count: number;
-}
-
-/** This object contains information about a user that was shared with the bot using a KeyboardButtonRequestUser button. */
+/** This object contains information about a user that was shared with the bot using a KeyboardButtonRequestUsers button. */
 export interface SharedUser {
-  /** Identifier of the shared user. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so 64-bit integers or double-precision float types are safe for storing these identifiers. The bot may not have access to the user and could be unable to use this identifier, unless the user is already known to the bot by some other means. */
+  /** Identifier of the shared user. The bot may not have access to the user and could be unable to use this identifier, unless the user is already known to the bot by some other means. */
   user_id: number;
   /** First name of the user, if the name was requested by the bot */
   first_name?: string;
@@ -1056,14 +1190,6 @@ export interface LinkPreviewOptions {
   show_above_text?: boolean;
 }
 
-/** Describes data sent from a Web App to the bot. */
-export interface WebAppData {
-  /** The data. Be aware that a bad client can send arbitrary data in this field. */
-  data: string;
-  /** Text of the web_app keyboard button from which the Web App was opened. Be aware that a bad client can send arbitrary data in this field. */
-  button_text: string;
-}
-
 /** This object represents a sticker. */
 export interface Sticker {
   /** Identifier for this file, which can be used to download or reuse the file */
@@ -1160,7 +1286,10 @@ export interface File {
   file_path?: string;
 }
 
-/** This object describes the type of a reaction. Currently, it can be one of */
+/** This object describes the type of a reaction. Currently, it can be one of
+
+- ReactionTypeEmoji
+- ReactionTypeCustomEmoji */
 export type ReactionType = ReactionTypeEmoji | ReactionTypeCustomEmoji;
 
 /** The reaction is based on an emoji. */

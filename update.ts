@@ -56,7 +56,7 @@ export interface Update {
   edited_channel_post?: Message & Update.Edited & Update.Channel;
   /** The bot was connected to or disconnected from a business account, or a user edited an existing connection with the bot */
   business_connection?: BusinessConnection;
-  /** New non-service message from a connected business account */
+  /** New message from a connected business account */
   business_message?: Message & Update.Private;
   /** New version of a message from a connected business account */
   edited_business_message?: Message & Update.Edited & Update.Private;
