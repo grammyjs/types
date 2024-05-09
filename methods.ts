@@ -4,7 +4,6 @@ import type {
   BotCommand,
   BusinessConnection,
   ChatAdministratorRights,
-  ChatFromGetChat,
   ChatInviteLink,
   ChatMember,
   ChatMemberAdministrator,
