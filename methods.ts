@@ -16,7 +16,7 @@ import type {
   UserProfilePhotos,
   WebhookInfo,
 } from "./manage.ts";
-import { ChatFullInfo } from "./manage.ts";
+import type { ChatFullInfo } from "./manage.ts";
 import type {
   ForceReply,
   InlineKeyboardMarkup,
