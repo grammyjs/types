@@ -42,7 +42,7 @@ export declare namespace Message {
     quote?: TextQuote;
     /** For replies to a story, the original message */
     reply_to_story?: Story;
-    /** Unique identifier of the message effect to be added to the message */
+    /** Unique identifier of the message effect added to the message */
     effect_id?: string;
     /** Bot through which the message was sent */
     via_bot?: User;
@@ -377,9 +377,8 @@ pre-formatted fixed-width code block written in the Python programming language
 >Block quotation continued
 >Block quotation continued
 >The last line of the block quotation
-***>The second block quotation started right after the previous
-\r>The third expandable block quotation started right after the previous
->Expandable block quotation continued
+***>The second expandable block quotation started right after the previous
+>It is separated from the previous block quotation by an empty bold entity
 >Expandable block quotation continued
 >Hidden by default part of the expandable block quotation started
 >Expandable block quotation continued
@@ -391,7 +390,7 @@ Please note:
 - Inside `pre` and `code` entities, all '`' and '\' characters must be escaped with a preceding '\' character.
 - Inside the `(...)` part of the inline link and custom emoji definition, all ')' and '\' must be escaped with a preceding '\' character.
 - In all other places characters '_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!' must be escaped with the preceding character '\'.
-- In case of ambiguity between `italic` and `underline` entities `__` is always greadily treated from left to right as beginning or end of `underline` entity, so instead of `___italic underline___` use `___italic underline_\r__`, where `\r` is a character with code 13, which will be ignored.
+- In case of ambiguity between `italic` and `underline` entities `__` is always greadily treated from left to right as beginning or end of an `underline` entity, so instead of `___italic underline___` use `___italic underline_**__`, adding an empty bold entity as a separator.
 - A valid emoji must be provided as an alternative value for the custom emoji. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the emoji field of the custom emoji sticker.
 - Custom emoji entities can only be used by bots that purchased additional usernames on Fragment.
 

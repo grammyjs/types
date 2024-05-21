@@ -116,7 +116,7 @@ export interface InlineQueryResultPhoto {
   /** Caption of the photo to be sent, 0-1024 characters after entities parsing */
   caption?: string;
   /** Pass True, if the caption must be shown above the message media */
-  show_caption_above_media?: true;
+  show_caption_above_media?: boolean;
   /** Mode for parsing entities in the photo caption. See formatting options for more details. */
   parse_mode?: ParseMode;
   /** List of special entities that appear in the caption, which can be specified instead of parse_mode */
@@ -150,7 +150,7 @@ export interface InlineQueryResultGif {
   /** Caption of the GIF file to be sent, 0-1024 characters after entities parsing */
   caption?: string;
   /** Pass True, if the caption must be shown above the message media */
-  show_caption_above_media?: true;
+  show_caption_above_media?: boolean;
   /** Mode for parsing entities in the caption. See formatting options for more details. */
   parse_mode?: ParseMode;
   /** List of special entities that appear in the caption, which can be specified instead of parse_mode */
@@ -184,7 +184,7 @@ export interface InlineQueryResultMpeg4Gif {
   /** Caption of the MPEG-4 file to be sent, 0-1024 characters after entities parsing */
   caption?: string;
   /** Pass True, if the caption must be shown above the message media */
-  show_caption_above_media?: true;
+  show_caption_above_media?: boolean;
   /** Mode for parsing entities in the caption. See formatting options for more details. */
   parse_mode?: ParseMode;
   /** List of special entities that appear in the caption, which can be specified instead of parse_mode */
@@ -214,7 +214,7 @@ export interface InlineQueryResultVideo {
   /** Caption of the video to be sent, 0-1024 characters after entities parsing */
   caption?: string;
   /** Pass True, if the caption must be shown above the message media */
-  show_caption_above_media?: true;
+  show_caption_above_media?: boolean;
   /** Mode for parsing entities in the video caption. See formatting options for more details. */
   parse_mode?: ParseMode;
   /** List of special entities that appear in the caption, which can be specified instead of parse_mode */
@@ -434,7 +434,7 @@ export interface InlineQueryResultCachedPhoto {
   /** Caption of the photo to be sent, 0-1024 characters after entities parsing */
   caption?: string;
   /** Pass True, if the caption must be shown above the message media */
-  show_caption_above_media?: true;
+  show_caption_above_media?: boolean;
   /** Mode for parsing entities in the photo caption. See formatting options for more details. */
   parse_mode?: ParseMode;
   /** List of special entities that appear in the caption, which can be specified instead of parse_mode */
@@ -458,7 +458,7 @@ export interface InlineQueryResultCachedGif {
   /** Caption of the GIF file to be sent, 0-1024 characters after entities parsing */
   caption?: string;
   /** Pass True, if the caption must be shown above the message media */
-  show_caption_above_media?: true;
+  show_caption_above_media?: boolean;
   /** Mode for parsing entities in the caption. See formatting options for more details. */
   parse_mode?: ParseMode;
   /** List of special entities that appear in the caption, which can be specified instead of parse_mode */
@@ -482,7 +482,7 @@ export interface InlineQueryResultCachedMpeg4Gif {
   /** Caption of the MPEG-4 file to be sent, 0-1024 characters after entities parsing */
   caption?: string;
   /** Pass True, if the caption must be shown above the message media */
-  show_caption_above_media?: true;
+  show_caption_above_media?: boolean;
   /** Mode for parsing entities in the caption. See formatting options for more details. */
   parse_mode?: ParseMode;
   /** List of special entities that appear in the caption, which can be specified instead of parse_mode */
@@ -546,7 +546,7 @@ export interface InlineQueryResultCachedVideo {
   /** Caption of the video to be sent, 0-1024 characters after entities parsing */
   caption?: string;
   /** Pass True, if the caption must be shown above the message media */
-  show_caption_above_media?: true;
+  show_caption_above_media?: boolean;
   /** Mode for parsing entities in the video caption. See formatting options for more details. */
   parse_mode?: ParseMode;
   /** List of special entities that appear in the caption, which can be specified instead of parse_mode */

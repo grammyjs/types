@@ -1720,7 +1720,7 @@ export type ApiMethods<F> = {
     description: string;
     /** Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use for your internal processes. */
     payload: string;
-    /** Payment provider token, obtained via BotFather */
+    /** Payment provider token, obtained via @BotFather. Pass an empty string for payments in Telegram Stars. */
     provider_token?: string;
     /** Three-letter ISO 4217 currency code, see more on currencies */
     currency: string;
@@ -1881,7 +1881,7 @@ export interface InputMediaPhoto<F> {
   /** Caption of the photo to be sent, 0-1024 characters after entities parsing */
   caption?: string;
   /** Pass True, if the caption must be shown above the message media */
-  show_caption_above_media?: true;
+  show_caption_above_media?: boolean;
   /** Mode for parsing entities in the photo caption. See formatting options for more details. */
   parse_mode?: ParseMode;
   /** List of special entities that appear in the caption, which can be specified instead of parse_mode */
@@ -1901,7 +1901,7 @@ export interface InputMediaVideo<F> {
   /** Caption of the video to be sent, 0-1024 characters after entities parsing */
   caption?: string;
   /** Pass True, if the caption must be shown above the message media */
-  show_caption_above_media?: true;
+  show_caption_above_media?: boolean;
   /** Mode for parsing entities in the video caption. See formatting options for more details. */
   parse_mode?: ParseMode;
   /** List of special entities that appear in the caption, which can be specified instead of parse_mode */
@@ -1929,7 +1929,7 @@ export interface InputMediaAnimation<F> {
   /** Caption of the animation to be sent, 0-1024 characters after entities parsing */
   caption?: string;
   /** Pass True, if the caption must be shown above the message media */
-  show_caption_above_media?: true;
+  show_caption_above_media?: boolean;
   /** Mode for parsing entities in the animation caption. See formatting options for more details. */
   parse_mode?: ParseMode;
   /** List of special entities that appear in the caption, which can be specified instead of parse_mode */
