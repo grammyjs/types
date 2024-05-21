@@ -1228,7 +1228,7 @@ export type ApiMethods<F> = {
     business_connection_id: string;
   }): BusinessConnection;
 
-  /** Use this method to change the list of the bot's commands. @See https://core.telegram.org/bots/features#commands for more details about bot commands. Returns True on success. */
+  /** Use this method to change the list of the bot's commands. See https://core.telegram.org/bots/features#commands for more details about bot commands. Returns True on success. */
   setMyCommands(args: {
     /** A list of bot commands to be set as the list of the bot's commands. At most 100 commands can be specified. */
     commands: readonly BotCommand[];
