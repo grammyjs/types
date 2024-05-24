@@ -1778,6 +1778,16 @@ export type ApiMethods<F> = {
     error_message?: string;
   }): true;
 
+  /** Refunds a successful payment in Telegram Stars. */
+  refundStarPayment(args: {
+    /** Identifier of the user whose payment will be refunded */
+    user_id: number;
+    /** Identifier of the successful_payment message in the private chat with the user for the payment that will be refunded */
+    message_id: number;
+    /** Telegram payment identifier */
+    telegram_payment_charge_id: string;
+  }): true;
+
   /** Informs a user that some of the Telegram Passport elements they provided contains errors. The user will not be able to re-submit their Passport to you until the errors are fixed (the contents of the field for which you returned the error must change). Returns True on success.
 
   Use this if the data submitted by the user doesn't satisfy the standards your service requires for any reason. For example, if a birthday date seems invalid, a submitted document is blurry, a scan shows evidence of tampering, etc. Supply some details in the error message to make sure the user knows how to correct the issues. */
