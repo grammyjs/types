@@ -8,3 +8,4 @@ export * from "./passport.ts";
 export * from "./payment.ts";
 export * from "./settings.ts";
 export * from "./update.ts";
+export * from "./langs.ts";
