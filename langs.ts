@@ -1,7 +1,7 @@
 /** A two-letter ISO 639-1 language code. */
 export type LanguageCode = `${Langs}`;
 
-enum Langs {
+export enum Langs {
   Abkhazian = "ab",
   Afar = "aa",
   Afrikaans = "af",
