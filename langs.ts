@@ -1,6 +1,12 @@
-/** A two-letter ISO 639-1 language code. */
+/** A two-letter ISO 639-1 language code.
+ * @see https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes
+ * @see https://www.loc.gov/standards/iso639-2/php/code_list.php
+ */
 export type LanguageCode = `${Langs}`;
 
+/**
+ * @see {@link LanguageCode}
+ */
 export enum Langs {
   Abkhazian = "ab",
   Afar = "aa",
