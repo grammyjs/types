@@ -1782,8 +1782,6 @@ export type ApiMethods<F> = {
   refundStarPayment(args: {
     /** Identifier of the user whose payment will be refunded */
     user_id: number;
-    /** Identifier of the successful_payment message in the private chat with the user for the payment that will be refunded */
-    message_id: number;
     /** Telegram payment identifier */
     telegram_payment_charge_id: string;
   }): true;
