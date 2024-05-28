@@ -115,6 +115,8 @@ export interface InlineQueryResultPhoto {
   description?: string;
   /** Caption of the photo to be sent, 0-1024 characters after entities parsing */
   caption?: string;
+  /** Pass True, if the caption must be shown above the message media */
+  show_caption_above_media?: boolean;
   /** Mode for parsing entities in the photo caption. See formatting options for more details. */
   parse_mode?: ParseMode;
   /** List of special entities that appear in the caption, which can be specified instead of parse_mode */
@@ -147,6 +149,8 @@ export interface InlineQueryResultGif {
   title?: string;
   /** Caption of the GIF file to be sent, 0-1024 characters after entities parsing */
   caption?: string;
+  /** Pass True, if the caption must be shown above the message media */
+  show_caption_above_media?: boolean;
   /** Mode for parsing entities in the caption. See formatting options for more details. */
   parse_mode?: ParseMode;
   /** List of special entities that appear in the caption, which can be specified instead of parse_mode */
@@ -179,6 +183,8 @@ export interface InlineQueryResultMpeg4Gif {
   title?: string;
   /** Caption of the MPEG-4 file to be sent, 0-1024 characters after entities parsing */
   caption?: string;
+  /** Pass True, if the caption must be shown above the message media */
+  show_caption_above_media?: boolean;
   /** Mode for parsing entities in the caption. See formatting options for more details. */
   parse_mode?: ParseMode;
   /** List of special entities that appear in the caption, which can be specified instead of parse_mode */
@@ -207,6 +213,8 @@ export interface InlineQueryResultVideo {
   title: string;
   /** Caption of the video to be sent, 0-1024 characters after entities parsing */
   caption?: string;
+  /** Pass True, if the caption must be shown above the message media */
+  show_caption_above_media?: boolean;
   /** Mode for parsing entities in the video caption. See formatting options for more details. */
   parse_mode?: ParseMode;
   /** List of special entities that appear in the caption, which can be specified instead of parse_mode */
@@ -425,6 +433,8 @@ export interface InlineQueryResultCachedPhoto {
   description?: string;
   /** Caption of the photo to be sent, 0-1024 characters after entities parsing */
   caption?: string;
+  /** Pass True, if the caption must be shown above the message media */
+  show_caption_above_media?: boolean;
   /** Mode for parsing entities in the photo caption. See formatting options for more details. */
   parse_mode?: ParseMode;
   /** List of special entities that appear in the caption, which can be specified instead of parse_mode */
@@ -447,6 +457,8 @@ export interface InlineQueryResultCachedGif {
   title?: string;
   /** Caption of the GIF file to be sent, 0-1024 characters after entities parsing */
   caption?: string;
+  /** Pass True, if the caption must be shown above the message media */
+  show_caption_above_media?: boolean;
   /** Mode for parsing entities in the caption. See formatting options for more details. */
   parse_mode?: ParseMode;
   /** List of special entities that appear in the caption, which can be specified instead of parse_mode */
@@ -469,6 +481,8 @@ export interface InlineQueryResultCachedMpeg4Gif {
   title?: string;
   /** Caption of the MPEG-4 file to be sent, 0-1024 characters after entities parsing */
   caption?: string;
+  /** Pass True, if the caption must be shown above the message media */
+  show_caption_above_media?: boolean;
   /** Mode for parsing entities in the caption. See formatting options for more details. */
   parse_mode?: ParseMode;
   /** List of special entities that appear in the caption, which can be specified instead of parse_mode */
@@ -531,6 +545,8 @@ export interface InlineQueryResultCachedVideo {
   description?: string;
   /** Caption of the video to be sent, 0-1024 characters after entities parsing */
   caption?: string;
+  /** Pass True, if the caption must be shown above the message media */
+  show_caption_above_media?: boolean;
   /** Mode for parsing entities in the video caption. See formatting options for more details. */
   parse_mode?: ParseMode;
   /** List of special entities that appear in the caption, which can be specified instead of parse_mode */
@@ -665,13 +681,13 @@ export interface InputInvoiceMessageContent {
   description: string;
   /** Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use for your internal processes. */
   payload: string;
-  /** Payment provider token, obtained via BotFather */
-  provider_token: string;
-  /** Three-letter ISO 4217 currency code, see more on currencies */
+  /** Payment provider token, obtained via @BotFather. Pass an empty string for payments in Telegram Stars. */
+  provider_token?: string;
+  /** Three-letter ISO 4217 currency code, see more on currencies. Pass “XTR” for payments in Telegram Stars. */
   currency: string;
-  /** Price breakdown, a list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.) */
+  /** Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.). Must contain exactly one item for payments in Telegram Stars. */
   prices: LabeledPrice[];
-  /** The maximum accepted amount for tips in the smallest units of the currency (integer, not float/double). For example, for a maximum tip of US$ 1.45 pass max_tip_amount = 145. See the exp parameter in currencies.json, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0 */
+  /** The maximum accepted amount for tips in the smallest units of the currency (integer, not float/double). For example, for a maximum tip of US$ 1.45 pass max_tip_amount = 145. See the exp parameter in currencies.json, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in Telegram Stars. */
   max_tip_amount?: number;
   /** An array of suggested amounts of tip in the smallest units of the currency (integer, not float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed max_tip_amount. */
   suggested_tip_amounts?: number[];
@@ -685,19 +701,19 @@ export interface InputInvoiceMessageContent {
   photo_width?: number;
   /** Photo height */
   photo_height?: number;
-  /** Pass True if you require the user's full name to complete the order */
+  /** Pass True if you require the user's full name to complete the order. Ignored for payments in Telegram Stars. */
   need_name?: boolean;
-  /** Pass True if you require the user's phone number to complete the order */
+  /** Pass True if you require the user's phone number to complete the order. Ignored for payments in Telegram Stars. */
   need_phone_number?: boolean;
-  /** Pass True if you require the user's email address to complete the order */
+  /** Pass True if you require the user's email address to complete the order. Ignored for payments in Telegram Stars. */
   need_email?: boolean;
-  /** Pass True if you require the user's shipping address to complete the order */
+  /** Pass True if you require the user's shipping address to complete the order. Ignored for payments in Telegram Stars. */
   need_shipping_address?: boolean;
-  /** Pass True if the user's phone number should be sent to provider */
+  /** Pass True if the user's phone number should be sent to provider. Ignored for payments in Telegram Stars. */
   send_phone_number_to_provider?: boolean;
-  /** Pass True if the user's email address should be sent to provider */
+  /** Pass True if the user's email address should be sent to provider. Ignored for payments in Telegram Stars. */
   send_email_to_provider?: boolean;
-  /** Pass True if the final price depends on the shipping method */
+  /** Pass True if the final price depends on the shipping method. Ignored for payments in Telegram Stars. */
   is_flexible?: boolean;
 }
 

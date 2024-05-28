@@ -48,12 +48,16 @@ export declare namespace Message {
     edit_date?: number;
     /** True, if the message can't be forwarded */
     has_protected_content?: true;
+    /** True, if the caption must be shown above the message media */
+    show_caption_above_media?: true;
     /** True, if the message was sent by an implicit action, for example, as an away or a greeting business message, or as a scheduled message */
     is_from_offline?: true;
     /** Signature of the post author for messages in channels, or the custom title of an anonymous group administrator */
     author_signature?: string;
     /** Options used for link preview generation for the message, if it is a text message and link preview options were changed */
     link_preview_options?: LinkPreviewOptions;
+    /** Unique identifier of the message effect added to the message */
+    effect_id?: string;
     /** Inline keyboard attached to the message. login_url buttons are represented as ordinary url buttons. */
     reply_markup?: InlineKeyboardMarkup;
   }
@@ -338,7 +342,7 @@ Note that Telegram clients will display an **alert** to the user before opening 
 Message entities can be nested, providing following restrictions are met:
 - If two entities have common characters, then one of them is fully contained inside another.
 - bold, italic, underline, strikethrough, and spoiler entities can contain and can be part of any other entities, except pre and code.
-- blockquote entities can't be nested.
+- blockquote and expandable_blockquote entities can't be nested.
 - All other entities can't contain each other.
 
 Links `tg://user?id=<user_id>` can be used to mention a user by their identifier without using a username. Please note:
@@ -370,9 +374,15 @@ pre-formatted fixed-width code block written in the Python programming language
 `​`​`
 >Block quotation started
 >Block quotation continued
->The last line of the block quotation**
->The second block quotation started right after the previous\r
->The third block quotation started right after the previous
+>Block quotation continued
+>Block quotation continued
+>The last line of the block quotation
+***>The second expandable block quotation started right after the previous
+>It is separated from the previous block quotation by an empty bold entity
+>Expandable block quotation continued
+>Hidden by default part of the expandable block quotation started
+>Expandable block quotation continued
+>The last line of the expandable block quotation with the expandability mark||
 ```
 Please note:
 
@@ -380,7 +390,7 @@ Please note:
 - Inside `pre` and `code` entities, all '`' and '\' characters must be escaped with a preceding '\' character.
 - Inside the `(...)` part of the inline link and custom emoji definition, all ')' and '\' must be escaped with a preceding '\' character.
 - In all other places characters '_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!' must be escaped with the preceding character '\'.
-- In case of ambiguity between `italic` and `underline` entities `__` is always greadily treated from left to right as beginning or end of `underline` entity, so instead of `___italic underline___` use `___italic underline_\r__`, where `\r` is a character with code 13, which will be ignored.
+- In case of ambiguity between `italic` and `underline` entities `__` is always greadily treated from left to right as beginning or end of an `underline` entity, so instead of `___italic underline___` use `___italic underline_**__`, adding an empty bold entity as a separator.
 - A valid emoji must be provided as an alternative value for the custom emoji. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the emoji field of the custom emoji sticker.
 - Custom emoji entities can only be used by bots that purchased additional usernames on Fragment.
 
@@ -401,6 +411,7 @@ To use this mode, pass *HTML* in the *parse_mode* field. The following tags are 
 <pre>pre-formatted fixed-width code block</pre>
 <pre><code class="language-python">pre-formatted fixed-width code block written in the Python programming language</code></pre>
 <blockquote>Block quotation started\nBlock quotation continued\nThe last line of the block quotation</blockquote>
+<blockquote expandable>Expandable block quotation started\nExpandable block quotation continued\nExpandable block quotation continued\nHidden by default part of the block quotation started\nExpandable block quotation continued\nThe last line of the block quotation</blockquote>
 ```
 Please note:
 
@@ -432,14 +443,14 @@ pre-formatted fixed-width code block written in the Python programming language
 Please note:
 
 - Entities must not be nested, use parse mode MarkdownV2 instead.
-- There is no way to specify “underline”, “strikethrough”, “spoiler”, “blockquote” and “custom_emoji” entities, use parse mode MarkdownV2 instead.
+- There is no way to specify “underline”, “strikethrough”, “spoiler”, “blockquote”, “expandable_blockquote” and “custom_emoji” entities, use parse mode MarkdownV2 instead.
 - To escape characters '_', '*', '`', '[' outside of an entity, prepend the characters '\' before them.
 - Escaping inside entities is not allowed, so entity must be closed first and reopened again: use `_snake_\__case_` for italic `snake_case` and `*2*\**2=4*` for bold `2*2=4`. */
 export type ParseMode = "Markdown" | "MarkdownV2" | "HTML";
 
 export declare namespace MessageEntity {
   interface AbstractMessageEntity {
-    /** Type of the entity. Currently, can be “mention” (@username), “hashtag” (#hashtag), “cashtag” ($USD), “bot_command” (/start@jobs_bot), “url” (https://telegram.org), “email” (do-not-reply@telegram.org), “phone_number” (+1-212-555-0123), “bold” (bold text), “italic” (italic text), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users without usernames), “custom_emoji” (for inline custom emoji stickers) */
+    /** Type of the entity. Currently, can be “mention” (@username), “hashtag” (#hashtag), “cashtag” ($USD), “bot_command” (/start@jobs_bot), “url” (https://telegram.org), “email” (do-not-reply@telegram.org), “phone_number” (+1-212-555-0123), “bold” (bold text), “italic” (italic text), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users without usernames), “custom_emoji” (for inline custom emoji stickers) */
     type: string;
     /** Offset in UTF-16 code units to the start of the entity */
     offset: number;
@@ -461,6 +472,7 @@ export declare namespace MessageEntity {
       | "strikethrough"
       | "spoiler"
       | "blockquote"
+      | "expandable_blockquote"
       | "code";
   }
   export interface PreMessageEntity extends AbstractMessageEntity {
