@@ -1,7 +1,7 @@
 import type { ChatAdministratorRights, User } from "./manage.ts";
 import type { MaybeInaccessibleMessage } from "./message.ts";
 
-/** This object represents an inline keyboard that appears right next to the message it belongs to. */
+/** This object represents one button of an inline keyboard. Exactly one of the optional fields must be used to specify type of the button. */
 export interface InlineKeyboardMarkup {
   /** Array of button rows, each represented by an Array of InlineKeyboardButton objects */
   inline_keyboard: InlineKeyboardButton[][];
@@ -51,7 +51,7 @@ export declare namespace InlineKeyboardButton {
     callback_game: CallbackGame;
   }
   export interface PayButton extends AbstractInlineKeyboardButton {
-    /** Specify True, to send a Pay button.
+    /** Specify True, to send a Pay button. Substrings “⭐” and “XTR” in the buttons's text will be replaced with a Telegram Star icon.
 
     NOTE: This type of button must always be the first button in the first row and can only be used in invoice messages. */
     pay: boolean;
@@ -171,7 +171,7 @@ export declare namespace KeyboardButton {
   }
 }
 
-/** This object represents one button of the reply keyboard. For simple text buttons, String can be used instead of this object to specify the button text. The optional fields web_app, request_users, request_chat, request_contact, request_location, and request_poll are mutually exclusive. */
+/** This object represents one button of the reply keyboard. At most one of the optional fields must be used to specify type of the button. For simple text buttons, String can be used instead of this object to specify the button text. */
 export type KeyboardButton =
   | KeyboardButton.CommonButton
   | KeyboardButton.RequestUsersButton

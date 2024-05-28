@@ -142,12 +142,12 @@ export type ApiMethods<F> = {
     entities?: MessageEntity[];
     /** Link preview generation options for the message */
     link_preview_options?: LinkPreviewOptions;
-    /** Unique identifier of the message effect to be added to the message */
-    message_effect_id?: string;
     /** Sends the message silently. Users will receive a notification with no sound. */
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
+    /** Unique identifier of the message effect to be added to the message */
+    message_effect_id?: string;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
     /** Additional interface options. An object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. */
@@ -264,12 +264,12 @@ export type ApiMethods<F> = {
     show_caption_above_media?: boolean;
     /** Pass True if the photo needs to be covered with a spoiler animation */
     has_spoiler?: boolean;
-    /** Unique identifier of the message effect to be added to the message */
-    message_effect_id?: string;
     /** Sends the message silently. Users will receive a notification with no sound. */
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
+    /** Unique identifier of the message effect to be added to the message */
+    message_effect_id?: string;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
     /** Additional interface options. An object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. */
@@ -308,12 +308,12 @@ export type ApiMethods<F> = {
     title?: string;
     /** Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass "attach://<file_attach_name>" if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. */
     thumbnail?: F;
-    /** Unique identifier of the message effect to be added to the message */
-    message_effect_id?: string;
     /** Sends the message silently. Users will receive a notification with no sound. */
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
+    /** Unique identifier of the message effect to be added to the message */
+    message_effect_id?: string;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
     /** Additional interface options. An object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. */
@@ -344,14 +344,14 @@ export type ApiMethods<F> = {
     parse_mode?: ParseMode;
     /** A list of special entities that appear in the caption, which can be specified instead of parse_mode */
     caption_entities?: MessageEntity[];
-    /** Unique identifier of the message effect to be added to the message */
-    message_effect_id?: string;
     /** Disables automatic server-side content type detection for files uploaded using multipart/form-data. Always true, if the document is sent as part of an album. */
     disable_content_type_detection?: boolean;
     /** Sends the message silently. Users will receive a notification with no sound. */
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
+    /** Unique identifier of the message effect to be added to the message */
+    message_effect_id?: string;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
     /** Additional interface options. An object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. */
@@ -394,12 +394,12 @@ export type ApiMethods<F> = {
     has_spoiler?: boolean;
     /** Pass True if the uploaded video is suitable for streaming */
     supports_streaming?: boolean;
-    /** Unique identifier of the message effect to be added to the message */
-    message_effect_id?: string;
     /** Sends the message silently. Users will receive a notification with no sound. */
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
+    /** Unique identifier of the message effect to be added to the message */
+    message_effect_id?: string;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
     /** Additional interface options. An object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. */
@@ -440,12 +440,12 @@ export type ApiMethods<F> = {
     show_caption_above_media?: boolean;
     /** Pass True if the animation needs to be covered with a spoiler animation */
     has_spoiler?: boolean;
-    /** Unique identifier of the message effect to be added to the message */
-    message_effect_id?: string;
     /** Sends the message silently. Users will receive a notification with no sound. */
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
+    /** Unique identifier of the message effect to be added to the message */
+    message_effect_id?: string;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
     /** Additional interface options. An object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. */
@@ -476,12 +476,12 @@ export type ApiMethods<F> = {
     caption_entities?: MessageEntity[];
     /** Duration of the voice message in seconds */
     duration?: number;
-    /** Unique identifier of the message effect to be added to the message */
-    message_effect_id?: string;
     /** Sends the message silently. Users will receive a notification with no sound. */
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
+    /** Unique identifier of the message effect to be added to the message */
+    message_effect_id?: string;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
     /** Additional interface options. An object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. */
@@ -511,12 +511,12 @@ export type ApiMethods<F> = {
     length?: number;
     /** Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass "attach://<file_attach_name>" if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. */
     thumbnail?: F;
-    /** Unique identifier of the message effect to be added to the message */
-    message_effect_id?: string;
     /** Sends the message silently. Users will receive a notification with no sound. */
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
+    /** Unique identifier of the message effect to be added to the message */
+    message_effect_id?: string;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
     /** Additional interface options. An object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. */
@@ -544,12 +544,12 @@ export type ApiMethods<F> = {
       | InputMediaPhoto<F>
       | InputMediaVideo<F>
     >;
-    /** Unique identifier of the message effect to be added to the message */
-    message_effect_id?: string;
     /** Sends the messages silently. Users will receive a notification with no sound. */
     disable_notification?: boolean;
     /** Protects the contents of the sent messages from forwarding and saving */
     protect_content?: boolean;
+    /** Unique identifier of the message effect to be added to the message */
+    message_effect_id?: string;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
     /** @deprecated Use `reply_parameters` instead. */
@@ -581,12 +581,12 @@ export type ApiMethods<F> = {
     heading?: number;
     /** The maximum distance for proximity alerts about approaching another chat member, in meters. For sent live locations only. */
     proximity_alert_radius?: number;
-    /** Unique identifier of the message effect to be added to the message */
-    message_effect_id?: string;
     /** Sends the message silently. Users will receive a notification with no sound. */
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
+    /** Unique identifier of the message effect to be added to the message */
+    message_effect_id?: string;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
     /** Additional interface options. An object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. */
@@ -659,12 +659,12 @@ export type ApiMethods<F> = {
     google_place_id?: string;
     /** Google Places type of the venue. (See supported types.) */
     google_place_type?: string;
-    /** Unique identifier of the message effect to be added to the message */
-    message_effect_id?: string;
     /** Sends the message silently. Users will receive a notification with no sound. */
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
+    /** Unique identifier of the message effect to be added to the message */
+    message_effect_id?: string;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
     /** Additional interface options. An object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. */
@@ -693,12 +693,12 @@ export type ApiMethods<F> = {
     last_name?: string;
     /** Additional data about the contact in the form of a vCard, 0-2048 bytes */
     vcard?: string;
-    /** Unique identifier of the message effect to be added to the message */
-    message_effect_id?: string;
     /** Sends the message silently. Users will receive a notification with no sound. */
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
+    /** Unique identifier of the message effect to be added to the message */
+    message_effect_id?: string;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
     /** Additional interface options. An object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. */
@@ -747,12 +747,12 @@ export type ApiMethods<F> = {
     close_date?: number;
     /** Pass True if the poll needs to be immediately closed. This can be useful for poll preview. */
     is_closed?: boolean;
-    /** Unique identifier of the message effect to be added to the message */
-    message_effect_id?: string;
     /** Sends the message silently. Users will receive a notification with no sound. */
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
+    /** Unique identifier of the message effect to be added to the message */
+    message_effect_id?: string;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
     /** Additional interface options. An object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. */
@@ -775,12 +775,12 @@ export type ApiMethods<F> = {
     message_thread_id?: number;
     /** Emoji on which the dice throw animation is based. Currently, must be one of "🎲", "🎯", "🏀", "⚽", "🎳", or "🎰". Dice can have values 1-6 for "🎲", "🎯" and "🎳", values 1-5 for "🏀" and "⚽", and values 1-64 for "🎰". Defaults to "🎲" */
     emoji?: string;
-    /** Unique identifier of the message effect to be added to the message */
-    message_effect_id?: string;
     /** Sends the message silently. Users will receive a notification with no sound. */
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding */
     protect_content?: boolean;
+    /** Unique identifier of the message effect to be added to the message */
+    message_effect_id?: string;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
     /** Additional interface options. An object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. */
@@ -1473,12 +1473,12 @@ export type ApiMethods<F> = {
     sticker: F | string;
     /** Emoji associated with the sticker; only for just uploaded stickers */
     emoji?: string;
-    /** Unique identifier of the message effect to be added to the message */
-    message_effect_id?: string;
     /** Sends the message silently. Users will receive a notification with no sound. */
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
+    /** Unique identifier of the message effect to be added to the message */
+    message_effect_id?: string;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
     /** Additional interface options. An object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. */
@@ -1698,12 +1698,12 @@ export type ApiMethods<F> = {
     send_email_to_provider?: boolean;
     /** Pass True if the final price depends on the shipping method. Ignored for payments in Telegram Stars. */
     is_flexible?: boolean;
-    /** Unique identifier of the message effect to be added to the message */
-    message_effect_id?: string;
     /** Sends the message silently. Users will receive a notification with no sound. */
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
+    /** Unique identifier of the message effect to be added to the message */
+    message_effect_id?: string;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
     /** An object for an inline keyboard. If empty, one 'Pay total price' button will be shown. If not empty, the first button must be a Pay button. */
@@ -1778,7 +1778,7 @@ export type ApiMethods<F> = {
     error_message?: string;
   }): true;
 
-  /** Refunds a successful payment in Telegram Stars. */
+  /** Refunds a successful payment in Telegram Stars. Returns True on success. */
   refundStarPayment(args: {
     /** Identifier of the user whose payment will be refunded */
     user_id: number;
@@ -1806,12 +1806,12 @@ export type ApiMethods<F> = {
     message_thread_id?: number;
     /** Short name of the game, serves as the unique identifier for the game. Set up your games via BotFather. */
     game_short_name: string;
-    /** Unique identifier of the message effect to be added to the message */
-    message_effect_id?: string;
     /** Sends the message silently. Users will receive a notification with no sound. */
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
+    /** Unique identifier of the message effect to be added to the message */
+    message_effect_id?: string;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
     /** An object for an inline keyboard. If empty, one 'Play game_title' button will be shown. If not empty, the first button must launch the game. */

@@ -42,8 +42,6 @@ export declare namespace Message {
     quote?: TextQuote;
     /** For replies to a story, the original message */
     reply_to_story?: Story;
-    /** Unique identifier of the message effect added to the message */
-    effect_id?: string;
     /** Bot through which the message was sent */
     via_bot?: User;
     /** Date the message was last edited in Unix time */
@@ -58,6 +56,8 @@ export declare namespace Message {
     author_signature?: string;
     /** Options used for link preview generation for the message, if it is a text message and link preview options were changed */
     link_preview_options?: LinkPreviewOptions;
+    /** Unique identifier of the message effect added to the message */
+    effect_id?: string;
     /** Inline keyboard attached to the message. login_url buttons are represented as ordinary url buttons. */
     reply_markup?: InlineKeyboardMarkup;
   }
