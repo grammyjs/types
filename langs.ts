@@ -7,7 +7,7 @@ export type LanguageCode = typeof LanguageCodes[keyof typeof LanguageCodes];
 /**
  * @see {@link LanguageCode}
  */
-const LanguageCodes = {
+export const LanguageCodes = {
   Abkhazian: "ab",
   Afar: "aa",
   Afrikaans: "af",
