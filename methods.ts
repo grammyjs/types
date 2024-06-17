@@ -147,7 +147,7 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
-    /** Unique identifier of the message effect to be added to the message */
+    /** Unique identifier of the message effect to be added to the message; for private chats only */
     message_effect_id?: string;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
@@ -269,7 +269,7 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
-    /** Unique identifier of the message effect to be added to the message */
+    /** Unique identifier of the message effect to be added to the message; for private chats only */
     message_effect_id?: string;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
@@ -313,7 +313,7 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
-    /** Unique identifier of the message effect to be added to the message */
+    /** Unique identifier of the message effect to be added to the message; for private chats only */
     message_effect_id?: string;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
@@ -351,7 +351,7 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
-    /** Unique identifier of the message effect to be added to the message */
+    /** Unique identifier of the message effect to be added to the message; for private chats only */
     message_effect_id?: string;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
@@ -399,7 +399,7 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
-    /** Unique identifier of the message effect to be added to the message */
+    /** Unique identifier of the message effect to be added to the message; for private chats only */
     message_effect_id?: string;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
@@ -445,7 +445,7 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
-    /** Unique identifier of the message effect to be added to the message */
+    /** Unique identifier of the message effect to be added to the message; for private chats only */
     message_effect_id?: string;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
@@ -481,7 +481,7 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
-    /** Unique identifier of the message effect to be added to the message */
+    /** Unique identifier of the message effect to be added to the message; for private chats only */
     message_effect_id?: string;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
@@ -516,7 +516,7 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
-    /** Unique identifier of the message effect to be added to the message */
+    /** Unique identifier of the message effect to be added to the message; for private chats only */
     message_effect_id?: string;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
@@ -549,7 +549,7 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent messages from forwarding and saving */
     protect_content?: boolean;
-    /** Unique identifier of the message effect to be added to the message */
+    /** Unique identifier of the message effect to be added to the message; for private chats only */
     message_effect_id?: string;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
@@ -586,7 +586,7 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
-    /** Unique identifier of the message effect to be added to the message */
+    /** Unique identifier of the message effect to be added to the message; for private chats only */
     message_effect_id?: string;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
@@ -664,7 +664,7 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
-    /** Unique identifier of the message effect to be added to the message */
+    /** Unique identifier of the message effect to be added to the message; for private chats only */
     message_effect_id?: string;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
@@ -698,7 +698,7 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
-    /** Unique identifier of the message effect to be added to the message */
+    /** Unique identifier of the message effect to be added to the message; for private chats only */
     message_effect_id?: string;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
@@ -752,7 +752,7 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
-    /** Unique identifier of the message effect to be added to the message */
+    /** Unique identifier of the message effect to be added to the message; for private chats only */
     message_effect_id?: string;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
@@ -780,7 +780,7 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding */
     protect_content?: boolean;
-    /** Unique identifier of the message effect to be added to the message */
+    /** Unique identifier of the message effect to be added to the message; for private chats only */
     message_effect_id?: string;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
@@ -1478,7 +1478,7 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
-    /** Unique identifier of the message effect to be added to the message */
+    /** Unique identifier of the message effect to be added to the message; for private chats only */
     message_effect_id?: string;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
@@ -1703,7 +1703,7 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
-    /** Unique identifier of the message effect to be added to the message */
+    /** Unique identifier of the message effect to be added to the message; for private chats only */
     message_effect_id?: string;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
@@ -1811,7 +1811,7 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
-    /** Unique identifier of the message effect to be added to the message */
+    /** Unique identifier of the message effect to be added to the message; for private chats only */
     message_effect_id?: string;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
