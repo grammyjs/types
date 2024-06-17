@@ -40,7 +40,11 @@ import type {
   StickerSet,
 } from "./message.ts";
 import type { PassportElementError } from "./passport.ts";
-import type { LabeledPrice, ShippingOption } from "./payment.ts";
+import type {
+  LabeledPrice,
+  ShippingOption,
+  StarTransactions,
+} from "./payment.ts";
 import type {
   BotCommandScope,
   BotDescription,
@@ -602,6 +606,8 @@ export type ApiMethods<F> = {
 
   /** Use this method to edit live location messages. A location can be edited until its live_period expires or editing is explicitly disabled by a call to stopMessageLiveLocation. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. */
   editMessageLiveLocation(args: {
+    /** Unique identifier of the business connection on behalf of which the message to be edited was sent */
+    business_connection_id?: string;
     /** Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername) */
     chat_id?: number | string;
     /** Required if inline_message_id is not specified. Identifier of the message to edit */
@@ -626,6 +632,8 @@ export type ApiMethods<F> = {
 
   /** Use this method to stop updating a live location message before live_period expires. On success, if the message is not an inline message, the edited Message is returned, otherwise True is returned. */
   stopMessageLiveLocation(args: {
+    /** Unique identifier of the business connection on behalf of which the message to be edited was sent */
+    business_connection_id?: string;
     /** Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername) */
     chat_id?: number | string;
     /** Required if inline_message_id is not specified. Identifier of the message with live location to stop */
@@ -1361,8 +1369,10 @@ export type ApiMethods<F> = {
     for_channels?: boolean;
   }): ChatAdministratorRights;
 
-  /** Use this method to edit text and game messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. */
+  /** Use this method to edit text and game messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent. */
   editMessageText(args: {
+    /** Unique identifier of the business connection on behalf of which the message to be edited was sent */
+    business_connection_id?: string;
     /** Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername) */
     chat_id?: number | string;
     /** Required if inline_message_id is not specified. Identifier of the message to edit */
@@ -1381,8 +1391,10 @@ export type ApiMethods<F> = {
     reply_markup?: InlineKeyboardMarkup;
   }): (Update.Edited & Message.TextMessage) | true;
 
-  /** Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. */
+  /** Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent. */
   editMessageCaption(args: {
+    /** Unique identifier of the business connection on behalf of which the message to be edited was sent */
+    business_connection_id?: string;
     /** Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername) */
     chat_id?: number | string;
     /** Required if inline_message_id is not specified. Identifier of the message to edit */
@@ -1401,8 +1413,10 @@ export type ApiMethods<F> = {
     reply_markup?: InlineKeyboardMarkup;
   }): (Update.Edited & Message.CaptionableMessage) | true;
 
-  /** Use this method to edit animation, audio, document, photo, or video messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo or a video otherwise. When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. */
+  /** Use this method to edit animation, audio, document, photo, or video messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo or a video otherwise. When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent. */
   editMessageMedia(args: {
+    /** Unique identifier of the business connection on behalf of which the message to be edited was sent */
+    business_connection_id?: string;
     /** Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername) */
     chat_id?: number | string;
     /** Required if inline_message_id is not specified. Identifier of the message to edit */
@@ -1415,8 +1429,10 @@ export type ApiMethods<F> = {
     reply_markup?: InlineKeyboardMarkup;
   }): (Update.Edited & Message) | true;
 
-  /** Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. */
+  /** Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent. */
   editMessageReplyMarkup(args: {
+    /** Unique identifier of the business connection on behalf of which the message to be edited was sent */
+    business_connection_id?: string;
     /** Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername) */
     chat_id?: number | string;
     /** Required if inline_message_id is not specified. Identifier of the message to edit */
@@ -1429,6 +1445,8 @@ export type ApiMethods<F> = {
 
   /** Use this method to stop a poll which was sent by the bot. On success, the stopped Poll is returned. */
   stopPoll(args: {
+    /** Unique identifier of the business connection on behalf of which the message to be edited was sent */
+    business_connection_id?: string;
     /** Unique identifier for the target chat or username of the target channel (in the format @channelusername) */
     chat_id: number | string;
     /** Identifier of the original message with the poll */
@@ -1778,6 +1796,14 @@ export type ApiMethods<F> = {
     /** Required if ok is False. Error message in human readable form that explains the reason for failure to proceed with the checkout (e.g. "Sorry, somebody just bought the last of our amazing black T-shirts while you were busy filling out your payment details. Please choose a different color or garment!"). Telegram will display this message to the user. */
     error_message?: string;
   }): true;
+
+  /** Returns the bot's Telegram Star transactions in chronological order. On success, returns a StarTransactions object. */
+  getStarTransactions(args: {
+    /** Number of transactions to skip in the response */
+    offset?: number;
+    /** The maximum number of transactions to be retrieved. Values between 1-100 are accepted. Defaults to 100. */
+    limit?: number;
+  }): StarTransactions;
 
   /** Refunds a successful payment in Telegram Stars. Returns True on success. */
   refundStarPayment(args: {

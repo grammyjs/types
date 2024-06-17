@@ -107,3 +107,87 @@ export interface PreCheckoutQuery {
   /** Order information provided by the user */
   order_info?: OrderInfo;
 }
+
+/** This object describes the state of a revenue withdrawal operation. Currently, it can be one of
+
+- RevenueWithdrawalStatePending
+- RevenueWithdrawalStateSucceeded
+- RevenueWithdrawalStateFailed */
+export type RevenueWithdrawalState =
+  | RevenueWithdrawalStatePending
+  | RevenueWithdrawalStateSucceeded
+  | RevenueWithdrawalStateFailed;
+
+/** The withdrawal is in progress. */
+export interface RevenueWithdrawalStatePending {
+  /** Type of the state, always “pending” */
+  type: "pending";
+}
+
+/** The withdrawal succeeded. */
+export interface RevenueWithdrawalStateSucceeded {
+  /** Type of the state, always “succeeded” */
+  type: "succeeded";
+  /** Date the withdrawal was completed in Unix time */
+  date: number;
+  /** An HTTPS URL that can be used to see transaction details */
+  url: string;
+}
+
+/** The withdrawal failed and the transaction was refunded. */
+export interface RevenueWithdrawalStateFailed {
+  /** Type of the state, always “failed” */
+  type: "failed";
+}
+
+/** This object describes the source of a transaction, or its recipient for outgoing transactions. Currently, it can be one of
+
+- TransactionPartnerFragment
+- TransactionPartnerUser
+- TransactionPartnerOther */
+export type TransactionPartner =
+  | TransactionPartnerFragment
+  | TransactionPartnerUser
+  | TransactionPartnerOther;
+
+/** Describes a withdrawal transaction with Fragment. */
+export interface TransactionPartnerFragment {
+  /** Type of the transaction partner, always “fragment” */
+  type: "fragment";
+  /** State of the transaction if the transaction is outgoing */
+  withdrawal_state?: RevenueWithdrawalState;
+}
+
+/** Describes a transaction with a user. */
+export interface TransactionPartnerUser {
+  /** Type of the transaction partner, always “user” */
+  type: "user";
+  /** Information about the user */
+  user: User;
+}
+
+/** Describes a transaction with an unknown source or recipient. */
+export interface TransactionPartnerOther {
+  /** Type of the transaction partner, always “other” */
+  type: "other";
+}
+
+/** Describes a Telegram Star transaction. */
+export interface StarTransaction {
+  /** Unique identifier of the transaction. Coincides with the identifer of the original transaction for refund transactions. Coincides with SuccessfulPayment.telegram_payment_charge_id for successful incoming payments from users. */
+  id: string;
+  /** Number of Telegram Stars transferred by the transaction */
+  amount: number;
+  /** Date the transaction was created in Unix time */
+  date: number;
+  /** Source of an incoming transaction (e.g., a user purchasing goods or services, Fragment refunding a failed withdrawal). Only for incoming transactions */
+  source?: TransactionPartner;
+  /** Receiver of an outgoing transaction (e.g., a user for a purchase refund, Fragment for a withdrawal). Only for outgoing transactions */
+  receiver?: TransactionPartner;
+}
+
+/** Contains a list of Telegram Star transactions. */
+export interface StarTransactions {
+  /** The list of transactions */
+  transactions: StarTransaction[];
+}
