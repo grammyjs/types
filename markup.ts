@@ -17,7 +17,7 @@ export declare namespace InlineKeyboardButton {
     url: string;
   }
   export interface CallbackButton extends AbstractInlineKeyboardButton {
-    /** Data to be sent in a callback query to the bot when button is pressed, 1-64 bytes. Not supported for messages sent on behalf of a Telegram Business account. */
+    /** Data to be sent in a callback query to the bot when the button is pressed, 1-64 bytes */
     callback_data: string;
   }
   export interface WebAppButton extends AbstractInlineKeyboardButton {
