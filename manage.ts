@@ -230,6 +230,8 @@ export declare namespace ChatFullInfo {
     linked_chat_id?: undefined;
     /** For supergroups, the location to which the supergroup is connected */
     location?: undefined;
+    /** True, if paid media messages can be sent or forwarded to the channel chat. The field is available only for channel chats. */
+    can_send_paid_media?: undefined;
   }
   /** Internal type for group chats */
   export interface GroupChat {
@@ -319,6 +321,8 @@ export declare namespace ChatFullInfo {
     linked_chat_id?: undefined;
     /** For supergroups, the location to which the supergroup is connected */
     location?: undefined;
+    /** True, if paid media messages can be sent or forwarded to the channel chat. The field is available only for channel chats. */
+    can_send_paid_media?: undefined;
   }
   /** Internal type for supergroup chats */
   export interface SupergroupChat {
@@ -408,6 +412,8 @@ export declare namespace ChatFullInfo {
     linked_chat_id?: number;
     /** For supergroups, the location to which the supergroup is connected */
     location?: ChatLocation;
+    /** True, if paid media messages can be sent or forwarded to the channel chat. The field is available only for channel chats. */
+    can_send_paid_media?: undefined;
   }
   /** Internal type for channel chats */
   export interface ChannelChat {
@@ -497,6 +503,8 @@ export declare namespace ChatFullInfo {
     linked_chat_id?: number;
     /** For supergroups, the location to which the supergroup is connected */
     location?: undefined;
+    /** True, if paid media messages can be sent or forwarded to the channel chat. The field is available only for channel chats. */
+    can_send_paid_media?: true;
   }
 }
 

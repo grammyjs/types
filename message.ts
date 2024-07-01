@@ -88,8 +88,9 @@ export declare namespace Message {
   export type DiceMessage = CommonMessage & MsgWith<"dice">;
   export type GameMessage = CommonMessage & MsgWith<"game">;
   export type PollMessage = CommonMessage & MsgWith<"poll">;
-  export type LocationMessage = CommonMessage & MsgWith<"location">;
   export type VenueMessage = LocationMessage & MsgWith<"venue">;
+  export type LocationMessage = CommonMessage & MsgWith<"location">;
+  export type PaidMediaMessage = CommonMessage & MsgWith<"paid_media">;
   export type NewChatMembersMessage =
     & ServiceMessage
     & MsgWith<"new_chat_members">;
@@ -222,6 +223,8 @@ export interface Message extends Message.MediaMessage {
   venue?: Venue;
   /** Message is a shared location, information about the location */
   location?: Location;
+  /** Message contains paid media; information about the paid media */
+  paid_media?: PaidMediaInfo;
   /** New members that were added to the group or supergroup and information about them (the bot itself may be one of these members) */
   new_chat_members?: User[];
   /** A member was removed from the group, information about them (this member may be the bot itself) */
@@ -561,6 +564,8 @@ export interface ExternalReplyInfo {
   invoice?: Invoice;
   /** Message is a shared location, information about the location */
   location?: Location;
+  /** Message contains paid media; information about the paid media */
+  paid_media?: PaidMediaInfo;
   /** Message is a native poll, information about the poll */
   poll?: Poll;
   /** Message is a venue, information about the venue */
@@ -877,6 +882,52 @@ export interface Location {
   heading?: number;
   /** The maximum distance for proximity alerts about approaching another chat member, in meters. For sent live locations only. */
   proximity_alert_radius?: number;
+}
+
+/** Describes the paid media added to a message. */
+export interface PaidMediaInfo {
+  /** The number of Telegram Stars that must be paid to buy access to the media */
+  star_count: number;
+  /** Information about the paid media */
+  paid_media: PaidMedia[];
+}
+
+/** This object describes paid media. Currently, it can be one of
+
+- PaidMediaPreview
+- PaidMediaPhoto
+- PaidMediaVideo */
+export type PaidMedia =
+  | PaidMediaPreview
+  | PaidMediaPhoto
+  | PaidMediaVideo;
+
+/** The paid media isn't available before the payment. */
+export interface PaidMediaPreview {
+  /** Type of the paid media, always “preview” */
+  type: "preview";
+  /** Media width as defined by the sender */
+  width?: number;
+  /** Media height as defined by the sender */
+  height?: number;
+  /** Duration of the media in seconds as defined by the sender */
+  duration?: number;
+}
+
+/** The paid media is a photo. */
+export interface PaidMediaPhoto {
+  /** Type of the paid media, always “photo” */
+  type: "photo";
+  /** The photo */
+  photo: PhotoSize[];
+}
+
+/** The paid media is a video. */
+export interface PaidMediaVideo {
+  /** Type of the paid media, always “video” */
+  type: "video";
+  /** The video */
+  video: Video;
 }
 
 /** This object represents a venue. */
