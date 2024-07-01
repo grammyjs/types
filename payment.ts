@@ -142,13 +142,25 @@ export interface RevenueWithdrawalStateFailed {
 
 /** This object describes the source of a transaction, or its recipient for outgoing transactions. Currently, it can be one of
 
-- TransactionPartnerFragment
 - TransactionPartnerUser
+- TransactionPartnerFragment
+- TransactionPartnerTelegramAds
 - TransactionPartnerOther */
 export type TransactionPartner =
-  | TransactionPartnerFragment
   | TransactionPartnerUser
+  | TransactionPartnerFragment
+  | TransactionPartnerTelegramAds
   | TransactionPartnerOther;
+
+/** Describes a transaction with a user. */
+export interface TransactionPartnerUser {
+  /** Type of the transaction partner, always “user” */
+  type: "user";
+  /** Information about the user */
+  user: User;
+  /** Bot-specified invoice payload */
+  invoice_payload?: string;
+}
 
 /** Describes a withdrawal transaction with Fragment. */
 export interface TransactionPartnerFragment {
@@ -158,12 +170,10 @@ export interface TransactionPartnerFragment {
   withdrawal_state?: RevenueWithdrawalState;
 }
 
-/** Describes a transaction with a user. */
-export interface TransactionPartnerUser {
-  /** Type of the transaction partner, always “user” */
-  type: "user";
-  /** Information about the user */
-  user: User;
+/** Describes a withdrawal transaction to the Telegram Ads platform. */
+export interface TransactionPartnerTelegramAds {
+  /** Type of the transaction partner, always “telegram_ads” */
+  type: "telegram_ads";
 }
 
 /** Describes a transaction with an unknown source or recipient. */

@@ -197,7 +197,7 @@ export type ApiMethods<F> = {
     protect_content?: boolean;
   }): MessageId[];
 
-  /** Use this method to copy messages of any kind. Service messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success. */
+  /** Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success. */
   copyMessage(args: {
     /** Unique identifier for the target chat or username of the target channel (in the format @channelusername) */
     chat_id: number | string;
@@ -231,7 +231,7 @@ export type ApiMethods<F> = {
     reply_to_message_id?: number;
   }): MessageId;
 
-  /** Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they are skipped. Service messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessages, but the copied messages don't have a link to the original message. Album grouping is kept for copied messages. On success, an array of MessageId of the sent messages is returned. */
+  /** Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessages, but the copied messages don't have a link to the original message. Album grouping is kept for copied messages. On success, an array of MessageId of the sent messages is returned. */
   copyMessages(args: {
     /** Unique identifier for the target chat or username of the target channel (in the format @channelusername) */
     chat_id: number | string;
@@ -643,6 +643,36 @@ export type ApiMethods<F> = {
     /** An object for a new inline keyboard. */
     reply_markup?: InlineKeyboardMarkup;
   }): (Update.Edited & Message.LocationMessage) | true;
+
+  /** Use this method to send paid media to channel chats. On success, the sent Message is returned. */
+  sendPaidMedia(args: {
+    /** Unique identifier for the target chat or username of the target channel (in the format @channelusername) */
+    chat_id: number | string;
+    /** The number of Telegram Stars that must be paid to buy access to the media */
+    star_count: number;
+    /** An array describing the media to be sent; up to 10 items */
+    media: InputPaidMedia<F>[];
+    /** Media caption, 0-1024 characters after entities parsing */
+    caption?: string;
+    /** Mode for parsing entities in the media caption. See formatting options for more details. */
+    parse_mode?: string;
+    /** A list of special entities that appear in the caption, which can be specified instead of parse_mode */
+    caption_entities?: MessageEntity[];
+    /** Pass True, if the caption must be shown above the message media */
+    show_caption_above_media?: boolean;
+    /** Sends the message silently. Users will receive a notification with no sound. */
+    disable_notification?: boolean;
+    /** Protects the contents of the sent message from forwarding and saving */
+    protect_content?: boolean;
+    /** Description of the message to reply to */
+    reply_parameters?: ReplyParameters;
+    /** Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user */
+    reply_markup?:
+      | InlineKeyboardMarkup
+      | ReplyKeyboardMarkup
+      | ReplyKeyboardRemove
+      | ForceReply;
+  }): Message.PaidMediaMessage;
 
   /** Use this method to send information about a venue. On success, the sent Message is returned. */
   sendVenue(args: {
@@ -2017,4 +2047,36 @@ export interface InputMediaDocument<F> {
   caption_entities?: MessageEntity[];
   /** Disables automatic server-side content type detection for files uploaded using multipart/form-data. Always true, if the document is sent as part of an album. */
   disable_content_type_detection?: boolean;
+}
+
+/** This object describes the paid media to be sent. Currently, it can be one of
+
+- InputPaidMediaPhoto
+- InputPaidMediaVideo */
+export type InputPaidMedia<F> = InputMediaPhoto<F> | InputPaidMediaVideo<F>;
+
+/** The paid media to send is a photo. */
+export interface InputPaidMediaPhoto<F> {
+  /** Type of the media, must be photo */
+  type: "photo";
+  /** File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. More information on Sending Files » */
+  media: F | string;
+}
+
+/** The paid media to send is a video. */
+export interface InputPaidMediaVideo<F> {
+  /** Type of the media, must be video */
+  type: "video";
+  /** File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. More information on Sending Files » */
+  media: F | string;
+  /** Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More information on Sending Files » */
+  thumbnail?: F | string;
+  /** Video width */
+  width?: number;
+  /** Video height */
+  height?: number;
+  /** Video duration in seconds */
+  duration?: number;
+  /** Pass True if the uploaded video is suitable for streaming */
+  supports_streaming?: boolean;
 }
