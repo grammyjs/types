@@ -78,6 +78,20 @@ export interface SuccessfulPayment {
   provider_payment_charge_id: string;
 }
 
+/** This object contains basic information about a refunded payment. */
+export interface RefundedPayment {
+  /** Three-letter ISO 4217 currency code, or “XTR” for payments in Telegram Stars. Currently, always “XTR” */
+  currency: string;
+  /** Total refunded price in the smallest units of the currency (integer, not float/double). For example, for a price of US$ 1.45, total_amount = 145. See the exp parameter in currencies.json, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). */
+  total_amount: number;
+  /** Bot-specified invoice payload */
+  invoice_payload: string;
+  /** Telegram payment identifier */
+  telegram_payment_charge_id: string;
+  /** Provider payment identifier */
+  provider_payment_charge_id?: string;
+}
+
 /** This object contains information about an incoming shipping query. */
 export interface ShippingQuery {
   /** Unique query identifier */

@@ -125,6 +125,9 @@ export declare namespace Message {
   export type SuccessfulPaymentMessage =
     & ServiceMessage
     & MsgWith<"successful_payment">;
+  export type RefundedPaymentMessage =
+    & ServiceMessage
+    & MsgWith<"refunded_payment">;
   export type UsersSharedMessage = ServiceMessage & MsgWith<"users_shared">;
   export type ChatSharedMessage = ServiceMessage & MsgWith<"chat_shared">;
   export type ConnectedWebsiteMessage =
@@ -253,6 +256,8 @@ export interface Message extends Message.MediaMessage {
   invoice?: Invoice;
   /** Message is a service message about a successful payment, information about the payment. More about payments » */
   successful_payment?: SuccessfulPayment;
+  /** Message is a service message about a refunded payment, information about the payment. More about payments » */
+  refunded_payment?: RefundedPayment;
   /** Service message: users were shared with the bot */
   users_shared?: UsersShared;
   /** Service message: a chat was shared with the bot */
