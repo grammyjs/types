@@ -2,7 +2,7 @@
 import type { Chat, User } from "./manage.ts";
 import type { InlineKeyboardMarkup } from "./markup.ts";
 import type { PassportData } from "./passport.ts";
-import type { Invoice, SuccessfulPayment } from "./payment.ts";
+import type { Invoice, RefundedPayment, SuccessfulPayment } from "./payment.ts";
 
 type MsgWith<P extends keyof Message> = Record<P, NonNullable<Message[P]>>;
 
