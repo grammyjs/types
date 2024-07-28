@@ -17,7 +17,7 @@ In fact, this pattern is used for various types, namely:
 
 - `CallbackQuery`
 - `Chat`
-- `ChatFromGetChat`
+- `ChatFullInfo`
 - `InlineKeyboardButton`
 - `KeyboardButton`
 - `Message`
