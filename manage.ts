@@ -240,7 +240,7 @@ export declare namespace ChatFullInfo {
     /** Type of the chat, can be either “private”, “group”, “supergroup” or “channel” */
     type: "group";
     /** Title, for supergroups, channels and group chats */
-    title?: string;
+    title: string;
     /**  Username, for private chats, supergroups and channels if available */
     username?: undefined;
     /**  First name of the other party in a private chat */
@@ -331,7 +331,7 @@ export declare namespace ChatFullInfo {
     /** Type of the chat, can be either “private”, “group”, “supergroup” or “channel” */
     type: "supergroup";
     /** Title, for supergroups, channels and group chats */
-    title?: string;
+    title: string;
     /**  Username, for private chats, supergroups and channels if available */
     username?: string;
     /**  First name of the other party in a private chat */
@@ -422,7 +422,7 @@ export declare namespace ChatFullInfo {
     /** Type of the chat, can be either “private”, “group”, “supergroup” or “channel” */
     type: "channel";
     /** Title, for supergroups, channels and group chats */
-    title?: string;
+    title: string;
     /**  Username, for private chats, supergroups and channels if available */
     username?: string;
     /**  First name of the other party in a private chat */
