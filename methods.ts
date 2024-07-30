@@ -1097,6 +1097,8 @@ export type ApiMethods<F> = {
 
   /** Use this method to add a message to the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' admin right in a supergroup or 'can_edit_messages' admin right in a channel. Returns True on success. */
   pinChatMessage(args: {
+    /** Unique identifier of the business connection on behalf of which the message will be pinned */
+    business_connection_id?: string;
     /** Unique identifier for the target chat or username of the target channel (in the format @channelusername) */
     chat_id: number | string;
     /** Identifier of a message to pin */
@@ -1107,9 +1109,11 @@ export type ApiMethods<F> = {
 
   /** Use this method to remove a message from the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' admin right in a supergroup or 'can_edit_messages' admin right in a channel. Returns True on success. */
   unpinChatMessage(args: {
+    /** Unique identifier of the business connection on behalf of which the message will be unpinned */
+    business_connection_id?: string;
     /** Unique identifier for the target chat or username of the target channel (in the format @channelusername) */
     chat_id: number | string;
-    /** Identifier of a message to unpin. If not specified, the most recent pinned message (by sending date) will be unpinned. */
+    /** Identifier of the message to unpin. Required if business_connection_id is specified. If not specified, the most recent pinned message (by sending date) will be unpinned. */
     message_id?: number;
   }): true;
 

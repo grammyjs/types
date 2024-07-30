@@ -60,7 +60,9 @@ export interface UserFromGetMe extends User {
   /** True, if the bot supports inline queries. Returned only in getMe. */
   supports_inline_queries: boolean;
   /** True, if the bot can be connected to a Telegram Business account to receive its messages. Returned only in getMe. */
-  can_connect_to_business?: boolean;
+  can_connect_to_business: boolean;
+  /** True, if the bot has main Web App. Returned only in getMe. */
+  has_main_web_app: boolean;
 }
 
 export declare namespace Chat {
