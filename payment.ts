@@ -1,4 +1,5 @@
 import type { User } from "./manage.ts";
+import type { PaidMedia } from "./message.ts";
 
 /** This object represents a portion of the price for goods or services. */
 export interface LabeledPrice {
@@ -174,6 +175,8 @@ export interface TransactionPartnerUser {
   user: User;
   /** Bot-specified invoice payload */
   invoice_payload?: string;
+  /** Information about the paid media bought by the user */
+  paid_media?: PaidMedia[];
 }
 
 /** Describes a withdrawal transaction with Fragment. */

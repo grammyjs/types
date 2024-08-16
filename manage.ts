@@ -690,6 +690,8 @@ export interface ChatMemberMember {
   status: "member";
   /** Information about the user */
   user: User;
+  /** Date when the user's subscription will expire; Unix time */
+  until_date?: number;
 }
 
 /** Represents a chat member that is under certain restrictions in the chat. Supergroups only. */
