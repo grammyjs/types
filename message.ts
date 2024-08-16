@@ -1363,7 +1363,6 @@ export interface File {
 export type ReactionType =
   | ReactionTypeEmoji
   | ReactionTypeCustomEmoji
-  | ReactionTypePaid
   | ReactionTypePaid;
 
 /** The reaction is based on an emoji. */
