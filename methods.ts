@@ -1055,7 +1055,7 @@ export type ApiMethods<F> = {
     subscription_price: number;
   }): ChatInviteLink;
 
-  /** Use this method to edit a subscription invite link created by the bot. The bot must have the can_invite_users administrator rights. Returns the edited invite link as a ChatInviteLink object.*/
+  /** Use this method to edit a subscription invite link created by the bot. The bot must have the can_invite_users administrator rights. Returns the edited invite link as a ChatInviteLink object. */
   editChatSubscriptionInviteLink(args: {
     /** Unique identifier for the target chat or username of the target channel (in the format @channelusername) */
     chat_id: number | string;
