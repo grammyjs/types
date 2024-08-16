@@ -12,9 +12,9 @@ export declare namespace Message {
     message_id: number;
     /** Unique identifier of a message thread or a forum topic to which the message belongs; for supergroups only */
     message_thread_id?: number;
-    /** Sender of the message; empty for messages sent to channels. For backward compatibility, the field contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat. */
+    /** Sender of the message; may be empty for messages sent to channels. For backward compatibility, if the message was sent on behalf of a chat, the field contains a fake sender user in non-channel chats */
     from?: User;
-    /** Sender of the message, sent on behalf of a chat. For example, the channel itself for channel posts, the supergroup itself for messages from anonymous group administrators, the linked channel for messages automatically forwarded to the discussion group. For backward compatibility, the field from contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat. */
+    /** Sender of the message when sent on behalf of a chat. For example, the supergroup itself for messages sent by its anonymous administrators or a linked channel for messages automatically forwarded to the channel's discussion group. For backward compatibility, if the message was sent on behalf of a chat, the field from contains a fake sender user in non-channel chats. */
     sender_chat?: Chat;
     /** Date the message was sent in Unix time. It is always a positive number, representing a valid date. */
     date: number;
@@ -191,6 +191,7 @@ export declare namespace Message {
 
 type ReplyMessage = Message & { reply_to_message: undefined };
 
+/** This object represents a message. */
 export interface Message extends Message.MediaMessage {
   /** For text messages, the actual UTF-8 text of the message */
   text?: string;
@@ -1357,8 +1358,13 @@ export interface File {
 /** This object describes the type of a reaction. Currently, it can be one of
 
 - ReactionTypeEmoji
-- ReactionTypeCustomEmoji */
-export type ReactionType = ReactionTypeEmoji | ReactionTypeCustomEmoji;
+- ReactionTypeCustomEmoji
+- ReactionTypePaid */
+export type ReactionType =
+  | ReactionTypeEmoji
+  | ReactionTypeCustomEmoji
+  | ReactionTypePaid
+  | ReactionTypePaid;
 
 /** The reaction is based on an emoji. */
 export interface ReactionTypeEmoji {
@@ -1447,6 +1453,12 @@ export interface ReactionTypeCustomEmoji {
   type: "custom_emoji";
   /** Custom emoji identifier */
   custom_emoji_id: string;
+}
+
+/** The reaction is paid. */
+export interface ReactionTypePaid {
+  /** Type of the reaction, always “paid” */
+  type: "paid";
 }
 
 /** Represents a reaction added to a message along with the number of times it was added. */

@@ -644,9 +644,11 @@ export type ApiMethods<F> = {
     reply_markup?: InlineKeyboardMarkup;
   }): (Update.Edited & Message.LocationMessage) | true;
 
-  /** Use this method to send paid media to channel chats. On success, the sent Message is returned. */
+  /** Use this method to send paid media. On success, the sent Message is returned. */
   sendPaidMedia(args: {
-    /** Unique identifier for the target chat or username of the target channel (in the format @channelusername) */
+    /** Unique identifier of the business connection on behalf of which the message to be edited was sent */
+    business_connection_id?: string;
+    /** Unique identifier for the target chat or username of the target channel (in the format @channelusername). If the chat is a channel, all Telegram Star proceeds from this media will be credited to the chat's balance. Otherwise, they will be credited to the bot's balance. */
     chat_id: number | string;
     /** The number of Telegram Stars that must be paid to buy access to the media */
     star_count: number;
@@ -859,13 +861,13 @@ export type ApiMethods<F> = {
     message_thread_id?: number;
   }): true;
 
-  /** Use this method to change the chosen reactions on a message. Service messages can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. In albums, bots must react to the first message. Returns True on success. */
+  /** Use this method to change the chosen reactions on a message. Service messages can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can't use paid reactions. Returns True on success. */
   setMessageReaction(args: {
     /** Unique identifier for the target chat or username of the target channel (in the format @channelusername) */
     chat_id: number | string;
     /** Identifier of the target message */
     message_id: number;
-    /** A list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators. */
+    /** A list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators. Paid reactions can't be used by bots. */
     reaction?: ReactionType[];
     /** Pass True to set the reaction with a big animation */
     is_big?: boolean;
@@ -1041,6 +1043,28 @@ export type ApiMethods<F> = {
     creates_join_request?: boolean;
   }): ChatInviteLink;
 
+  /** Use this method to create a subscription invite link for a channel chat. The bot must have the can_invite_users administrator rights. The link can be edited using the method editChatSubscriptionInviteLink or revoked using the method revokeChatInviteLink. Returns the new invite link as a ChatInviteLink object. */
+  createChatSubscriptionInviteLink(args: {
+    /** Unique identifier for the target channel chat or username of the target channel (in the format @channelusername) */
+    chat_id: number | string;
+    /** Invite link name; 0-32 characters */
+    name?: string;
+    /** The number of seconds the subscription will be active for before the next payment. Currently, it must always be 2592000 (30 days). */
+    subscription_period: number;
+    /** The amount of Telegram Stars a user must pay initially and after each subsequent subscription period to be a member of the chat; 1-2500 */
+    subscription_price: number;
+  }): ChatInviteLink;
+
+  /** Use this method to edit a subscription invite link created by the bot. The bot must have the can_invite_users administrator rights. Returns the edited invite link as a ChatInviteLink object.*/
+  editChatSubscriptionInviteLink(args: {
+    /** Unique identifier for the target chat or username of the target channel (in the format @channelusername) */
+    chat_id: number | string;
+    /** The invite link to edit */
+    invite_link: string;
+    /** Invite link name; 0-32 characters */
+    name?: string;
+  }): ChatInviteLink;
+
   /** Use this method to revoke an invite link created by the bot. If the primary link is revoked, a new link is automatically generated. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the revoked invite link as ChatInviteLink object. */
   revokeChatInviteLink(args: {
     /** Unique identifier of the target chat or username of the target channel (in the format @channelusername) */
@@ -1193,7 +1217,7 @@ export type ApiMethods<F> = {
     icon_custom_emoji_id?: string;
   }): ForumTopic;
 
-  /** Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success. */
+  /** Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success. */
   editForumTopic(args: {
     /** Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername) */
     chat_id: number | string;
@@ -1237,7 +1261,7 @@ export type ApiMethods<F> = {
     message_thread_id: number;
   }): true;
 
-  /** Use this method to edit the name of the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have can_manage_topics administrator rights. Returns True on success. */
+  /** Use this method to edit the name of the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns True on success. */
   editGeneralForumTopic(args: {
     /** Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername) */
     chat_id: number | string;
