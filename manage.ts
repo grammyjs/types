@@ -559,6 +559,10 @@ export interface ChatInviteLink {
   member_limit?: number;
   /** Number of pending join requests created using this link */
   pending_join_request_count?: number;
+  /** The number of seconds the subscription will be active for before the next payment */
+  subscription_period?: number;
+  /** The amount of Telegram Stars a user must pay initially and after each subsequent subscription period to be a member of the chat using the link */
+  subscription_price?: number;
 }
 
 /** Represents the rights of an administrator in a chat. */

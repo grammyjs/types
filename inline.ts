@@ -679,7 +679,7 @@ export interface InputInvoiceMessageContent {
   title: string;
   /** Product description, 1-255 characters */
   description: string;
-  /** Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use for your internal processes. */
+  /** Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use it for your internal processes. */
   payload: string;
   /** Payment provider token, obtained via @BotFather. Pass an empty string for payments in Telegram Stars. */
   provider_token?: string;
