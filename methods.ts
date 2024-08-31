@@ -654,6 +654,8 @@ export type ApiMethods<F> = {
     star_count: number;
     /** An array describing the media to be sent; up to 10 items */
     media: InputPaidMedia<F>[];
+    /** Bot-defined paid media payload, 0-128 bytes. This will not be displayed to the user, use it for your internal processes. */
+    payload?: string;
     /** Media caption, 0-1024 characters after entities parsing */
     caption?: string;
     /** Mode for parsing entities in the media caption. See formatting options for more details. */

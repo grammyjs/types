@@ -177,6 +177,8 @@ export interface TransactionPartnerUser {
   invoice_payload?: string;
   /** Information about the paid media bought by the user */
   paid_media?: PaidMedia[];
+  /** Bot-specified paid media payload */
+  paid_media_payload?: string;
 }
 
 /** Describes a withdrawal transaction with Fragment. */
@@ -217,4 +219,12 @@ export interface StarTransaction {
 export interface StarTransactions {
   /** The list of transactions */
   transactions: StarTransaction[];
+}
+
+/** This object contains information about a paid media purchase. */
+export interface PaidMediaPurchased {
+  /** User who purchased the media */
+  from: User;
+  /** Bot-specified paid media payload */
+  paid_media_payload: string;
 }
