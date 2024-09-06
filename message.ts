@@ -1189,7 +1189,7 @@ export interface VideoChatParticipantsInvited {
 /** This object represents a service message about the creation of a scheduled giveaway. */
 export interface GiveawayCreated {
   /** The number of Telegram Stars to be split between giveaway winners; for Telegram Star giveaways only */
-  prize_star_count: number;
+  prize_star_count?: number;
 }
 
 /** This object represents a message about a scheduled giveaway. */
