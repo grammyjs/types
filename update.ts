@@ -17,7 +17,11 @@ import type {
   Poll,
   PollAnswer,
 } from "./message.ts";
-import type { PreCheckoutQuery, ShippingQuery } from "./payment.ts";
+import type {
+  PaidMediaPurchased,
+  PreCheckoutQuery,
+  ShippingQuery,
+} from "./payment.ts";
 
 /** Internal namespace used to make some message types more accurate */
 export declare namespace Update {
@@ -90,4 +94,6 @@ export interface Update {
   chat_boost?: ChatBoostUpdated;
   /** A boost was removed from a chat. The bot must be an administrator in the chat to receive these updates. */
   removed_chat_boost?: ChatBoostRemoved;
+  /** A user purchased paid media with a non-empty payload sent by the bot in a non-channel chat */
+  purchased_paid_media?: PaidMediaPurchased;
 }

@@ -1186,8 +1186,11 @@ export interface VideoChatParticipantsInvited {
   users: User[];
 }
 
-/** This object represents a service message about the creation of a scheduled giveaway. Currently holds no information. */
-export interface GiveawayCreated {}
+/** This object represents a service message about the creation of a scheduled giveaway. */
+export interface GiveawayCreated {
+  /** The number of Telegram Stars to be split between giveaway winners; for Telegram Star giveaways only */
+  prize_star_count?: number;
+}
 
 /** This object represents a message about a scheduled giveaway. */
 export interface Giveaway {
@@ -1205,7 +1208,9 @@ export interface Giveaway {
   prize_description?: string;
   /** A list of two-letter ISO 3166-1 alpha-2 country codes indicating the countries from which eligible users for the giveaway must come. If empty, then all users can participate in the giveaway. Users with a phone number that was bought on Fragment can always participate in giveaways. */
   country_codes?: string[];
-  /** The number of months the Telegram Premium subscription won from the giveaway will be active for */
+  /** The number of Telegram Stars to be split between giveaway winners; for Telegram Star giveaways only */
+  prize_star_count?: number;
+  /** The number of months the Telegram Premium subscription won from the giveaway will be active for; for Telegram Premium giveaways only */
   premium_subscription_month_count?: number;
 }
 
@@ -1223,7 +1228,9 @@ export interface GiveawayWinners {
   winners: User[];
   /** The number of other chats the user had to join in order to be eligible for the giveaway */
   additional_chat_count?: number;
-  /** The number of months the Telegram Premium subscription won from the giveaway will be active for */
+  /** The number of Telegram Stars that were split between giveaway winners; for Telegram Star giveaways only */
+  prize_star_count?: number;
+  /** The number of months the Telegram Premium subscription won from the giveaway will be active for; for Telegram Premium giveaways only */
   premium_subscription_month_count?: number;
   /** Number of undistributed prizes */
   unclaimed_prize_count?: number;
@@ -1243,6 +1250,8 @@ export interface GiveawayCompleted {
   unclaimed_prize_count?: number;
   /** Message with the giveaway that was completed, if it wasn't deleted */
   giveaway_message?: Message;
+  /** True, if the giveaway is a Telegram Star giveaway. Otherwise, currently, the giveaway is a Telegram Premium giveaway. */
+  is_star_giveaway?: true;
 }
 
 /** Describes the options used for link preview generation. */
