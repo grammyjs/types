@@ -902,7 +902,7 @@ export interface ChatBoostSourceGiftCode {
   user: User;
 }
 
-/** The boost was obtained by the creation of a Telegram Premium or a Telegram Star giveaway. This boosts the chat 4 times for the duration of the corresponding Telegram Premium subscription for Telegram Premium giveaways and ??? times for one year for Telegram Star giveaways. */
+/** The boost was obtained by the creation of a Telegram Premium or a Telegram Star giveaway. This boosts the chat 4 times for the duration of the corresponding Telegram Premium subscription for Telegram Premium giveaways and prize_star_count / 500 times for one year for Telegram Star giveaways. */
 export interface ChatBoostSourceGiveaway {
   /** Source of the boost, always “giveaway” */
   source: "giveaway";
