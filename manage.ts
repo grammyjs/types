@@ -910,10 +910,10 @@ export interface ChatBoostSourceGiveaway {
   giveaway_message_id: number;
   /** User that won the prize in the giveaway if any; for Telegram Premium giveaways only */
   user?: User;
-  /** True, if the giveaway was completed, but there was no user to win the prize */
-  is_unclaimed?: true;
   /** The number of Telegram Stars to be split between giveaway winners; for Telegram Star giveaways only */
   prize_star_count?: number;
+  /** True, if the giveaway was completed, but there was no user to win the prize */
+  is_unclaimed?: true;
 }
 
 /** This object contains information about a chat boost. */
