@@ -20,6 +20,10 @@ export declare namespace InlineKeyboardButton {
     /** Data to be sent in a callback query to the bot when the button is pressed, 1-64 bytes */
     callback_data: string;
   }
+  export interface CopyTextButtonButton extends AbstractInlineKeyboardButton {
+    /** Description of the button that copies the specified text to the clipboard. */
+    copy_text: CopyTextButton;
+  }
   export interface WebAppButton extends AbstractInlineKeyboardButton {
     /** Description of the Web App that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method answerWebAppQuery. Available only in private chats between a user and the bot. Not supported for messages sent on behalf of a Telegram Business account. */
     web_app: WebAppInfo;
@@ -61,6 +65,7 @@ export declare namespace InlineKeyboardButton {
 /** This object represents one button of an inline keyboard. You must use exactly one of the optional fields. */
 export type InlineKeyboardButton =
   | InlineKeyboardButton.CallbackButton
+  | InlineKeyboardButton.CopyTextButtonButton
   | InlineKeyboardButton.GameButton
   | InlineKeyboardButton.LoginButton
   | InlineKeyboardButton.PayButton
@@ -214,6 +219,12 @@ export interface ForceReply {
   input_field_placeholder?: string;
   /** Use this parameter if you want to force reply from specific users only. Targets: 1) users that are @mentioned in the text of the Message object; 2) if the bot's message is a reply to a message in the same chat and forum topic, sender of the original message. */
   selective?: boolean;
+}
+
+/** This object represents an inline keyboard button that copies specified text to the clipboard. */
+export interface CopyTextButton {
+  /** The text to be copied to the clipboard; 1-256 characters */
+  text: string;
 }
 
 /** Describes a Web App. */
