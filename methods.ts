@@ -139,8 +139,6 @@ export type ApiMethods<F> = {
     chat_id: number | string;
     /** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
     message_thread_id?: number;
-    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
-    allow_paid_broadcast?: boolean;
     /** Text of the message to be sent, 1-4096 characters after entities parsing */
     text: string;
     /** Mode for parsing entities in the message text. See formatting options for more details. */
@@ -153,6 +151,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
+    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
+    allow_paid_broadcast?: boolean;
     /** Unique identifier of the message effect to be added to the message; for private chats only */
     message_effect_id?: string;
     /** Description of the message to reply to */
@@ -205,8 +205,6 @@ export type ApiMethods<F> = {
     chat_id: number | string;
     /** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
     message_thread_id?: number;
-    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
-    allow_paid_broadcast?: boolean;
     /** Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername) */
     from_chat_id: number | string;
     /** Message identifier in the chat specified in from_chat_id */
@@ -223,6 +221,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
+    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
+    allow_paid_broadcast?: boolean;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
     /** Additional interface options. An object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user. */
@@ -261,8 +261,6 @@ export type ApiMethods<F> = {
     chat_id: number | string;
     /** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
     message_thread_id?: number;
-    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
-    allow_paid_broadcast?: boolean;
     /** Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. The photo must be at most 10 MB in size. The photo's width and height must not exceed 10000 in total. Width and height ratio must be at most 20. */
     photo: F | string;
     /** Photo caption (may also be used when resending photos by file_id), 0-1024 characters after entities parsing */
@@ -279,6 +277,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
+    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
+    allow_paid_broadcast?: boolean;
     /** Unique identifier of the message effect to be added to the message; for private chats only */
     message_effect_id?: string;
     /** Description of the message to reply to */
@@ -303,8 +303,6 @@ export type ApiMethods<F> = {
     chat_id: number | string;
     /** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
     message_thread_id?: number;
-    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
-    allow_paid_broadcast?: boolean;
     /** Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data. */
     audio: F | string;
     /** Audio caption, 0-1024 characters after entities parsing */
@@ -325,6 +323,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
+    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
+    allow_paid_broadcast?: boolean;
     /** Unique identifier of the message effect to be added to the message; for private chats only */
     message_effect_id?: string;
     /** Description of the message to reply to */
@@ -347,8 +347,6 @@ export type ApiMethods<F> = {
     chat_id: number | string;
     /** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
     message_thread_id?: number;
-    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
-    allow_paid_broadcast?: boolean;
     /** File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. */
     document: F | string;
     /** Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass "attach://<file_attach_name>" if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. */
@@ -365,6 +363,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
+    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
+    allow_paid_broadcast?: boolean;
     /** Unique identifier of the message effect to be added to the message; for private chats only */
     message_effect_id?: string;
     /** Description of the message to reply to */
@@ -387,8 +387,6 @@ export type ApiMethods<F> = {
     chat_id: number | string;
     /** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
     message_thread_id?: number;
-    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
-    allow_paid_broadcast?: boolean;
     /** Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data. */
     video: F | string;
     /** Duration of sent video in seconds */
@@ -415,6 +413,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
+    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
+    allow_paid_broadcast?: boolean;
     /** Unique identifier of the message effect to be added to the message; for private chats only */
     message_effect_id?: string;
     /** Description of the message to reply to */
@@ -437,8 +437,6 @@ export type ApiMethods<F> = {
     chat_id: number | string;
     /** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
     message_thread_id?: number;
-    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
-    allow_paid_broadcast?: boolean;
     /** Animation to send. Pass a file_id as String to send an animation that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an animation from the Internet, or upload a new animation using multipart/form-data. */
     animation: F | string;
     /** Duration of sent animation in seconds */
@@ -463,6 +461,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
+    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
+    allow_paid_broadcast?: boolean;
     /** Unique identifier of the message effect to be added to the message; for private chats only */
     message_effect_id?: string;
     /** Description of the message to reply to */
@@ -485,8 +485,6 @@ export type ApiMethods<F> = {
     chat_id: number | string;
     /** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
     message_thread_id?: number;
-    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
-    allow_paid_broadcast?: boolean;
     /** Audio file to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. */
     voice: F | string;
     /** Voice message caption, 0-1024 characters after entities parsing */
@@ -501,6 +499,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
+    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
+    allow_paid_broadcast?: boolean;
     /** Unique identifier of the message effect to be added to the message; for private chats only */
     message_effect_id?: string;
     /** Description of the message to reply to */
@@ -524,8 +524,6 @@ export type ApiMethods<F> = {
     chat_id: number | string;
     /** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
     message_thread_id?: number;
-    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
-    allow_paid_broadcast?: boolean;
     /** Video note to send. Pass a file_id as String to send a video note that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data.. Sending video notes by a URL is currently unsupported */
     video_note: F | string;
     /** Duration of sent video in seconds */
@@ -538,6 +536,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
+    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
+    allow_paid_broadcast?: boolean;
     /** Unique identifier of the message effect to be added to the message; for private chats only */
     message_effect_id?: string;
     /** Description of the message to reply to */
@@ -560,8 +560,6 @@ export type ApiMethods<F> = {
     chat_id: number | string;
     /** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
     message_thread_id?: number;
-    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
-    allow_paid_broadcast?: boolean;
     /** An array describing messages to be sent, must include 2-10 items */
     media: ReadonlyArray<
       | InputMediaAudio<F>
@@ -573,6 +571,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent messages from forwarding and saving */
     protect_content?: boolean;
+    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
+    allow_paid_broadcast?: boolean;
     /** Unique identifier of the message effect to be added to the message; for private chats only */
     message_effect_id?: string;
     /** Description of the message to reply to */
@@ -594,8 +594,6 @@ export type ApiMethods<F> = {
     chat_id: number | string;
     /** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
     message_thread_id?: number;
-    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
-    allow_paid_broadcast?: boolean;
     /** Latitude of the location */
     latitude: number;
     /** Longitude of the location */
@@ -612,6 +610,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
+    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
+    allow_paid_broadcast?: boolean;
     /** Unique identifier of the message effect to be added to the message; for private chats only */
     message_effect_id?: string;
     /** Description of the message to reply to */
@@ -672,8 +672,6 @@ export type ApiMethods<F> = {
     business_connection_id?: string;
     /** Unique identifier for the target chat or username of the target channel (in the format @channelusername). If the chat is a channel, all Telegram Star proceeds from this media will be credited to the chat's balance. Otherwise, they will be credited to the bot's balance. */
     chat_id: number | string;
-    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
-    allow_paid_broadcast?: boolean;
     /** The number of Telegram Stars that must be paid to buy access to the media; 1-2500 */
     star_count: number;
     /** An array describing the media to be sent; up to 10 items */
@@ -692,6 +690,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
+    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
+    allow_paid_broadcast?: boolean;
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
     /** Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user */
@@ -710,8 +710,6 @@ export type ApiMethods<F> = {
     chat_id: number | string;
     /** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
     message_thread_id?: number;
-    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
-    allow_paid_broadcast?: boolean;
     /** Latitude of the venue */
     latitude: number;
     /** Longitude of the venue */
@@ -732,6 +730,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
+    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
+    allow_paid_broadcast?: boolean;
     /** Unique identifier of the message effect to be added to the message; for private chats only */
     message_effect_id?: string;
     /** Description of the message to reply to */
@@ -754,8 +754,6 @@ export type ApiMethods<F> = {
     chat_id: number | string;
     /** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
     message_thread_id?: number;
-    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
-    allow_paid_broadcast?: boolean;
     /** Contact's phone number */
     phone_number: string;
     /** Contact's first name */
@@ -768,6 +766,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
+    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
+    allow_paid_broadcast?: boolean;
     /** Unique identifier of the message effect to be added to the message; for private chats only */
     message_effect_id?: string;
     /** Description of the message to reply to */
@@ -790,8 +790,6 @@ export type ApiMethods<F> = {
     chat_id: number | string;
     /** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
     message_thread_id?: number;
-    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
-    allow_paid_broadcast?: boolean;
     /** Poll question, 1-300 characters */
     question: string;
     /** Mode for parsing entities in the question. See formatting options for more details. Currently, only custom emoji entities are allowed */
@@ -824,6 +822,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
+    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
+    allow_paid_broadcast?: boolean;
     /** Unique identifier of the message effect to be added to the message; for private chats only */
     message_effect_id?: string;
     /** Description of the message to reply to */
@@ -846,8 +846,6 @@ export type ApiMethods<F> = {
     chat_id: number | string;
     /** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
     message_thread_id?: number;
-    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
-    allow_paid_broadcast?: boolean;
     /** Emoji on which the dice throw animation is based. Currently, must be one of "🎲", "🎯", "🏀", "⚽", "🎳", or "🎰". Dice can have values 1-6 for "🎲", "🎯" and "🎳", values 1-5 for "🏀" and "⚽", and values 1-64 for "🎰". Defaults to "🎲" */
     emoji?:
       | (string & Record<never, never>)
@@ -861,6 +859,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding */
     protect_content?: boolean;
+    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
+    allow_paid_broadcast?: boolean;
     /** Unique identifier of the message effect to be added to the message; for private chats only */
     message_effect_id?: string;
     /** Description of the message to reply to */
@@ -1587,8 +1587,6 @@ export type ApiMethods<F> = {
     chat_id: number | string;
     /** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
     message_thread_id?: number;
-    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
-    allow_paid_broadcast?: boolean;
     /** Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP sticker from the Internet, or upload a new .WEBP, .TGS, or .WEBM sticker using multipart/form-data. Video and animated stickers can't be sent via an HTTP URL. */
     sticker: F | string;
     /** Emoji associated with the sticker; only for just uploaded stickers */
@@ -1597,6 +1595,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
+    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
+    allow_paid_broadcast?: boolean;
     /** Unique identifier of the message effect to be added to the message; for private chats only */
     message_effect_id?: string;
     /** Description of the message to reply to */
@@ -1776,8 +1776,6 @@ export type ApiMethods<F> = {
     chat_id: number | string;
     /** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
     message_thread_id?: number;
-    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
-    allow_paid_broadcast?: boolean;
     /** Product name, 1-32 characters */
     title: string;
     /** Product description, 1-255 characters */
@@ -1824,6 +1822,8 @@ export type ApiMethods<F> = {
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
+    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
+    allow_paid_broadcast?: boolean;
     /** Unique identifier of the message effect to be added to the message; for private chats only */
     message_effect_id?: string;
     /** Description of the message to reply to */
@@ -1934,14 +1934,14 @@ export type ApiMethods<F> = {
     chat_id: number;
     /** Unique identifier for the target message thread (topic) of the forum; for forum supergroups only */
     message_thread_id?: number;
-    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
-    allow_paid_broadcast?: boolean;
     /** Short name of the game, serves as the unique identifier for the game. Set up your games via BotFather. */
     game_short_name: string;
     /** Sends the message silently. Users will receive a notification with no sound. */
     disable_notification?: boolean;
     /** Protects the contents of the sent message from forwarding and saving */
     protect_content?: boolean;
+    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance */
+    allow_paid_broadcast?: boolean;
     /** Unique identifier of the message effect to be added to the message; for private chats only */
     message_effect_id?: string;
     /** Description of the message to reply to */

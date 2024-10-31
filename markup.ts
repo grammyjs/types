@@ -20,10 +20,6 @@ export declare namespace InlineKeyboardButton {
     /** Data to be sent in a callback query to the bot when the button is pressed, 1-64 bytes */
     callback_data: string;
   }
-  export interface CopyTextButtonButton extends AbstractInlineKeyboardButton {
-    /** Description of the button that copies the specified text to the clipboard. */
-    copy_text: CopyTextButton;
-  }
   export interface WebAppButton extends AbstractInlineKeyboardButton {
     /** Description of the Web App that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method answerWebAppQuery. Available only in private chats between a user and the bot. Not supported for messages sent on behalf of a Telegram Business account. */
     web_app: WebAppInfo;
@@ -48,6 +44,10 @@ export declare namespace InlineKeyboardButton {
     /** If set, pressing the button will prompt the user to select one of their chats of the specified type, open that chat and insert the bot's username and the specified inline query in the input field. Not supported for messages sent on behalf of a Telegram Business account. */
     switch_inline_query_chosen_chat: SwitchInlineQueryChosenChat;
   }
+  export interface CopyTextButtonButton extends AbstractInlineKeyboardButton {
+    /** Description of the button that copies the specified text to the clipboard. */
+    copy_text: CopyTextButton;
+  }
   export interface GameButton extends AbstractInlineKeyboardButton {
     /** Description of the game that will be launched when the user presses the button.
 
@@ -65,13 +65,13 @@ export declare namespace InlineKeyboardButton {
 /** This object represents one button of an inline keyboard. You must use exactly one of the optional fields. */
 export type InlineKeyboardButton =
   | InlineKeyboardButton.CallbackButton
-  | InlineKeyboardButton.CopyTextButtonButton
   | InlineKeyboardButton.GameButton
   | InlineKeyboardButton.LoginButton
   | InlineKeyboardButton.PayButton
   | InlineKeyboardButton.SwitchInlineButton
   | InlineKeyboardButton.SwitchInlineCurrentChatButton
   | InlineKeyboardButton.SwitchInlineChosenChatButton
+  | InlineKeyboardButton.CopyTextButtonButton
   | InlineKeyboardButton.UrlButton
   | InlineKeyboardButton.WebAppButton;
 
