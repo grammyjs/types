@@ -44,6 +44,10 @@ export declare namespace InlineKeyboardButton {
     /** If set, pressing the button will prompt the user to select one of their chats of the specified type, open that chat and insert the bot's username and the specified inline query in the input field. Not supported for messages sent on behalf of a Telegram Business account. */
     switch_inline_query_chosen_chat: SwitchInlineQueryChosenChat;
   }
+  export interface CopyTextButtonButton extends AbstractInlineKeyboardButton {
+    /** Description of the button that copies the specified text to the clipboard. */
+    copy_text: CopyTextButton;
+  }
   export interface GameButton extends AbstractInlineKeyboardButton {
     /** Description of the game that will be launched when the user presses the button.
 
@@ -67,6 +71,7 @@ export type InlineKeyboardButton =
   | InlineKeyboardButton.SwitchInlineButton
   | InlineKeyboardButton.SwitchInlineCurrentChatButton
   | InlineKeyboardButton.SwitchInlineChosenChatButton
+  | InlineKeyboardButton.CopyTextButtonButton
   | InlineKeyboardButton.UrlButton
   | InlineKeyboardButton.WebAppButton;
 
@@ -214,6 +219,12 @@ export interface ForceReply {
   input_field_placeholder?: string;
   /** Use this parameter if you want to force reply from specific users only. Targets: 1) users that are @mentioned in the text of the Message object; 2) if the bot's message is a reply to a message in the same chat and forum topic, sender of the original message. */
   selective?: boolean;
+}
+
+/** This object represents an inline keyboard button that copies specified text to the clipboard. */
+export interface CopyTextButton {
+  /** The text to be copied to the clipboard; 1-256 characters */
+  text: string;
 }
 
 /** Describes a Web App. */
