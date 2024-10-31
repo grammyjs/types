@@ -15,7 +15,7 @@
     "types"
   ],
   "scripts": {
-    "prepare": "deno task backport"
+    "prepare": "deno task build"
   },
   "author": "KnorpelSenf",
   "types": "mod.d.ts",
