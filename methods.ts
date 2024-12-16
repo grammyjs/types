@@ -1,4 +1,3 @@
-// deno-lint-ignore-file ban-types
 import type { InlineQueryResult, InlineQueryResultsButton } from "./inline.ts";
 import type { LanguageCode } from "./langs.ts";
 import type {
@@ -59,11 +58,12 @@ import type { Update } from "./update.ts";
 
 /** Extracts the parameters of a given method name */
 type Params<F, M extends keyof ApiMethods<F>> = Parameters<ApiMethods<F>[M]>;
+/** Alias for an object type with no keys */
+type Empty = Record<string, never>;
 
 /** Utility type providing the argument type for the given method name or `{}` if the method does not take any parameters */
 export type Opts<F> = {
-  [M in keyof ApiMethods<F>]: Params<F, M>[0] extends undefined ? {}
-    : NonNullable<Params<F, M>[0]>;
+  [M in keyof ApiMethods<F>]: Params<F, M>[0];
 };
 
 /** Wrapper type to bundle all methods of the Telegram Bot API */
@@ -122,16 +122,16 @@ export type ApiMethods<F> = {
   }): true;
 
   /** Use this method to get current webhook status. Requires no parameters. On success, returns a WebhookInfo object. If the bot is using getUpdates, will return an object with the url field empty. */
-  getWebhookInfo(): WebhookInfo;
+  getWebhookInfo(args?: Empty): WebhookInfo;
 
   /** A simple method for testing your bot's authentication token. Requires no parameters. Returns basic information about the bot in form of a User object. */
-  getMe(): UserFromGetMe;
+  getMe(args?: Empty): UserFromGetMe;
 
   /** Use this method to log out from the cloud Bot API server before launching the bot locally. You must log out the bot before running it locally, otherwise there is no guarantee that the bot will receive updates. After a successful call, you can immediately log in on a local server, but will not be able to log in back to the cloud Bot API server for 10 minutes. Returns True on success. Requires no parameters. */
-  logOut(): true;
+  logOut(args?: Empty): true;
 
   /** Use this method to close the bot instance before moving it from one local server to another. You need to delete the webhook before calling this method to ensure that the bot isn't launched again after server restart. The method will return error 429 in the first 10 minutes after the bot is launched. Returns True on success. Requires no parameters. */
-  close(): true;
+  close(args?: Empty): true;
 
   /** Use this method to send text messages. On success, the sent Message is returned. */
   sendMessage(args: {
@@ -1251,7 +1251,7 @@ export type ApiMethods<F> = {
   }): true;
 
   /** Use this method to get custom emoji stickers, which can be used as a forum topic icon by any user. Requires no parameters. Returns an Array of Sticker objects. */
-  getForumTopicIconStickers(): Sticker[];
+  getForumTopicIconStickers(args?: Empty): Sticker[];
   /** Use this method to create a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns information about the created topic as a ForumTopic object. */
   createForumTopic(args: {
     /** Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername) */
@@ -1756,7 +1756,7 @@ export type ApiMethods<F> = {
   }): true;
 
   /** Returns the list of gifts that can be sent by the bot to users. Requires no parameters. Returns a Gifts object. */
-  getAvailableGifts(): Gifts;
+  getAvailableGifts(args?: Empty): Gifts;
 
   /** Sends a gift to the given user. The gift can't be converted to Telegram Stars by the user. Returns True on success. */
   sendGift(args: {
