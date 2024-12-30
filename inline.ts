@@ -83,8 +83,6 @@ export interface InlineQueryResultArticle {
   reply_markup?: InlineKeyboardMarkup;
   /** URL of the result */
   url?: string;
-  /** Pass True if you don't want the URL to be shown in the message */
-  hide_url?: boolean;
   /** Short description of the result */
   description?: string;
   /** Url of the thumbnail for the result */

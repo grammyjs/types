@@ -1770,6 +1770,8 @@ export type ApiMethods<F> = {
     text_parse_mode?: ParseMode;
     /** A list of special entities that appear in the gift text. It can be specified instead of text_parse_mode. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, and “custom_emoji” are ignored. */
     text_entities?: MessageEntity[];
+    /** Pass True to pay for the gift upgrade from the bot's balance, thereby making the upgrade free for the receiver */
+    pay_for_upgrade?: boolean;
   }): Gifts;
 
   /** Use this method to send answers to an inline query. On success, True is returned.
@@ -1973,6 +1975,34 @@ export type ApiMethods<F> = {
     telegram_payment_charge_id: string;
     /** Pass True to cancel extension of the user subscription; the subscription must be active up to the end of the current subscription period. Pass False to allow the user to re-enable a subscription that was previously canceled by the bot. */
     is_canceled: boolean;
+  }): true;
+
+  /** Verifies a user on behalf of the organization which is represented by the bot. Returns True on success. */
+  verifyUser(args: {
+    /** Unique identifier of the target user */
+    user_id: number;
+    /** Custom description for the verification; 0-70 characters. Must be empty if the organization isn't allowed to provide a custom verification description. */
+    custom_description?: string;
+  }): true;
+
+  /** Verifies a chat on behalf of the organization which is represented by the bot. Returns True on success. */
+  verifyChat(args: {
+    /** Unique identifier for the target chat or username of the target channel (in the format @channelusername) */
+    chat_id: number | string;
+    /** Custom description for the verification; 0-70 characters. Must be empty if the organization isn't allowed to provide a custom verification description. */
+    custom_description?: string;
+  }): true;
+
+  /** Removes verification from a user who is currently verified on behalf of the organization represented by the bot. Returns True on success. */
+  removeUserVerification(args: {
+    /** Unique identifier of the target user */
+    user_id: number;
+  }): true;
+
+  /** Removes verification from a chat that is currently verified on behalf of the organization represented by the bot. Returns True on success. */
+  removeChatVerification(args: {
+    /** Unique identifier for the target chat or username of the target channel (in the format @channelusername) */
+    chat_id: number | string;
   }): true;
 
   /** Informs a user that some of the Telegram Passport elements they provided contains errors. The user will not be able to re-submit their Passport to you until the errors are fixed (the contents of the field for which you returned the error must change). Returns True on success.
