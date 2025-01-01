@@ -152,11 +152,11 @@ export declare namespace ChatFullInfo {
     type: "private";
     /** Title, for supergroups, channels and group chats */
     title?: undefined;
-    /**  Username, for private chats, supergroups and channels if available */
+    /** Username, for private chats, supergroups and channels if available */
     username?: string;
-    /**  First name of the other party in a private chat */
+    /** First name of the other party in a private chat */
     first_name: string;
-    /**  Last name of the other party in a private chat */
+    /** Last name of the other party in a private chat */
     last_name?: string;
     /** True, if the supergroup chat is a forum (has topics enabled) */
     is_forum?: undefined;
@@ -186,7 +186,7 @@ export declare namespace ChatFullInfo {
     profile_accent_color_id?: number;
     /** Custom emoji identifier of the emoji chosen by the chat for its profile background */
     profile_background_custom_emoji_id?: string;
-    /**  Custom emoji identifier of the emoji status of the chat or the other party in a private chat */
+    /** Custom emoji identifier of the emoji status of the chat or the other party in a private chat */
     emoji_status_custom_emoji_id?: string;
     /** Expiration date of the emoji status of the chat or the other party in a private chat, in Unix time, if any */
     emoji_status_expiration_date?: number;
@@ -202,7 +202,7 @@ export declare namespace ChatFullInfo {
     join_by_request?: undefined;
     /** Description, for groups, supergroups and channel chats */
     description?: undefined;
-    /**  Primary invite link, for groups, supergroups and channel chats */
+    /** Primary invite link, for groups, supergroups and channel chats */
     invite_link?: undefined;
     /** The most recent pinned message (by sending date) */
     pinned_message?: Message;
@@ -210,9 +210,9 @@ export declare namespace ChatFullInfo {
     permissions?: undefined;
     /** For supergroups, the minimum allowed delay between consecutive messages sent by each unprivileged user; in seconds */
     slow_mode_delay?: undefined;
-    /**  For supergroups, the minimum number of boosts that a non-administrator user needs to add in order to ignore slow mode and chat permissions */
+    /** For supergroups, the minimum number of boosts that a non-administrator user needs to add in order to ignore slow mode and chat permissions */
     unrestrict_boost_count?: undefined;
-    /**  The time after which all messages sent to the chat will be automatically deleted; in seconds */
+    /** The time after which all messages sent to the chat will be automatically deleted; in seconds */
     message_auto_delete_time?: number;
     /** True, if aggressive anti-spam checks are enabled in the supergroup. The field is only available to chat administrators. */
     has_aggressive_anti_spam_enabled?: undefined;
@@ -243,11 +243,11 @@ export declare namespace ChatFullInfo {
     type: "group";
     /** Title, for supergroups, channels and group chats */
     title: string;
-    /**  Username, for private chats, supergroups and channels if available */
+    /** Username, for private chats, supergroups and channels if available */
     username?: undefined;
-    /**  First name of the other party in a private chat */
+    /** First name of the other party in a private chat */
     first_name?: undefined;
-    /**  Last name of the other party in a private chat */
+    /** Last name of the other party in a private chat */
     last_name?: undefined;
     /** True, if the supergroup chat is a forum (has topics enabled) */
     is_forum?: undefined;
@@ -277,7 +277,7 @@ export declare namespace ChatFullInfo {
     profile_accent_color_id?: number;
     /** Custom emoji identifier of the emoji chosen by the chat for its profile background */
     profile_background_custom_emoji_id?: string;
-    /**  Custom emoji identifier of the emoji status of the chat or the other party in a private chat */
+    /** Custom emoji identifier of the emoji status of the chat or the other party in a private chat */
     emoji_status_custom_emoji_id?: string;
     /** Expiration date of the emoji status of the chat or the other party in a private chat, in Unix time, if any */
     emoji_status_expiration_date?: number;
@@ -293,7 +293,7 @@ export declare namespace ChatFullInfo {
     join_by_request?: undefined;
     /** Description, for groups, supergroups and channel chats */
     description?: string;
-    /**  Primary invite link, for groups, supergroups and channel chats */
+    /** Primary invite link, for groups, supergroups and channel chats */
     invite_link?: string;
     /** The most recent pinned message (by sending date) */
     pinned_message?: Message;
@@ -301,9 +301,9 @@ export declare namespace ChatFullInfo {
     permissions?: ChatPermissions;
     /** For supergroups, the minimum allowed delay between consecutive messages sent by each unprivileged user; in seconds */
     slow_mode_delay?: undefined;
-    /**  For supergroups, the minimum number of boosts that a non-administrator user needs to add in order to ignore slow mode and chat permissions */
+    /** For supergroups, the minimum number of boosts that a non-administrator user needs to add in order to ignore slow mode and chat permissions */
     unrestrict_boost_count?: undefined;
-    /**  The time after which all messages sent to the chat will be automatically deleted; in seconds */
+    /** The time after which all messages sent to the chat will be automatically deleted; in seconds */
     message_auto_delete_time?: number;
     /** True, if aggressive anti-spam checks are enabled in the supergroup. The field is only available to chat administrators. */
     has_aggressive_anti_spam_enabled?: undefined;
@@ -334,11 +334,11 @@ export declare namespace ChatFullInfo {
     type: "supergroup";
     /** Title, for supergroups, channels and group chats */
     title: string;
-    /**  Username, for private chats, supergroups and channels if available */
+    /** Username, for private chats, supergroups and channels if available */
     username?: string;
-    /**  First name of the other party in a private chat */
+    /** First name of the other party in a private chat */
     first_name?: undefined;
-    /**  Last name of the other party in a private chat */
+    /** Last name of the other party in a private chat */
     last_name?: undefined;
     /** True, if the supergroup chat is a forum (has topics enabled) */
     is_forum?: true;
@@ -368,7 +368,7 @@ export declare namespace ChatFullInfo {
     profile_accent_color_id?: number;
     /** Custom emoji identifier of the emoji chosen by the chat for its profile background */
     profile_background_custom_emoji_id?: string;
-    /**  Custom emoji identifier of the emoji status of the chat or the other party in a private chat */
+    /** Custom emoji identifier of the emoji status of the chat or the other party in a private chat */
     emoji_status_custom_emoji_id?: string;
     /** Expiration date of the emoji status of the chat or the other party in a private chat, in Unix time, if any */
     emoji_status_expiration_date?: number;
@@ -384,7 +384,7 @@ export declare namespace ChatFullInfo {
     join_by_request?: true;
     /** Description, for groups, supergroups and channel chats */
     description?: string;
-    /**  Primary invite link, for groups, supergroups and channel chats */
+    /** Primary invite link, for groups, supergroups and channel chats */
     invite_link?: string;
     /** The most recent pinned message (by sending date) */
     pinned_message?: Message;
@@ -392,9 +392,9 @@ export declare namespace ChatFullInfo {
     permissions?: ChatPermissions;
     /** For supergroups, the minimum allowed delay between consecutive messages sent by each unprivileged user; in seconds */
     slow_mode_delay?: number;
-    /**  For supergroups, the minimum number of boosts that a non-administrator user needs to add in order to ignore slow mode and chat permissions */
+    /** For supergroups, the minimum number of boosts that a non-administrator user needs to add in order to ignore slow mode and chat permissions */
     unrestrict_boost_count?: number;
-    /**  The time after which all messages sent to the chat will be automatically deleted; in seconds */
+    /** The time after which all messages sent to the chat will be automatically deleted; in seconds */
     message_auto_delete_time?: number;
     /** True, if aggressive anti-spam checks are enabled in the supergroup. The field is only available to chat administrators. */
     has_aggressive_anti_spam_enabled?: true;
@@ -425,11 +425,11 @@ export declare namespace ChatFullInfo {
     type: "channel";
     /** Title, for supergroups, channels and group chats */
     title: string;
-    /**  Username, for private chats, supergroups and channels if available */
+    /** Username, for private chats, supergroups and channels if available */
     username?: string;
-    /**  First name of the other party in a private chat */
+    /** First name of the other party in a private chat */
     first_name?: undefined;
-    /**  Last name of the other party in a private chat */
+    /** Last name of the other party in a private chat */
     last_name?: undefined;
     /** True, if the supergroup chat is a forum (has topics enabled) */
     is_forum?: undefined;
@@ -459,7 +459,7 @@ export declare namespace ChatFullInfo {
     profile_accent_color_id?: number;
     /** Custom emoji identifier of the emoji chosen by the chat for its profile background */
     profile_background_custom_emoji_id?: string;
-    /**  Custom emoji identifier of the emoji status of the chat or the other party in a private chat */
+    /** Custom emoji identifier of the emoji status of the chat or the other party in a private chat */
     emoji_status_custom_emoji_id?: string;
     /** Expiration date of the emoji status of the chat or the other party in a private chat, in Unix time, if any */
     emoji_status_expiration_date?: number;
@@ -475,7 +475,7 @@ export declare namespace ChatFullInfo {
     join_by_request?: undefined;
     /** Description, for groups, supergroups and channel chats */
     description?: string;
-    /**  Primary invite link, for groups, supergroups and channel chats */
+    /** Primary invite link, for groups, supergroups and channel chats */
     invite_link?: string;
     /** The most recent pinned message (by sending date) */
     pinned_message?: Message;
@@ -483,9 +483,9 @@ export declare namespace ChatFullInfo {
     permissions?: undefined;
     /** For supergroups, the minimum allowed delay between consecutive messages sent by each unprivileged user; in seconds */
     slow_mode_delay?: undefined;
-    /**  For supergroups, the minimum number of boosts that a non-administrator user needs to add in order to ignore slow mode and chat permissions */
+    /** For supergroups, the minimum number of boosts that a non-administrator user needs to add in order to ignore slow mode and chat permissions */
     unrestrict_boost_count?: undefined;
-    /**  The time after which all messages sent to the chat will be automatically deleted; in seconds */
+    /** The time after which all messages sent to the chat will be automatically deleted; in seconds */
     message_auto_delete_time?: number;
     /** True, if aggressive anti-spam checks are enabled in the supergroup. The field is only available to chat administrators. */
     has_aggressive_anti_spam_enabled?: undefined;

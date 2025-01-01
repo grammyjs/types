@@ -287,6 +287,8 @@ export interface Gift {
   sticker: Sticker;
   /** The number of Telegram Stars that must be paid to send the sticker */
   star_count: number;
+  /** The number of Telegram Stars that must be paid to upgrade the gift to a unique one */
+  upgrade_star_count?: number;
   /** The total number of the gifts of this type that can be sent; for limited gifts only */
   total_count?: number;
   /** The number of remaining gifts of this type that can be sent; for limited gifts only */
