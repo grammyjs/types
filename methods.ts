@@ -214,7 +214,7 @@ export type ApiMethods<F> = {
     /** New caption for media, 0-1024 characters after entities parsing. If not specified, the original caption is kept */
     caption?: string;
     /** Mode for parsing entities in the new caption. See formatting options for more details. */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /** A list of special entities that appear in the new caption, which can be specified instead of parse_mode */
     caption_entities?: MessageEntity[];
     /** Pass True, if the caption must be shown above the message media. Ignored if a new caption isn't specified. */
@@ -683,7 +683,7 @@ export type ApiMethods<F> = {
     /** Media caption, 0-1024 characters after entities parsing */
     caption?: string;
     /** Mode for parsing entities in the media caption. See formatting options for more details. */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /** A list of special entities that appear in the caption, which can be specified instead of parse_mode */
     caption_entities?: MessageEntity[];
     /** Pass True, if the caption must be shown above the message media */
@@ -795,7 +795,7 @@ export type ApiMethods<F> = {
     /** Poll question, 1-300 characters */
     question: string;
     /** Mode for parsing entities in the question. See formatting options for more details. Currently, only custom emoji entities are allowed */
-    question_parse_mode?: string;
+    question_parse_mode?: ParseMode;
     /** A list of special entities that appear in the poll question. It can be specified instead of question_parse_mode */
     question_entities?: MessageEntity[];
     /** A list of 2-10 answer options */
