@@ -589,7 +589,7 @@ export interface ReplyParameters {
   /** Quoted part of the message to be replied to; 0-1024 characters after entities parsing. The quote must be an exact substring of the message to be replied to, including bold, italic, underline, strikethrough, spoiler, and custom_emoji entities. The message will fail to send if the quote isn't found in the original message. */
   quote?: string;
   /** Mode for parsing entities in the quote. See formatting options for more details. */
-  quote_parse_mode?: string;
+  quote_parse_mode?: ParseMode;
   /** A JSON-serialized list of special entities that appear in the quote. It can be specified instead of quote_parse_mode. */
   quote_entities?: MessageEntity[];
   /** Position of the quote in the original message in UTF-16 code units */
@@ -825,7 +825,7 @@ export interface InputPollOption {
   /** Option text, 1-100 characters */
   text: string;
   /** Mode for parsing entities in the text. See formatting options for more details. Currently, only custom emoji entities are allowed */
-  text_parse_mode?: string;
+  text_parse_mode?: ParseMode;
   /** A list of special entities that appear in the poll option text. It can be specified instead of text_parse_mode */
   text_entities?: MessageEntity[];
 }
