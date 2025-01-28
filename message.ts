@@ -750,6 +750,10 @@ export interface Video {
   duration: number;
   /** Video thumbnail */
   thumbnail?: PhotoSize;
+  /** Available sizes of the cover of the video in the message */
+  cover?: PhotoSize[];
+  /** Timestamp in seconds from which the video will play in the message */
+  start_timestamp?: number;
   /** Original filename as defined by sender */
   file_name?: string;
   /** MIME type of the file as defined by sender */

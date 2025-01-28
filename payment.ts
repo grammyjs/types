@@ -178,6 +178,7 @@ export interface AffiliateInfo {
 /** This object describes the source of a transaction, or its recipient for outgoing transactions. Currently, it can be one of
 
 - TransactionPartnerUser
+- TransactionPartnerChat
 - TransactionPartnerAffiliateProgram
 - TransactionPartnerFragment
 - TransactionPartnerTelegramAds
@@ -208,7 +209,17 @@ export interface TransactionPartnerUser {
   /** Bot-specified paid media payload */
   paid_media_payload?: string;
   /** The gift sent to the user by the bot */
-  gift?: string;
+  gift?: Gift;
+}
+
+/** Describes a transaction with a chat. */
+export interface TransactionPartnerChat {
+  /** Type of the transaction partner, always “chat” */
+  type: "chat";
+  /** Information about the chat */
+  chat: Chat;
+  /** The gift sent to the chat by the bot */
+  gift?: Gift;
 }
 
 /** Describes the affiliate program that issued the affiliate commission received via this transaction. */

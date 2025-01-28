@@ -177,6 +177,8 @@ export type ApiMethods<F> = {
     message_thread_id?: number;
     /** Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername) */
     from_chat_id: number | string;
+    /** New start timestamp for the copied video in the message */
+    video_start_timestamp?: number;
     /** Sends the message silently. Users will receive a notification with no sound. */
     disable_notification?: boolean;
     /** Protects the contents of the forwarded message from forwarding and saving */
@@ -211,6 +213,8 @@ export type ApiMethods<F> = {
     from_chat_id: number | string;
     /** Message identifier in the chat specified in from_chat_id */
     message_id: number;
+    /** New start timestamp for the copied video in the message */
+    video_start_timestamp?: number;
     /** New caption for media, 0-1024 characters after entities parsing. If not specified, the original caption is kept */
     caption?: string;
     /** Mode for parsing entities in the new caption. See formatting options for more details. */
@@ -399,6 +403,10 @@ export type ApiMethods<F> = {
     height?: number;
     /** Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass "attach://<file_attach_name>" if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. */
     thumbnail?: F;
+    /** Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. */
+    cover?: F | string;
+    /** Start timestamp for the video in the message */
+    start_timestamp?: number;
     /** Video caption (may also be used when resending videos by file_id), 0-1024 characters after entities parsing */
     caption?: string;
     /** Mode for parsing entities in the video caption. See formatting options for more details. */
@@ -904,7 +912,7 @@ export type ApiMethods<F> = {
     message_thread_id?: number;
   }): true;
 
-  /** Use this method to change the chosen reactions on a message. Service messages can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can't use paid reactions. Returns True on success. */
+  /** Use this method to change the chosen reactions on a message. Service messages of some types can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can't use paid reactions. Returns True on success. */
   setMessageReaction(args: {
     /** Unique identifier for the target chat or username of the target channel (in the format @channelusername) */
     chat_id: number | string;
@@ -1755,13 +1763,15 @@ export type ApiMethods<F> = {
     custom_emoji_id?: string;
   }): true;
 
-  /** Returns the list of gifts that can be sent by the bot to users. Requires no parameters. Returns a Gifts object. */
+  /** Returns the list of gifts that can be sent by the bot to users and channel chats. Requires no parameters. Returns a Gifts object. */
   getAvailableGifts(): Gifts;
 
-  /** Sends a gift to the given user. The gift can't be converted to Telegram Stars by the user. Returns True on success. */
+  /** Sends a gift to the given user or channel chat. The gift can't be converted to Telegram Stars by the receiver. Returns True on success. */
   sendGift(args: {
-    /** Unique identifier of the target user that will receive the gift */
-    user_id: number;
+    /** Required if chat_id is not specified. Unique identifier of the target user who will receive the gift. */
+    user_id?: number;
+    /** Required if user_id is not specified. Unique identifier for the chat or username of the channel (in the format @channelusername) that will receive the gift. */
+    chat_id?: number | string;
     /** Identifier of the gift */
     gift_id: string;
     /** Pass True to pay for the gift upgrade from the bot's balance, thereby making the upgrade free for the receiver */
@@ -2127,6 +2137,10 @@ export interface InputMediaVideo<F> {
   media: F | string;
   /** Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass "attach://<file_attach_name>" if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. */
   thumbnail?: F;
+  /** Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. */
+  cover?: F | string;
+  /** Start timestamp for the video in the message */
+  start_timestamp?: number;
   /** Caption of the video to be sent, 0-1024 characters after entities parsing */
   caption?: string;
   /** Pass True, if the caption must be shown above the message media */
@@ -2235,6 +2249,10 @@ export interface InputPaidMediaVideo<F> {
   media: F | string;
   /** Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More information on Sending Files » */
   thumbnail?: F | string;
+  /** Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. */
+  cover?: F | string;
+  /** Start timestamp for the video in the message */
+  start_timestamp?: number;
   /** Video width */
   width?: number;
   /** Video height */
