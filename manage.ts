@@ -208,6 +208,8 @@ export declare namespace ChatFullInfo {
     pinned_message?: Message;
     /** Default chat member permissions, for groups and supergroups */
     permissions?: undefined;
+    /** True, if paid media messages can be sent or forwarded to the channel chat. The field is available only for channel chats. */
+    can_send_paid_media?: undefined;
     /** For supergroups, the minimum allowed delay between consecutive messages sent by each unprivileged user; in seconds */
     slow_mode_delay?: undefined;
     /** For supergroups, the minimum number of boosts that a non-administrator user needs to add in order to ignore slow mode and chat permissions */
@@ -232,8 +234,6 @@ export declare namespace ChatFullInfo {
     linked_chat_id?: undefined;
     /** For supergroups, the location to which the supergroup is connected */
     location?: undefined;
-    /** True, if paid media messages can be sent or forwarded to the channel chat. The field is available only for channel chats. */
-    can_send_paid_media?: undefined;
   }
   /** Internal type for group chats */
   export interface GroupChat {
@@ -299,6 +299,8 @@ export declare namespace ChatFullInfo {
     pinned_message?: Message;
     /** Default chat member permissions, for groups and supergroups */
     permissions?: ChatPermissions;
+    /** True, if paid media messages can be sent or forwarded to the channel chat. The field is available only for channel chats. */
+    can_send_paid_media?: undefined;
     /** For supergroups, the minimum allowed delay between consecutive messages sent by each unprivileged user; in seconds */
     slow_mode_delay?: undefined;
     /** For supergroups, the minimum number of boosts that a non-administrator user needs to add in order to ignore slow mode and chat permissions */
@@ -323,8 +325,6 @@ export declare namespace ChatFullInfo {
     linked_chat_id?: undefined;
     /** For supergroups, the location to which the supergroup is connected */
     location?: undefined;
-    /** True, if paid media messages can be sent or forwarded to the channel chat. The field is available only for channel chats. */
-    can_send_paid_media?: undefined;
   }
   /** Internal type for supergroup chats */
   export interface SupergroupChat {
@@ -390,6 +390,8 @@ export declare namespace ChatFullInfo {
     pinned_message?: Message;
     /** Default chat member permissions, for groups and supergroups */
     permissions?: ChatPermissions;
+    /** True, if paid media messages can be sent or forwarded to the channel chat. The field is available only for channel chats. */
+    can_send_paid_media?: undefined;
     /** For supergroups, the minimum allowed delay between consecutive messages sent by each unprivileged user; in seconds */
     slow_mode_delay?: number;
     /** For supergroups, the minimum number of boosts that a non-administrator user needs to add in order to ignore slow mode and chat permissions */
@@ -414,8 +416,6 @@ export declare namespace ChatFullInfo {
     linked_chat_id?: number;
     /** For supergroups, the location to which the supergroup is connected */
     location?: ChatLocation;
-    /** True, if paid media messages can be sent or forwarded to the channel chat. The field is available only for channel chats. */
-    can_send_paid_media?: undefined;
   }
   /** Internal type for channel chats */
   export interface ChannelChat {
@@ -481,6 +481,8 @@ export declare namespace ChatFullInfo {
     pinned_message?: Message;
     /** Default chat member permissions, for groups and supergroups */
     permissions?: undefined;
+    /** True, if paid media messages can be sent or forwarded to the channel chat. The field is available only for channel chats. */
+    can_send_paid_media?: true;
     /** For supergroups, the minimum allowed delay between consecutive messages sent by each unprivileged user; in seconds */
     slow_mode_delay?: undefined;
     /** For supergroups, the minimum number of boosts that a non-administrator user needs to add in order to ignore slow mode and chat permissions */
@@ -505,8 +507,6 @@ export declare namespace ChatFullInfo {
     linked_chat_id?: number;
     /** For supergroups, the location to which the supergroup is connected */
     location?: undefined;
-    /** True, if paid media messages can be sent or forwarded to the channel chat. The field is available only for channel chats. */
-    can_send_paid_media?: true;
   }
 }
 
