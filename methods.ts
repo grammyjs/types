@@ -2,6 +2,7 @@
 import type { InlineQueryResult, InlineQueryResultsButton } from "./inline.ts";
 import type { LanguageCode } from "./langs.ts";
 import type {
+  AcceptedGiftTypes,
   BotCommand,
   BusinessConnection,
   ChatAdministratorRights,
@@ -40,12 +41,15 @@ import type {
   SentWebAppMessage,
   Sticker,
   StickerSet,
+  Story,
 } from "./message.ts";
 import type { PassportElementError } from "./passport.ts";
 import type {
   Gifts,
   LabeledPrice,
+  OwnedGifts,
   ShippingOption,
+  StarAmount,
   StarTransactions,
 } from "./payment.ts";
 import type {
@@ -55,6 +59,7 @@ import type {
   BotShortDescription,
   MenuButton,
 } from "./settings.ts";
+import { StoryArea } from "./story.ts";
 import type { Update } from "./update.ts";
 
 /** Extracts the parameters of a given method name */
@@ -912,6 +917,16 @@ export type ApiMethods<F> = {
     message_thread_id?: number;
   }): true;
 
+  /** Marks incoming message as read on behalf of a business account. Requires the can_read_messages business bot right. Returns True on success. */
+  readBusinessMessage(args: {
+    /** Unique identifier of the business connection on behalf of which to read the message */
+    business_connection_id: string;
+    /** Unique identifier of the chat in which the message was received. The chat must have been active in the last 24 hours. */
+    chat_id: number;
+    /** Unique identifier of the message to mark as read */
+    message_id: number;
+  }): true;
+
   /** Use this method to change the chosen reactions on a message. Service messages of some types can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can't use paid reactions. Returns True on success. */
   setMessageReaction(args: {
     /** Unique identifier for the target chat or username of the target channel (in the format @channelusername) */
@@ -1488,6 +1503,120 @@ export type ApiMethods<F> = {
     for_channels?: boolean;
   }): ChatAdministratorRights;
 
+  /** Changes the first and last name of a managed business account. Requires the can_change_name business bot right. Returns True on success. */
+  setBusinessAccountName(args: {
+    /** Unique identifier of the business connection */
+    business_connection_id: string;
+    /** The new value of the first name for the business account; 1-64 characters */
+    first_name: string;
+    /** The new value of the last name for the business account; 0-64 characters */
+    last_name?: string;
+  }): true;
+
+  /** Changes the username of a managed business account. Requires the can_change_username business bot right. Returns True on success. */
+  setBusinessAccountUsername(args: {
+    /** Unique identifier of the business connection */
+    business_connection_id: string;
+    /** The new value of the username for the business account; 0-32 characters */
+    username?: string;
+  }): true;
+
+  /** Changes the bio of a managed business account. Requires the can_change_bio business bot right. Returns True on success. */
+  setBusinessAccountBio(args: {
+    /** Unique identifier of the business connection */
+    business_connection_id: string;
+    /** The new value of the bio for the business account; 0-140 characters */
+    bio?: string;
+  }): true;
+
+  /** Changes the profile photo of a managed business account. Requires the can_edit_profile_photo business bot right. Returns True on success. */
+  setBusinessAccountProfilePhoto(args: {
+    /** Unique identifier of the business connection */
+    business_connection_id: string;
+    /** The new profile photo to set */
+    photo: InputProfilePhoto<F>;
+    /** Pass True to set the public photo, which will be visible even if the main photo is hidden by the business account's privacy settings. An account can have only one public photo. */
+    is_public?: boolean;
+  }): true;
+
+  /** Removes the current profile photo of a managed business account. Requires the can_edit_profile_photo business bot right. Returns True on success. */
+  removeBusinessAccountProfilePhoto(args: {
+    /** Unique identifier of the business connection */
+    business_connection_id: string;
+    /** Pass True to remove the public photo, which is visible even if the main photo is hidden by the business account's privacy settings. After the main photo is removed, the previous profile photo (if present) becomes the main photo. */
+    is_public?: boolean;
+  }): true;
+
+  /** Changes the privacy settings pertaining to incoming gifts in a managed business account. Requires the can_change_gift_settings business bot right. Returns True on success. */
+  setBusinessAccountGiftSettings(args: {
+    /** Unique identifier of the business connection */
+    business_connection_id: string;
+    /** Pass True, if a button for sending a gift to the user or by the business account must always be shown in the input field */
+    show_gift_button: boolean;
+    /** Types of gifts accepted by the business account */
+    accepted_gift_types: AcceptedGiftTypes;
+  }): true;
+
+  /** Returns the amount of Telegram Stars owned by a managed business account. Requires the can_view_gifts_and_stars business bot right. Returns StarAmount on success. */
+  getBusinessAccountStarBalance(args: {
+    /** Unique identifier of the business connection */
+    business_connection_id: string;
+  }): StarAmount;
+
+  /** Returns the gifts received and owned by a managed business account. Requires the can_view_gifts_and_stars business bot right. Returns OwnedGifts on success. */
+  getBusinessAccountGifts(args: {
+    /** Unique identifier of the business connection */
+    business_connection_id: string;
+    /** Pass True to exclude gifts that aren't saved to the account's profile page */
+    exclude_unsaved?: boolean;
+    /** Pass True to exclude gifts that are saved to the account's profile page */
+    exclude_saved?: boolean;
+    /** Pass True to exclude gifts that can be purchased an unlimited number of times */
+    exclude_unlimited?: boolean;
+    /** Pass True to exclude gifts that can be purchased a limited number of times */
+    exclude_limited?: boolean;
+    /** Pass True to exclude unique gifts */
+    exclude_unique?: boolean;
+    /** Pass True to sort results by gift price instead of send date. Sorting is applied before pagination. */
+    sort_by_price?: boolean;
+    /** Offset of the first entry to return as received from the previous request; use empty string to get the first chunk of results */
+    offset?: string;
+    /** The maximum number of gifts to be returned; 1-100. Defaults to 100 */
+    limit?: number;
+  }): OwnedGifts;
+
+  /** Converts a given regular gift to Telegram Stars. Requires the can_convert_gifts_to_stars business bot right. Returns True on success. */
+  convertGiftToStars(args: {
+    /** Unique identifier of the business connection */
+    business_connection_id: string;
+    /** Unique identifier of the regular gift that should be converted to Telegram Stars */
+    owned_gift_id: string;
+  }): true;
+
+  /** Upgrades a given regular gift to a unique gift. Requires the can_transfer_and_upgrade_gifts business bot right. Additionally requires the can_transfer_stars business bot right if the upgrade is paid. Returns True on success. */
+  upgradeGift(args: {
+    /** Unique identifier of the business connection */
+    business_connection_id: string;
+    /** Unique identifier of the regular gift that should be upgraded to a unique one */
+    owned_gift_id: string;
+    /** Pass True to keep the original gift text, sender and receiver in the upgraded gift */
+    keep_original_details?: boolean;
+    /** The amount of Telegram Stars that will be paid for the upgrade from the business account balance. If gift.prepaid_upgrade_star_count > 0, then pass 0, otherwise, the can_transfer_stars business bot right is required and gift.upgrade_star_count must be passed. */
+    star_count?: number;
+  }): true;
+
+  /** Transfers an owned unique gift to another user. Requires the can_transfer_and_upgrade_gifts business bot right. Requires can_transfer_stars business bot right if the transfer is paid. Returns True on success. */
+  transferGift(args: {
+    /** Unique identifier of the business connection */
+    business_connection_id: string;
+    /** Unique identifier of the regular gift that should be transferred */
+    owned_gift_id: string;
+    /** Unique identifier of the chat which will own the gift. The chat must be active in the last 24 hours. */
+    new_owner_chat_id: number;
+    /** The amount of Telegram Stars that will be paid for the transfer from the business account balance. If positive, then the can_transfer_stars business bot right is required. */
+    star_count: number;
+  }): true;
+
   /** Use this method to edit text and game messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent. */
   editMessageText(args: {
     /** Unique identifier of the business connection on behalf of which the message to be edited was sent */
@@ -1596,6 +1725,14 @@ export type ApiMethods<F> = {
     /** Unique identifier for the target chat or username of the target channel (in the format @channelusername) */
     chat_id: number | string;
     /** A list of 1-100 identifiers of messages to delete. See deleteMessage for limitations on which messages can be deleted */
+    message_ids: number[];
+  }): true;
+
+  /** Delete messages on behalf of a business account. Requires the can_delete_outgoing_messages business bot right to delete messages sent by the bot itself, or the can_delete_all_messages business bot right to delete any message. Returns True on success. */
+  deleteBusinessMessages(args: {
+    /** Unique identifier of the business connection on behalf of which to delete the messages */
+    business_connection_id: string;
+    /** A list of 1-100 identifiers of messages to delete. All messages must be from the same chat. See deleteMessage for limitations on which messages can be deleted */
     message_ids: number[];
   }): true;
 
@@ -1763,6 +1900,54 @@ export type ApiMethods<F> = {
     custom_emoji_id?: string;
   }): true;
 
+  /** Posts a story on behalf of a managed business account. Requires the can_manage_stories business bot right. Returns Story on success. */
+  postStory(args: {
+    /** Unique identifier of the business connection */
+    business_connection_id: string;
+    /** Content of the story */
+    content: InputStoryContent<F>;
+    /** Period after which the story is moved to the archive, in seconds; must be one of 6 * 3600, 12 * 3600, 86400, or 2 * 86400 */
+    active_period: number;
+    /** Caption of the story, 0-2048 characters after entities parsing */
+    caption?: string;
+    /** Mode for parsing entities in the story caption. See formatting options for more details. */
+    parse_mode?: string;
+    /** A list of special entities that appear in the caption, which can be specified instead of parse_mode */
+    caption_entities?: MessageEntity[];
+    /** A list of clickable areas to be shown on the story */
+    areas?: StoryArea[];
+    /** Pass True to keep the story accessible after it expires */
+    post_to_chat_page?: boolean;
+    /** Pass True if the content of the story must be protected from forwarding and screenshotting */
+    protect_content?: boolean;
+  }): Story;
+
+  /** Edits a story previously posted by the bot on behalf of a managed business account. Requires the can_manage_stories business bot right. Returns Story on success. */
+  editStory(args: {
+    /** Unique identifier of the business connection */
+    business_connection_id: string;
+    /** Unique identifier of the story to edit */
+    story_id: number;
+    /** Content of the story */
+    content: InputStoryContent<F>;
+    /** Caption of the story, 0-2048 characters after entities parsing */
+    caption?: string;
+    /** Mode for parsing entities in the story caption. See formatting options for more details. */
+    parse_mode?: string;
+    /** A list of special entities that appear in the caption, which can be specified instead of parse_mode */
+    caption_entities?: MessageEntity[];
+    /** A list of clickable areas to be shown on the story */
+    areas?: StoryArea;
+  }): Story;
+
+  /** Deletes a story previously posted by the bot on behalf of a managed business account. Requires the can_manage_stories business bot right. Returns True on success. */
+  deleteStory(args: {
+    /** Unique identifier of the business connection */
+    business_connection_id: string;
+    /** Unique identifier of the story to delete */
+    story_id: number;
+  }): true;
+
   /** Returns the list of gifts that can be sent by the bot to users and channel chats. Requires no parameters. Returns a Gifts object. */
   getAvailableGifts(): Gifts;
 
@@ -1783,6 +1968,30 @@ export type ApiMethods<F> = {
     /** A list of special entities that appear in the gift text. It can be specified instead of text_parse_mode. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, and “custom_emoji” are ignored. */
     text_entities?: MessageEntity[];
   }): Gifts;
+
+  /** Gifts a Telegram Premium subscription to the given user. Returns True on success. */
+  giftPremiumSubscription(args: {
+    /** Unique identifier of the target user who will receive a Telegram Premium subscription */
+    user_id: number;
+    /** Number of months the Telegram Premium subscription will be active for the user; must be one of 3, 6, or 12 */
+    month_count: 3 | 6 | 12;
+    /** Number of Telegram Stars to pay for the Telegram Premium subscription; must be 1000 for 3 months, 1500 for 6 months, and 2500 for 12 months */
+    star_count: 1000 | 1500 | 2500;
+    /** Text that will be shown along with the service message about the subscription; 0-128 characters */
+    text?: string;
+    /** Mode for parsing entities in the text. See formatting options for more details. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, and “custom_emoji” are ignored. */
+    text_parse_mode?: string;
+    /** A list of special entities that appear in the gift text. It can be specified instead of text_parse_mode. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, and “custom_emoji” are ignored. */
+    text_entities?: MessageEntity[];
+  }): true;
+
+  /** Transfers Telegram Stars from the business account balance to the bot's balance. Requires the can_transfer_stars business bot right. Returns True on success. */
+  transferBusinessAccountStars(args: {
+    /** Unique identifier of the business connection */
+    business_connection_id: string;
+    /** Number of Telegram Stars to transfer; 1-10000 */
+    star_count: number;
+  }): true;
 
   /** Use this method to send answers to an inline query. On success, True is returned.
   No more than 50 results per query are allowed.
@@ -2261,4 +2470,60 @@ export interface InputPaidMediaVideo<F> {
   duration?: number;
   /** Pass True if the uploaded video is suitable for streaming */
   supports_streaming?: boolean;
+}
+
+/** This object describes a profile photo to set. Currently, it can be one of
+
+- InputProfilePhotoStatic
+- InputProfilePhotoAnimated */
+export type InputProfilePhoto<F> =
+  | InputProfilePhotoStatic<F>
+  | InputProfilePhotoAnimated<F>;
+
+/** A static profile photo in the .JPG format. */
+export interface InputProfilePhotoStatic<F> {
+  /** Type of the profile photo, must be “static” */
+  type: "static";
+  /** The static profile photo. Profile photos can't be reused and can only be uploaded as a new file, so you can pass “attach://<file_attach_name>” if the photo was uploaded using multipart/form-data under <file_attach_name>. More information on Sending Files » */
+  photo: F;
+}
+
+/** An animated profile photo in the MPEG4 format. */
+export interface InputProfilePhotoAnimated<F> {
+  /** Type of the profile photo, must be “animated” */
+  type: "animated";
+  /** The animated profile photo. Profile photos can't be reused and can only be uploaded as a new file, so you can pass “attach://<file_attach_name>” if the photo was uploaded using multipart/form-data under <file_attach_name>. More information on Sending Files » */
+  animation: F;
+  /** Timestamp in seconds of the frame that will be used as the static profile photo. Defaults to 0.0. */
+  main_frame_timestamp?: number;
+}
+
+/** This object describes the content of a story to post. Currently, it can be one of
+
+- InputStoryContentPhoto
+- InputStoryContentVideo */
+export type InputStoryContent<F> =
+  | InputStoryContentPhoto<F>
+  | InputStoryContentVideo<F>;
+
+/** Describes a photo to post as a story. */
+export interface InputStoryContentPhoto<F> {
+  /** Type of the content, must be “photo” */
+  type: "photo";
+  /** The photo to post as a story. The photo must be of the size 1080x1920 and must not exceed 10 MB. The photo can't be reused and can only be uploaded as a new file, so you can pass “attach://<file_attach_name>” if the photo was uploaded using multipart/form-data under <file_attach_name>. More information on Sending Files » */
+  photo: F;
+}
+
+/** Describes a video to post as a story. */
+export interface InputStoryContentVideo<F> {
+  /** Type of the content, must be “video” */
+  type: "video";
+  /** The video to post as a story. The video must be of the size 720x1280, streamable, encoded with H.265 codec, with key frames added each second in the MPEG4 format, and must not exceed 30 MB. The video can't be reused and can only be uploaded as a new file, so you can pass “attach://<file_attach_name>” if the video was uploaded using multipart/form-data under <file_attach_name>. More information on Sending Files » */
+  video: F;
+  /** Precise duration of the video in seconds; 0-60 */
+  duration?: number;
+  /** Timestamp in seconds of the frame that will be used as the static cover for the story. Defaults to 0.0. */
+  cover_frame_timestamp?: number;
+  /** Pass True if the video has no sound */
+  is_animation?: boolean;
 }
