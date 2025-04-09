@@ -974,6 +974,7 @@ export interface UserChatBoosts {
   boosts: ChatBoost[];
 }
 
+/** Represents the rights of a business bot. */
 export interface BusinessBotRights {
   /** True, if the bot can send and edit messages in the private chats that had incoming messages in the last 24 hours */
   can_reply?: true;
@@ -1001,7 +1002,7 @@ export interface BusinessBotRights {
   can_transfer_and_upgrade_gifts?: true;
   /** True, if the bot can transfer Telegram Stars received by the business account to its own account, or use them to upgrade and transfer gifts */
   can_transfer_stars?: true;
-  /** True, if the bot can send, edit and delete stories on behalf of the business account */
+  /** True, if the bot can post, edit and delete stories on behalf of the business account */
   can_manage_stories?: true;
 }
 
