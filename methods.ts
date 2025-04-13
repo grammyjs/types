@@ -1911,7 +1911,7 @@ export type ApiMethods<F> = {
     /** Caption of the story, 0-2048 characters after entities parsing */
     caption?: string;
     /** Mode for parsing entities in the story caption. See formatting options for more details. */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /** A list of special entities that appear in the caption, which can be specified instead of parse_mode */
     caption_entities?: MessageEntity[];
     /** A list of clickable areas to be shown on the story */
@@ -1933,7 +1933,7 @@ export type ApiMethods<F> = {
     /** Caption of the story, 0-2048 characters after entities parsing */
     caption?: string;
     /** Mode for parsing entities in the story caption. See formatting options for more details. */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /** A list of special entities that appear in the caption, which can be specified instead of parse_mode */
     caption_entities?: MessageEntity[];
     /** A list of clickable areas to be shown on the story */
@@ -1980,7 +1980,7 @@ export type ApiMethods<F> = {
     /** Text that will be shown along with the service message about the subscription; 0-128 characters */
     text?: string;
     /** Mode for parsing entities in the text. See formatting options for more details. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, and “custom_emoji” are ignored. */
-    text_parse_mode?: string;
+    text_parse_mode?: ParseMode;
     /** A list of special entities that appear in the gift text. It can be specified instead of text_parse_mode. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, and “custom_emoji” are ignored. */
     text_entities?: MessageEntity[];
   }): true;
