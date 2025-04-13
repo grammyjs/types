@@ -183,6 +183,15 @@ export declare namespace Message {
   export type GiveawayCompletedMessage =
     & ServiceMessage
     & MsgWith<"giveaway_completed">;
+  export type GiftMessage =
+    & ServiceMessage
+    & MsgWith<"gift">;
+  export type UniqueGiftMessage =
+    & ServiceMessage
+    & MsgWith<"unique_gift">;
+  export type PaidMessagePriceChangedMessage =
+    & ServiceMessage
+    & MsgWith<"paid_message_price_changed">;
   export type VideoChatScheduledMessage =
     & ServiceMessage
     & MsgWith<"video_chat_scheduled">;
