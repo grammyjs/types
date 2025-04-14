@@ -29,6 +29,18 @@ export interface WebhookInfo {
   allowed_updates?: Array<Exclude<keyof Update, "update_id">>;
 }
 
+/** This object describes the types of gifts that can be gifted to a user or a chat. */
+export interface AcceptedGiftTypes {
+  /** True, if unlimited regular gifts are accepted */
+  unlimited_gifts: boolean;
+  /** True, if limited regular gifts are accepted */
+  limited_gifts: boolean;
+  /** True, if unique gifts or gifts that can be upgraded to unique for free are accepted */
+  unique_gifts: boolean;
+  /** True, if a Telegram Premium subscription is accepted */
+  premium_subscription: boolean;
+}
+
 /** This object represents a Telegram user or bot. */
 export interface User {
   /** Unique identifier for this user or bot. */
@@ -208,8 +220,8 @@ export declare namespace ChatFullInfo {
     pinned_message?: Message;
     /** Default chat member permissions, for groups and supergroups */
     permissions?: undefined;
-    /** True, if gifts can be sent to the chat */
-    can_send_gift?: true;
+    /** Information about types of gifts that are accepted by the chat or by the corresponding user for private chats */
+    accepted_gift_types: AcceptedGiftTypes;
     /** True, if paid media messages can be sent or forwarded to the channel chat. The field is available only for channel chats. */
     can_send_paid_media?: undefined;
     /** For supergroups, the minimum allowed delay between consecutive messages sent by each unprivileged user; in seconds */
@@ -962,6 +974,38 @@ export interface UserChatBoosts {
   boosts: ChatBoost[];
 }
 
+/** Represents the rights of a business bot. */
+export interface BusinessBotRights {
+  /** True, if the bot can send and edit messages in the private chats that had incoming messages in the last 24 hours */
+  can_reply?: true;
+  /** True, if the bot can mark incoming private messages as read */
+  can_read_messages?: true;
+  /** True, if the bot can delete messages sent by the bot */
+  can_delete_outgoing_messages?: true;
+  /** True, if the bot can delete all private messages in managed chats */
+  can_delete_all_messages?: true;
+  /** True, if the bot can edit the first and last name of the business account */
+  can_edit_name?: true;
+  /** True, if the bot can edit the bio of the business account */
+  can_edit_bio?: true;
+  /** True, if the bot can edit the profile photo of the business account */
+  can_edit_profile_photo?: true;
+  /** True, if the bot can edit the username of the business account */
+  can_edit_username?: true;
+  /** True, if the bot can change the privacy settings pertaining to gifts for the business account */
+  can_change_gift_settings?: true;
+  /** True, if the bot can view gifts and the amount of Telegram Stars owned by the business account */
+  can_view_gifts_and_stars?: true;
+  /** True, if the bot can convert regular gifts owned by the business account to Telegram Stars */
+  can_convert_gifts_to_stars?: true;
+  /** True, if the bot can transfer and upgrade gifts owned by the business account */
+  can_transfer_and_upgrade_gifts?: true;
+  /** True, if the bot can transfer Telegram Stars received by the business account to its own account, or use them to upgrade and transfer gifts */
+  can_transfer_stars?: true;
+  /** True, if the bot can post, edit and delete stories on behalf of the business account */
+  can_manage_stories?: true;
+}
+
 /** Describes the connection of the bot with a business account. */
 export interface BusinessConnection {
   /** Unique identifier of the business connection */
@@ -972,8 +1016,8 @@ export interface BusinessConnection {
   user_chat_id: number;
   /** Date the connection was established in Unix time */
   date: number;
-  /** True, if the bot can act on behalf of the business account in chats that were active in the last 24 hours */
-  can_reply: boolean;
+  /** Rights of the business bot */
+  rights?: BusinessBotRights;
   /** True, if the connection is active */
   is_enabled: boolean;
 }
