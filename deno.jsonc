@@ -27,5 +27,6 @@
         "no-empty-interface"
       ]
     }
-  }
+  },
+  "compilerOptions": {}
 }
