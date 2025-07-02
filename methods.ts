@@ -1,4 +1,5 @@
 // deno-lint-ignore-file ban-types
+import type { InputChecklist } from "./checklist.ts";
 import type { InlineQueryResult, InlineQueryResultsButton } from "./inline.ts";
 import type { LanguageCode } from "./langs.ts";
 import type {
@@ -811,7 +812,7 @@ export type ApiMethods<F> = {
     question_parse_mode?: ParseMode;
     /** A list of special entities that appear in the poll question. It can be specified instead of question_parse_mode */
     question_entities?: MessageEntity[];
-    /** A list of 2-10 answer options */
+    /** A list of 2-12 answer options */
     options: InputPollOption[];
     /** True, if the poll needs to be anonymous, defaults to True */
     is_anonymous?: boolean;
@@ -852,6 +853,40 @@ export type ApiMethods<F> = {
     /** @deprecated Use `reply_parameters` instead. */
     reply_to_message_id?: number;
   }): Message.PollMessage;
+
+  /** Use this method to send a checklist on behalf of a connected business account. On success, the sent Message is returned. */
+  sendChecklist(args: {
+    /** Unique identifier of the business connection on behalf of which the message will be sent */
+    business_connection_id: string;
+    /** Unique identifier for the target chat */
+    chat_id: number;
+    /** An object for the checklist to send */
+    checklist: InputChecklist;
+    /** Sends the message silently. Users will receive a notification with no sound. */
+    disable_notification?: boolean;
+    /** Protects the contents of the sent message from forwarding and saving */
+    protect_content?: boolean;
+    /** Unique identifier of the message effect to be added to the message */
+    message_effect_id?: string;
+    /** An object for description of the message to reply to */
+    reply_parameters?: ReplyParameters;
+    /** An object for an inline keyboard */
+    reply_markup?: InlineKeyboardMarkup;
+  }): Message.ChecklistMessage;
+
+  /** Use this method to edit a checklist on behalf of a connected business account. On success, the edited Message is returned. */
+  editMessageChecklist(args: {
+    /** Unique identifier of the business connection on behalf of which the message will be sent */
+    business_connection_id: string;
+    /** Unique identifier for the target chat */
+    chat_id: number;
+    /** Unique identifier for the target message */
+    message_id: number;
+    /** An object for the new checklist */
+    checklist: InputChecklist;
+    /** An object for the new inline keyboard for the message */
+    reply_markup?: InlineKeyboardMarkup;
+  }): Message.ChecklistMessage;
 
   /** Use this method to send an animated emoji that will display a random value. On success, the sent Message is returned. */
   sendDice(args: {
@@ -1005,7 +1040,7 @@ export type ApiMethods<F> = {
     user_id: number;
     /** Pass True if the administrator's presence in the chat is hidden */
     is_anonymous?: boolean;
-    /** Pass True if the administrator can access the chat event log, get boost list, see hidden supergroup and channel members, report spam messages and ignore slow mode. Implied by any other administrator privilege. */
+    /** Pass True if the administrator can access the chat event log, get boost list, see hidden supergroup and channel members, report spam messages, ignore slow mode, and send messages to the chat without paying Telegram Stars. Implied by any other administrator privilege. */
     can_manage_chat?: boolean;
     /** Pass True if the administrator can delete messages of other users */
     can_delete_messages?: boolean;
@@ -1025,7 +1060,7 @@ export type ApiMethods<F> = {
     can_edit_stories?: boolean;
     /** True if the administrator can delete stories posted by other users */
     can_delete_stories?: boolean;
-    /** True if the administrator can post messages in the channel, or access channel statistics; for channels only */
+    /** Pass True if the administrator can post messages in the channel, approve suggested posts, or access channel statistics; for channels only */
     can_post_messages?: boolean;
     /** True if the administrator can edit messages of other users and can pin messages; for channels only */
     can_edit_messages?: boolean;
@@ -1492,6 +1527,9 @@ export type ApiMethods<F> = {
     /** Pass True to get default administrator rights of the bot in channels. Otherwise, default administrator rights of the bot for groups and supergroups will be returned. */
     for_channels?: boolean;
   }): ChatAdministratorRights;
+
+  /** A method to get the current Telegram Stars balance of the bot. Requires no parameters. On success, returns a StarAmount object. */
+  getMyStarBalance(): StarAmount;
 
   /** Use this method to edit text and game messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent. */
   editMessageText(args: {

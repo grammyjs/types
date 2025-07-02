@@ -1,4 +1,9 @@
 // deno-lint-ignore-file no-irregular-whitespace
+import type {
+  Checklist,
+  ChecklistTasksAdded,
+  ChecklistTasksDone,
+} from "./checklist.ts";
 import type { Chat, User } from "./manage.ts";
 import type { InlineKeyboardMarkup } from "./markup.ts";
 import type { PassportData } from "./passport.ts";
@@ -100,6 +105,16 @@ export declare namespace Message {
   export type VenueMessage = LocationMessage & MsgWith<"venue">;
   export type LocationMessage = CommonMessage & MsgWith<"location">;
   export type PaidMediaMessage = CommonMessage & MsgWith<"paid_media">;
+  export type DirectMessagePriceChangedMessage =
+    & ServiceMessage
+    & MsgWith<"direct_message_price_changed">;
+  export type ChecklistMessage = CommonMessage & MsgWith<"checklist">;
+  export type ChecklistTasksDoneMessage =
+    & ServiceMessage
+    & MsgWith<"checklist_tasks_done">;
+  export type ChecklistTasksAddedMessage =
+    & ServiceMessage
+    & MsgWith<"checklist_tasks_added">;
   export type NewChatMembersMessage =
     & ServiceMessage
     & MsgWith<"new_chat_members">;
@@ -247,6 +262,12 @@ export interface Message extends Message.MediaMessage {
   location?: Location;
   /** Message contains paid media; information about the paid media */
   paid_media?: PaidMediaInfo;
+  /** Message is a checklist */
+  checklist?: Checklist;
+  /** Service message: some tasks in a checklist were marked as done or not done */
+  checklist_tasks_done?: ChecklistTasksDone;
+  /** Service message: tasks were added to a checklist */
+  checklist_tasks_added?: ChecklistTasksAdded;
   /** New members that were added to the group or supergroup and information about them (the bot itself may be one of these members) */
   new_chat_members?: User[];
   /** A member was removed from the group, information about them (this member may be the bot itself) */
@@ -319,6 +340,8 @@ export interface Message extends Message.MediaMessage {
   unique_gift?: UniqueGiftInfo;
   /** Service message: the price for paid messages has changed in the chat */
   paid_message_price_changed?: PaidMessagePriceChanged;
+  /** Service message: the price for paid messages in the corresponding direct messages chat of a channel has changed */
+  direct_message_price_changed?: DirectMessagePriceChanged;
   /** Service message: video chat scheduled */
   video_chat_scheduled?: VideoChatScheduled;
   /** Service message: video chat started */
@@ -598,6 +621,8 @@ export interface ExternalReplyInfo {
   paid_media?: PaidMediaInfo;
   /** Message is a native poll, information about the poll */
   poll?: Poll;
+  /** Message is a checklist */
+  checklist?: Checklist;
   /** Message is a venue, information about the venue */
   venue?: Venue;
 }
@@ -1191,6 +1216,14 @@ export interface WriteAccessAllowed {
   web_app_name?: string;
   /** True, if the access was granted when the bot was added to the attachment or side menu */
   from_attachment_menu?: boolean;
+}
+
+/** Describes a service message about a change in the price of direct messages sent to a channel chat. */
+export interface DirectMessagePriceChanged {
+  /** True, if direct messages are enabled for the channel chat; false otherwise */
+  are_direct_messages_enabled: boolean;
+  /** The new number of Telegram Stars that must be paid by users for each direct message sent to the channel. Defaults to 0. */
+  direct_message_star_count?: number;
 }
 
 /** This object represents a service message about a video chat scheduled in the chat. */

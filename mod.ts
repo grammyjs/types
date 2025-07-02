@@ -1,4 +1,5 @@
 export * from "./api.ts";
+export * from "./checklist.ts";
 export * from "./inline.ts";
 export * from "./manage.ts";
 export * from "./markup.ts";
