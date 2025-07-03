@@ -50,7 +50,7 @@ export interface InputChecklist {
   /** List of special entities that appear in the title, which can be specified instead of parse_mode. Currently, only bold, italic, underline, strikethrough, spoiler, and custom_emoji entities are allowed. */
   title_entities?: MessageEntity[];
   /** List of 1-30 tasks in the checklist */
-  tasks: InputChecklistTask;
+  tasks: InputChecklistTask[];
   /** Pass True if other users can add tasks to the checklist */
   others_can_add_tasks?: boolean;
   /** Pass True if other users can mark tasks as done or not done in the checklist */
