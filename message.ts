@@ -88,7 +88,7 @@ export declare namespace Message {
     has_media_spoiler?: true;
   }
 
-  export type TextMessage = CommonMessage & MsgWith<"text">;
+  export type TextMessage = CommonMessage & MsgWith<"text" | "entities">;
   export type AudioMessage = CaptionableMessage & MsgWith<"audio">;
   export type DocumentMessage = CaptionableMessage & MsgWith<"document">;
   export type AnimationMessage = DocumentMessage & MsgWith<"animation">;
