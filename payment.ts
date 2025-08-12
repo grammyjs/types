@@ -1,5 +1,5 @@
 import type { Chat, User } from "./manage.ts";
-import type { MessageEntity, PaidMedia, Sticker } from "./message.ts";
+import type { Message, MessageEntity, PaidMedia, Sticker } from "./message.ts";
 
 /** This object represents a portion of the price for goods or services. */
 export interface LabeledPrice {
@@ -304,6 +304,8 @@ export interface PaidMediaPurchased {
 export interface Gift {
   /** Unique identifier of the gift */
   id: string;
+  /** Information about the chat that published the gift */
+  publisher_chat?: Chat;
   /** The sticker that represents the gift */
   sticker: Sticker;
   /** The number of Telegram Stars that must be paid to send the sticker */
@@ -370,6 +372,8 @@ export interface UniqueGift {
   base_name: string;
   /** Unique name of the gift. This name can be used in https://t.me/nft/... links and story areas */
   name: string;
+  /** Information about the chat that published the gift */
+  publisher_chat?: Chat;
   /** Unique number of the upgraded gift among gifts upgraded from the same regular gift */
   number: number;
   /** Model of the gift */
@@ -496,4 +500,68 @@ export interface OwnedGifts {
   gifts: OwnedGift[];
   /** Offset for the next request. If empty, then there are no more results */
   next_offset?: string;
+}
+
+/** Desribes price of a suggested post. */
+export interface SuggestedPostPrice {
+  /** Currency in which the post will be paid. Currently, must be one of “XTR” for Telegram Stars or “TON” for toncoins */
+  currency: "XTR" | "TON";
+  /** The amount of the currency that will be paid for the post in the smallest units of the currency, i.e. Telegram Stars or nanotoncoins. Currently, price in Telegram Stars must be between 5 and 100000, and price in nanotoncoins must be between 10000000 and 10000000000000. */
+  amount: number;
+}
+
+/** Contains information about a suggested post. */
+export interface SuggestedPostInfo {
+  /** State of the suggested post. Currently, it can be one of “pending”, “approved”, “declined”. */
+  state: "pending" | "approved" | "declined";
+  /** Proposed price of the post. If the field is omitted, then the post is unpaid. */
+  price?: SuggestedPostPrice;
+  /** Proposed send date of the post. If the field is omitted, then the post can be published at any time within 30 days at the sole discretion of the user or administrator who approves it. */
+  send_date?: number;
+}
+
+/** Describes a service message about the approval of a suggested post. */
+export interface SuggestedPostApproved {
+  /** Message containing the suggested post. Note that the Message object in this field will not contain the reply_to_message field even if it itself is a reply. */
+  suggested_post_message?: Message;
+  /** Amount paid for the post */
+  price?: SuggestedPostPrice;
+  /** Date when the post will be published */
+  send_date: number;
+}
+
+/** Describes a service message about the failed approval of a suggested post. Currently, only caused by insufficient user funds at the time of approval. */
+export interface SuggestedPostApprovalFailed {
+  /** Message containing the suggested post whose approval has failed. Note that the Message object in this field will not contain the reply_to_message field even if it itself is a reply. */
+  suggested_post_message?: Message;
+  /** Expected price of the post */
+  price: SuggestedPostPrice;
+}
+
+/** Describes a service message about the rejection of a suggested post. */
+export interface SuggestedPostDeclined {
+  /** Message containing the suggested post. Note that the Message object in this field will not contain the reply_to_message field even if it itself is a reply. */
+  suggested_post_message?: Message;
+  /** Comment with which the post was declined */
+  comment?: string;
+}
+
+/** Describes a service message about a successful payment for a suggested post. */
+export interface SuggestedPostPaid {
+  /** Message containing the suggested post. Note that the Message object in this field will not contain the reply_to_message field even if it itself is a reply. */
+  suggested_post_message?: Message;
+  /** Currency in which the payment was made. Currently, one of “XTR” for Telegram Stars or “TON” for toncoins */
+  currency: string;
+  /** The amount of the currency that was received by the channel in nanotoncoins; for payments in toncoins only */
+  amount?: number;
+  /** The amount of Telegram Stars that was received by the channel; for payments in Telegram Stars only */
+  star_amount?: StarAmount;
+}
+
+/** Describes a service message about a payment refund for a suggested post. */
+export interface SuggestedPostRefunded {
+  /** Message containing the suggested post. Note that the Message object in this field will not contain the reply_to_message field even if it itself is a reply. */
+  suggested_post_message?: Message;
+  /** Reason for the refund. Currently, one of “post_deleted” if the post was deleted within 24 hours of being posted or removed from scheduled messages without being posted, or “payment_refunded” if the payer refunded their payment. */
+  reason: string;
 }

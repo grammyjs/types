@@ -94,6 +94,8 @@ export declare namespace Chat {
     last_name?: string;
     /** True, if the supergroup chat is a forum (has topics enabled) */
     is_forum?: undefined;
+    /** True, if the chat is the direct messages chat of a channel */
+    is_direct_messages?: undefined;
   }
   /** Internal type for group chats */
   export interface GroupChat {
@@ -111,6 +113,8 @@ export declare namespace Chat {
     last_name?: undefined;
     /** True, if the supergroup chat is a forum (has topics enabled) */
     is_forum?: undefined;
+    /** True, if the chat is the direct messages chat of a channel */
+    is_direct_messages?: undefined;
   }
   /** Internal type for supergroup chats */
   export interface SupergroupChat {
@@ -128,6 +132,8 @@ export declare namespace Chat {
     last_name?: undefined;
     /** True, if the supergroup chat is a forum (has topics enabled) */
     is_forum?: true;
+    /** True, if the chat is the direct messages chat of a channel */
+    is_direct_messages?: true;
   }
   /** Internal type for channel chats */
   export interface ChannelChat {
@@ -145,6 +151,8 @@ export declare namespace Chat {
     last_name?: undefined;
     /** True, if the supergroup chat is a forum (has topics enabled) */
     is_forum?: undefined;
+    /** True, if the chat is the direct messages chat of a channel */
+    is_direct_messages?: undefined;
   }
 }
 
@@ -246,6 +254,8 @@ export declare namespace ChatFullInfo {
     custom_emoji_sticker_set_name?: undefined;
     /** Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats. */
     linked_chat_id?: undefined;
+    /** Information about the corresponding channel chat; for direct messages chats only */
+    parent_chat?: undefined;
     /** For supergroups, the location to which the supergroup is connected */
     location?: undefined;
   }
@@ -339,6 +349,8 @@ export declare namespace ChatFullInfo {
     custom_emoji_sticker_set_name?: undefined;
     /** Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats. */
     linked_chat_id?: undefined;
+    /** Information about the corresponding channel chat; for direct messages chats only */
+    parent_chat?: undefined;
     /** For supergroups, the location to which the supergroup is connected */
     location?: undefined;
   }
@@ -432,6 +444,8 @@ export declare namespace ChatFullInfo {
     custom_emoji_sticker_set_name?: string;
     /** Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats. */
     linked_chat_id?: number;
+    /** Information about the corresponding channel chat; for direct messages chats only */
+    parent_chat?: Chat.ChannelChat;
     /** For supergroups, the location to which the supergroup is connected */
     location?: ChatLocation;
   }
@@ -525,6 +539,8 @@ export declare namespace ChatFullInfo {
     custom_emoji_sticker_set_name?: undefined;
     /** Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats. */
     linked_chat_id?: number;
+    /** Information about the corresponding channel chat; for direct messages chats only */
+    parent_chat?: undefined;
     /** For supergroups, the location to which the supergroup is connected */
     location?: undefined;
   }
@@ -617,6 +633,8 @@ export interface ChatAdministratorRights {
   can_pin_messages?: boolean;
   /** True, if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only */
   can_manage_topics?: boolean;
+  /** True, if the administrator can manage direct messages of the channel and decline suggested posts; for channels only */
+  can_manage_direct_messages?: boolean;
 }
 
 /** This object represents changes in the status of a chat member. */
@@ -704,6 +722,8 @@ export interface ChatMemberAdministrator {
   can_pin_messages?: boolean;
   /** True, if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only */
   can_manage_topics?: boolean;
+  /** True, if the administrator can manage direct messages of the channel and decline suggested posts; for channels only */
+  can_manage_direct_messages?: boolean;
   /** Custom title for this user */
   custom_title?: string;
 }
