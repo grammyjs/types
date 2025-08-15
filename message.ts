@@ -299,7 +299,7 @@ export interface Message extends Message.MediaMessage {
   checklist_tasks_done?: ChecklistTasksDone;
   /** Service message: tasks were added to a checklist */
   checklist_tasks_added?: ChecklistTasksAdded;
-  /** Information about suggested post parameters if the message is a suggested post in a channel direct messages chat. If the message is a suggested post, then it can't be edited. */
+  /** Information about suggested post parameters if the message is a suggested post in a channel direct messages chat. If the message is an approved or declined suggested post, then it can't be edited. */
   suggested_post_info?: SuggestedPostInfo;
   /** Service message: a suggested post was approved */
   suggested_post_approved?: SuggestedPostApproved;
@@ -1633,6 +1633,6 @@ export interface DirectMessagesTopic {
 export interface SuggestedPostParameters {
   /** Proposed price for the post. If the field is omitted, then the post is unpaid. */
   price?: SuggestedPostPrice;
-  /** Proposed send date of the post. If the field is omitted, then the post can be published at any time within 30 days at the sole discretion of the user who approves it. */
+  /** Proposed send date of the post. If specified, then the date must be between 300 second and 2678400 seconds (30 days) in the future. If the field is omitted, then the post can be published at any time within 30 days at the sole discretion of the user who approves it. */
   send_date?: number;
 }

@@ -1265,7 +1265,7 @@ export type ApiMethods<F> = {
     chat_id: number;
     /** Identifier of a suggested post message to approve */
     message_id: number;
-    /** Point in time (Unix timestamp) when the post is expected to be published; omit if the date has already been specified when the suggested post was created */
+    /** Point in time (Unix timestamp) when the post is expected to be published; omit if the date has already been specified when the suggested post was created. If specified, then the date must be not more than 2678400 seconds (30 days) in the future */
     send_date?: number;
   }): true;
 
@@ -1275,7 +1275,7 @@ export type ApiMethods<F> = {
     chat_id: number;
     /** Identifier of a suggested post message to decline */
     message_id: number;
-    /** Comment for the creator of the suggested post */
+    /** Comment for the creator of the suggested post; 0-128 characters */
     comment?: string;
   }): true;
 
