@@ -323,8 +323,8 @@ export declare namespace ChatFullInfo {
     pinned_message?: Message;
     /** Default chat member permissions, for groups and supergroups */
     permissions?: ChatPermissions;
-    /** True, if gifts can be sent to the chat */
-    can_send_gift?: true;
+    /** Information about types of gifts that are accepted by the chat or by the corresponding user for private chats */
+    accepted_gift_types: AcceptedGiftTypes;
     /** True, if paid media messages can be sent or forwarded to the channel chat. The field is available only for channel chats. */
     can_send_paid_media?: undefined;
     /** For supergroups, the minimum allowed delay between consecutive messages sent by each unprivileged user; in seconds */
@@ -418,8 +418,8 @@ export declare namespace ChatFullInfo {
     pinned_message?: Message;
     /** Default chat member permissions, for groups and supergroups */
     permissions?: ChatPermissions;
-    /** True, if gifts can be sent to the chat */
-    can_send_gift?: true;
+    /** Information about types of gifts that are accepted by the chat or by the corresponding user for private chats */
+    accepted_gift_types: AcceptedGiftTypes;
     /** True, if paid media messages can be sent or forwarded to the channel chat. The field is available only for channel chats. */
     can_send_paid_media?: undefined;
     /** For supergroups, the minimum allowed delay between consecutive messages sent by each unprivileged user; in seconds */
@@ -513,8 +513,8 @@ export declare namespace ChatFullInfo {
     pinned_message?: Message;
     /** Default chat member permissions, for groups and supergroups */
     permissions?: undefined;
-    /** True, if gifts can be sent to the chat */
-    can_send_gift?: true;
+    /** Information about types of gifts that are accepted by the chat or by the corresponding user for private chats */
+    accepted_gift_types: AcceptedGiftTypes;
     /** True, if paid media messages can be sent or forwarded to the channel chat. The field is available only for channel chats. */
     can_send_paid_media?: true;
     /** For supergroups, the minimum allowed delay between consecutive messages sent by each unprivileged user; in seconds */
