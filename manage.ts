@@ -180,6 +180,8 @@ export declare namespace ChatFullInfo {
     last_name?: string;
     /** True, if the supergroup chat is a forum (has topics enabled) */
     is_forum?: undefined;
+    /** True, if the chat is the direct messages chat of a channel */
+    is_direct_messages?: undefined;
     /** Identifier of the accent color for the chat name and backgrounds of the chat photo, reply header, and link preview. See accent colors for more details. */
     accent_color_id: number;
     /** The maximum number of reactions that can be set on a message in the chat */
@@ -275,6 +277,8 @@ export declare namespace ChatFullInfo {
     last_name?: undefined;
     /** True, if the supergroup chat is a forum (has topics enabled) */
     is_forum?: undefined;
+    /** True, if the chat is the direct messages chat of a channel */
+    is_direct_messages?: undefined;
     /** Identifier of the accent color for the chat name and backgrounds of the chat photo, reply header, and link preview. See accent colors for more details. */
     accent_color_id: number;
     /** The maximum number of reactions that can be set on a message in the chat */
@@ -370,6 +374,8 @@ export declare namespace ChatFullInfo {
     last_name?: undefined;
     /** True, if the supergroup chat is a forum (has topics enabled) */
     is_forum?: true;
+    /** True, if the chat is the direct messages chat of a channel */
+    is_direct_messages?: true;
     /** Identifier of the accent color for the chat name and backgrounds of the chat photo, reply header, and link preview. See accent colors for more details. */
     accent_color_id: number;
     /** The maximum number of reactions that can be set on a message in the chat */
@@ -465,6 +471,8 @@ export declare namespace ChatFullInfo {
     last_name?: undefined;
     /** True, if the supergroup chat is a forum (has topics enabled) */
     is_forum?: undefined;
+    /** True, if the chat is the direct messages chat of a channel */
+    is_direct_messages?: undefined;
     /** Identifier of the accent color for the chat name and backgrounds of the chat photo, reply header, and link preview. See accent colors for more details. */
     accent_color_id: number;
     /** The maximum number of reactions that can be set on a message in the chat */
