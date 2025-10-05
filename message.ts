@@ -552,7 +552,7 @@ export type ParseMode = "Markdown" | "MarkdownV2" | "HTML";
 
 export declare namespace MessageEntity {
   interface AbstractMessageEntity {
-    /** Type of the entity. Currently, can be “mention” (@username), “hashtag” (#hashtag or #hashtag@chatusername), “cashtag” ($USD or $USD@chatusername), “bot_command” (/start@jobs_bot), “url” (https://telegram.org), “email” (do-not-reply@telegram.org), “phone_number” (+1-212-555-0123), “bold” (bold text), “italic” (italic text), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users without usernames), “custom_emoji” (for inline custom emoji stickers) */
+    /** Type of the entity. Currently, can be “mention” (`@username`), “hashtag” (#hashtag or `#hashtag@chatusername`), “cashtag” ($USD or `$USD@chatusername`), “bot_command” (`/start@jobs_bot`), “url” (https://telegram.org), “email” (`do-not-reply@telegram.org`), “phone_number” (+1-212-555-0123), “bold” (bold text), “italic” (italic text), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users without usernames), “custom_emoji” (for inline custom emoji stickers) */
     type: string;
     /** Offset in UTF-16 code units to the start of the entity */
     offset: number;
@@ -677,7 +677,7 @@ export interface ExternalReplyInfo {
 export interface ReplyParameters {
   /** Identifier of the message that will be replied to in the current chat, or in the chat chat_id if it is specified */
   message_id: number;
-  /** If the message to be replied to is from a different chat, unique identifier for the chat or username of the channel (in the format @channelusername). Not supported for messages sent on behalf of a business account and messages from channel direct messages chats. */
+  /** If the message to be replied to is from a different chat, unique identifier for the chat or username of the channel (in the format `@channelusername`). Not supported for messages sent on behalf of a business account and messages from channel direct messages chats. */
   chat_id?: number | string;
   /** Identifier of the specific checklist task to be replied to */
   checklist_task_id?: number;
