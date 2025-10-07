@@ -200,6 +200,8 @@ export declare namespace ChatFullInfo {
     business_opening_hours?: BusinessOpeningHours;
     /** For private chats, the personal channel of the user */
     personal_chat?: Chat;
+    /** Information about the corresponding channel chat; for direct messages chats only */
+    parent_chat?: undefined;
     /** List of available reactions allowed in the chat. If omitted, then all emoji reactions are allowed. */
     available_reactions?: ReactionType[];
     /** Custom emoji identifier of the emoji chosen by the chat for the reply header and link preview background */
@@ -256,8 +258,6 @@ export declare namespace ChatFullInfo {
     custom_emoji_sticker_set_name?: undefined;
     /** Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats. */
     linked_chat_id?: undefined;
-    /** Information about the corresponding channel chat; for direct messages chats only */
-    parent_chat?: undefined;
     /** For supergroups, the location to which the supergroup is connected */
     location?: undefined;
   }
@@ -297,6 +297,8 @@ export declare namespace ChatFullInfo {
     business_opening_hours?: undefined;
     /** For private chats, the personal channel of the user */
     personal_chat?: undefined;
+    /** Information about the corresponding channel chat; for direct messages chats only */
+    parent_chat?: undefined;
     /** List of available reactions allowed in the chat. If omitted, then all emoji reactions are allowed. */
     available_reactions?: ReactionType[];
     /** Custom emoji identifier of the emoji chosen by the chat for the reply header and link preview background */
@@ -353,8 +355,6 @@ export declare namespace ChatFullInfo {
     custom_emoji_sticker_set_name?: undefined;
     /** Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats. */
     linked_chat_id?: undefined;
-    /** Information about the corresponding channel chat; for direct messages chats only */
-    parent_chat?: undefined;
     /** For supergroups, the location to which the supergroup is connected */
     location?: undefined;
   }
@@ -394,6 +394,8 @@ export declare namespace ChatFullInfo {
     business_opening_hours?: undefined;
     /** For private chats, the personal channel of the user */
     personal_chat?: undefined;
+    /** Information about the corresponding channel chat; for direct messages chats only */
+    parent_chat?: Chat.ChannelChat;
     /** List of available reactions allowed in the chat. If omitted, then all emoji reactions are allowed. */
     available_reactions?: ReactionType[];
     /** Custom emoji identifier of the emoji chosen by the chat for the reply header and link preview background */
@@ -450,8 +452,6 @@ export declare namespace ChatFullInfo {
     custom_emoji_sticker_set_name?: string;
     /** Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats. */
     linked_chat_id?: number;
-    /** Information about the corresponding channel chat; for direct messages chats only */
-    parent_chat?: Chat.ChannelChat;
     /** For supergroups, the location to which the supergroup is connected */
     location?: ChatLocation;
   }
@@ -491,6 +491,8 @@ export declare namespace ChatFullInfo {
     business_opening_hours?: undefined;
     /** For private chats, the personal channel of the user */
     personal_chat?: undefined;
+    /** Information about the corresponding channel chat; for direct messages chats only */
+    parent_chat?: undefined;
     /** List of available reactions allowed in the chat. If omitted, then all emoji reactions are allowed. */
     available_reactions?: ReactionType[];
     /** Custom emoji identifier of the emoji chosen by the chat for the reply header and link preview background */
@@ -547,8 +549,6 @@ export declare namespace ChatFullInfo {
     custom_emoji_sticker_set_name?: undefined;
     /** Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats. */
     linked_chat_id?: number;
-    /** Information about the corresponding channel chat; for direct messages chats only */
-    parent_chat?: undefined;
     /** For supergroups, the location to which the supergroup is connected */
     location?: undefined;
   }
