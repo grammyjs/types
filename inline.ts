@@ -679,7 +679,7 @@ export interface InputInvoiceMessageContent {
   description: string;
   /** Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use it for your internal processes. */
   payload: string;
-  /** Payment provider token, obtained via @BotFather. Pass an empty string for payments in Telegram Stars. */
+  /** Payment provider token, obtained via `@BotFather`. Pass an empty string for payments in Telegram Stars. */
   provider_token?: string;
   /** Three-letter ISO 4217 currency code, see more on currencies. Pass “XTR” for payments in Telegram Stars. */
   currency: string;
@@ -717,7 +717,7 @@ export interface InputInvoiceMessageContent {
 
 /** Represents a result of an inline query that was chosen by the user and sent to their chat partner.
 
-Note: It is necessary to enable inline feedback via @BotFather in order to receive these objects in updates. */
+Note: It is necessary to enable inline feedback via `@BotFather` in order to receive these objects in updates. */
 export interface ChosenInlineResult {
   /** The unique identifier for the result that was chosen */
   result_id: string;
