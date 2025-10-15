@@ -5,6 +5,7 @@ import type {
   ReactionType,
   Sticker,
 } from "./message.ts";
+import type { UniqueGiftColors } from "./payment.ts";
 import type { Update } from "./update.ts";
 
 /** Describes the current status of a webhook. */
@@ -39,6 +40,8 @@ export interface AcceptedGiftTypes {
   unique_gifts: boolean;
   /** True, if a Telegram Premium subscription is accepted */
   premium_subscription: boolean;
+  /** True, if transfers of unique gifts from channels are accepted */
+  gifts_from_channels: boolean;
 }
 
 /** This object represents a Telegram user or bot. */
@@ -75,6 +78,20 @@ export interface UserFromGetMe extends User {
   can_connect_to_business: boolean;
   /** True, if the bot has main Web App. Returned only in getMe. */
   has_main_web_app: boolean;
+  /** True, if the bot has forum topic mode enabled in private chats. Returned only in getMe. */
+  has_topics_enabled?: boolean;
+}
+
+/** This object describes the rating of a user based on their Telegram Star spendings. */
+export interface UserRating {
+  /** Current level of the user, indicating their reliability when purchasing digital goods and services. A higher level suggests a more trustworthy customer; a negative level is likely reason for concern. */
+  level: number;
+  /** Numerical value of the user's rating; the higher the rating, the better */
+  rating: number;
+  /** The rating value required to get the current level */
+  current_level_rating: number;
+  /** The rating value required to get to the next level; omitted if the maximum level was reached */
+  next_level_rating?: number;
 }
 
 export declare namespace Chat {
@@ -198,6 +215,10 @@ export declare namespace ChatFullInfo {
     business_location?: BusinessLocation;
     /** For private chats with business accounts, the opening hours of the business */
     business_opening_hours?: BusinessOpeningHours;
+    /** For private chats, the rating of the user if any */
+    rating?: UserRating;
+    /** The color scheme based on a unique gift that must be used for the chat's name, message replies and link previews */
+    unique_gift_colors?: UniqueGiftColors;
     /** For private chats, the personal channel of the user */
     personal_chat?: Chat;
     /** Information about the corresponding channel chat; for direct messages chats only */
@@ -295,6 +316,10 @@ export declare namespace ChatFullInfo {
     business_location?: undefined;
     /** For private chats with business accounts, the opening hours of the business */
     business_opening_hours?: undefined;
+    /** For private chats, the rating of the user if any */
+    rating?: undefined;
+    /** The color scheme based on a unique gift that must be used for the chat's name, message replies and link previews */
+    unique_gift_colors?: UniqueGiftColors;
     /** For private chats, the personal channel of the user */
     personal_chat?: undefined;
     /** Information about the corresponding channel chat; for direct messages chats only */
@@ -392,6 +417,10 @@ export declare namespace ChatFullInfo {
     business_location?: undefined;
     /** For private chats with business accounts, the opening hours of the business */
     business_opening_hours?: undefined;
+    /** For private chats, the rating of the user if any */
+    rating?: undefined;
+    /** The color scheme based on a unique gift that must be used for the chat's name, message replies and link previews */
+    unique_gift_colors?: UniqueGiftColors;
     /** For private chats, the personal channel of the user */
     personal_chat?: undefined;
     /** Information about the corresponding channel chat; for direct messages chats only */
@@ -489,6 +518,10 @@ export declare namespace ChatFullInfo {
     business_location?: undefined;
     /** For private chats with business accounts, the opening hours of the business */
     business_opening_hours?: undefined;
+    /** For private chats, the rating of the user if any */
+    rating?: undefined;
+    /** The color scheme based on a unique gift that must be used for the chat's name, message replies and link previews */
+    unique_gift_colors?: UniqueGiftColors;
     /** For private chats, the personal channel of the user */
     personal_chat?: undefined;
     /** Information about the corresponding channel chat; for direct messages chats only */
@@ -910,6 +943,8 @@ export interface ForumTopic {
   message_thread_id: number;
   /** Name of the topic */
   name: string;
+  /** True, if the name of the topic wasn't specified explicitly by its creator and likely needs to be changed by the bot */
+  is_name_implicit?: true;
   /** Color of the topic icon in RGB format */
   icon_color: number;
   /** Unique identifier of the custom emoji shown as the topic icon */
