@@ -502,7 +502,7 @@ export interface OwnedGifts {
   next_offset?: string;
 }
 
-/** Desribes price of a suggested post. */
+/** Describes the price of a suggested post. */
 export interface SuggestedPostPrice {
   /** Currency in which the post will be paid. Currently, must be one of “XTR” for Telegram Stars or “TON” for toncoins */
   currency: "XTR" | "TON";
