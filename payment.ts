@@ -417,7 +417,7 @@ export interface UniqueGiftInfo {
   /** For gifts bought from other users, the price paid for the gift */
   last_resale_star_count?: number;
   /** Point in time (Unix timestamp) when the gift can be transferred. If it is in the past, then the gift can be transferred now */
-  next_transfer_date?: string;
+  next_transfer_date?: number;
 }
 
 /** Describes a service message about a change in the price of paid messages within a chat. */
@@ -489,7 +489,7 @@ export interface OwnedGiftUnique {
   /** Number of Telegram Stars that must be paid to transfer the gift; omitted if the bot cannot transfer the gift */
   transfer_star_count?: number;
   /** Point in time (Unix timestamp) when the gift can be transferred. If it is in the past, then the gift can be transferred now */
-  next_transfer_date?: string;
+  next_transfer_date?: number;
 }
 
 /** Contains the list of gifts received and owned by a user or a chat. */
