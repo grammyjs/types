@@ -1,4 +1,4 @@
-import type { User } from "./manage.ts";
+import type { Chat, User } from "./manage.ts";
 import type { Message, MessageEntity, ParseMode } from "./message.ts";
 
 /** Describes a task in a checklist. */
@@ -9,8 +9,10 @@ export interface ChecklistTask {
   text: string;
   /** Special entities that appear in the task text */
   text_entities?: MessageEntity[];
-  /** User that completed the task; omitted if the task wasn't completed */
+  /** User that completed the task; omitted if the task wasn't completed by a user */
   completed_by_user?: User;
+  /** Chat that completed the task; omitted if the task wasn't completed by a chat */
+  completed_by_chat?: Chat;
   /** Point in time (Unix timestamp) when the task was completed; 0 if the task wasn't completed */
   completion_date?: number;
 }

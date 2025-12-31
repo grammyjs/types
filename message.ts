@@ -29,7 +29,7 @@ export declare namespace Message {
   interface ServiceMessage {
     /** Unique message identifier inside this chat. In specific instances (e.g., message containing a video sent to a big chat), the server might automatically schedule a message instead of sending it immediately. In such cases, this field will be 0 and the relevant message will be unusable until it is actually sent */
     message_id: number;
-    /** Unique identifier of a message thread or a forum topic to which the message belongs; for supergroups only */
+    /** Unique identifier of a message thread or forum topic to which the message belongs; for supergroups and private chats only */
     message_thread_id?: number;
     /** Sender of the message; may be empty for messages sent to channels. For backward compatibility, if the message was sent on behalf of a chat, the field contains a fake sender user in non-channel chats */
     from?: User;
@@ -41,7 +41,7 @@ export declare namespace Message {
     business_connection_id?: string;
     /** Chat the message belongs to */
     chat: Chat;
-    /** True, if the message is sent to a forum topic */
+    /** True, if the message is sent to a topic in a forum supergroup or a private chat with the bot */
     is_topic_message?: boolean;
     /** Information about the direct messages chat topic that contains the message */
     direct_messages_topic?: DirectMessagesTopic;
@@ -238,6 +238,9 @@ export declare namespace Message {
   export type UniqueGiftMessage =
     & ServiceMessage
     & MsgWith<"unique_gift">;
+  export type GiftUpgradeSentMessage =
+    & ServiceMessage
+    & MsgWith<"gift_upgrade_sent">;
   export type PaidMessagePriceChangedMessage =
     & ServiceMessage
     & MsgWith<"paid_message_price_changed">;
@@ -382,6 +385,8 @@ export interface Message extends Message.MediaMessage {
   giveaway_completed?: GiveawayCompleted;
   /** Service message: a regular gift was sent or received */
   gift?: GiftInfo;
+  /** Service message: upgrade of a gift was purchased after the gift was sent */
+  gift_upgrade_sent?: GiftInfo;
   /** Service message: a unique gift was sent or received */
   unique_gift?: UniqueGiftInfo;
   /** Service message: the price for paid messages has changed in the chat */
@@ -1194,6 +1199,8 @@ export interface ChatBackground {
 export interface ForumTopicCreated {
   /** Name of the topic */
   name: string;
+  /** True, if the name of the topic wasn't specified explicitly by its creator and likely needs to be changed by the bot */
+  is_name_implicit?: true;
   /** Color of the topic icon in RGB format */
   icon_color: number;
   /** Unique identifier of the custom emoji shown as the topic icon */
