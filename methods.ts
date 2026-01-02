@@ -2187,7 +2187,7 @@ export type ApiMethods<F> = {
     text_parse_mode?: ParseMode;
     /** A list of special entities that appear in the gift text. It can be specified instead of text_parse_mode. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, and “custom_emoji” are ignored. */
     text_entities?: MessageEntity[];
-  }): Gifts;
+  }): true;
 
   /** Gifts a Telegram Premium subscription to the given user. Returns True on success. */
   giftPremiumSubscription(args: {
