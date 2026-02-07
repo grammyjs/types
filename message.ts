@@ -4,7 +4,7 @@ import type {
   ChecklistTasksAdded,
   ChecklistTasksDone,
 } from "./checklist.ts";
-import type { Chat, User } from "./manage.ts";
+import type { Chat, ChatOwnerChanged, ChatOwnerLeft, User } from "./manage.ts";
 import type { InlineKeyboardMarkup } from "./markup.ts";
 import type { PassportData } from "./passport.ts";
 import type {
@@ -149,6 +149,12 @@ export declare namespace Message {
   export type SuggestedPostRefundedMessage =
     & ServiceMessage
     & MsgWith<"suggested_post_refunded">;
+  export type ChatOwnerLeftMessage =
+    & ServiceMessage
+    & MsgWith<"chat_owner_left">;
+  export type ChatOwnerChangedMessage =
+    & ServiceMessage
+    & MsgWith<"chat_owner_changed">;
   export type NewChatMembersMessage =
     & ServiceMessage
     & MsgWith<"new_chat_members">;
@@ -317,6 +323,10 @@ export interface Message extends Message.MediaMessage {
   suggested_post_paid?: SuggestedPostPaid;
   /** Service message: payment for a suggested post was refunded */
   suggested_post_refunded?: SuggestedPostRefunded;
+  /** Service message: chat owner has left */
+  chat_owner_left?: ChatOwnerLeft;
+  /** Service message: chat owner has changed */
+  chat_owner_changed?: ChatOwnerChanged;
   /** New members that were added to the group or supergroup and information about them (the bot itself may be one of these members) */
   new_chat_members?: User[];
   /** A member was removed from the group, information about them (this member may be the bot itself) */
@@ -861,6 +871,23 @@ export interface Video {
   /** MIME type of the file as defined by sender */
   mime_type?: string;
   /** File size in bytes */
+  file_size?: number;
+  /** List of available qualities of the video. */
+  qualities?: VideoQuality[];
+}
+/** This object represents a video file of a specific quality. */
+export interface VideoQuality {
+  /** Identifier for this file, which can be used to download or reuse the file */
+  file_id: string;
+  /** Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file. */
+  file_unique_id: string;
+  /** Video width */
+  width: number;
+  /** Video height */
+  height: number;
+  /** Codec that was used to encode the video, for example, “h264”, “h265”, or “av01” */
+  codec: string;
+  /** File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value. */
   file_size?: number;
 }
 

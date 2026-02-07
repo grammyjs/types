@@ -352,8 +352,10 @@ export interface UniqueGiftModel {
   name: string;
   /** The sticker that represents the unique gift */
   sticker: Sticker;
-  /** The number of unique gifts that receive this model for every 1000 gifts upgraded */
+  /** The number of unique gifts that receive this model for every 1000 gift upgrades. Always 0 for crafted gifts. */
   rarity_per_mille: number;
+  /** Rarity of the model if it is a crafted model. Currently, can be “uncommon”, “rare”, “epic”, or “legendary”. */
+  rarity?: "uncommon" | "rare" | "epic" | "legendary";
 }
 
 /** This object describes the symbol shown on the pattern of a unique gift. */
@@ -412,6 +414,8 @@ export interface UniqueGift {
   backdrop: UniqueGiftBackdrop;
   /** The color scheme that can be used by the gift's owner for the chat's name, replies to messages and link previews */
   colors?: UniqueGiftColors;
+  /** True, if the gift was used to craft another gift and isn't available anymore */
+  is_burned?: true;
 }
 
 /** This object contains information about the color scheme for a user's name, message replies and link previews based on a unique gift. */
