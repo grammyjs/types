@@ -1,4 +1,5 @@
 import type {
+  Audio,
   Location,
   Message,
   PhotoSize,
@@ -79,7 +80,21 @@ export interface UserFromGetMe extends User {
   /** True, if the bot has main Web App. Returned only in getMe. */
   has_main_web_app: boolean;
   /** True, if the bot has forum topic mode enabled in private chats. Returned only in getMe. */
-  has_topics_enabled?: boolean;
+  has_topics_enabled: boolean;
+  /** True, if the bot allows users to create and delete topics in private chats. Returned only in getMe. */
+  allows_users_to_create_topics: boolean;
+}
+
+/** Describes a service message about the chat owner leaving the chat. */
+export interface ChatOwnerLeft {
+  /** The user which will be the new owner of the chat if the previous owner does not return to the chat */
+  new_owner?: User;
+}
+
+/** Describes a service message about an ownership change in the chat. */
+export interface ChatOwnerChanged {
+  /** The new owner of the chat */
+  new_owner: User;
 }
 
 /** This object describes the rating of a user based on their Telegram Star spendings. */
@@ -205,6 +220,8 @@ export declare namespace ChatFullInfo {
     max_reaction_count: number;
     /** Chat photo */
     photo?: ChatPhoto;
+    /** For private chats, the first audio added to the profile of the user */
+    first_profile_audio?: Audio;
     /** If non-empty, the list of all active chat usernames; for private chats, supergroups and channels */
     active_usernames?: string[];
     /** For private chats, the date of birth of the user */
@@ -306,6 +323,8 @@ export declare namespace ChatFullInfo {
     max_reaction_count: number;
     /** Chat photo */
     photo?: ChatPhoto;
+    /** For private chats, the first audio added to the profile of the user */
+    first_profile_audio?: undefined;
     /** If non-empty, the list of all active chat usernames; for private chats, supergroups and channels */
     active_usernames?: undefined;
     /** For private chats, the date of birth of the user */
@@ -407,6 +426,8 @@ export declare namespace ChatFullInfo {
     max_reaction_count: number;
     /** Chat photo */
     photo?: ChatPhoto;
+    /** For private chats, the first audio added to the profile of the user */
+    first_profile_audio?: undefined;
     /** If non-empty, the list of all active chat usernames; for private chats, supergroups and channels */
     active_usernames?: string[];
     /** For private chats, the date of birth of the user */
@@ -508,6 +529,8 @@ export declare namespace ChatFullInfo {
     max_reaction_count: number;
     /** Chat photo */
     photo?: ChatPhoto;
+    /** For private chats, the first audio added to the profile of the user */
+    first_profile_audio?: undefined;
     /** If non-empty, the list of all active chat usernames; for private chats, supergroups and channels */
     active_usernames?: string[];
     /** For private chats, the date of birth of the user */
@@ -602,6 +625,14 @@ export interface UserProfilePhotos {
   total_count: number;
   /** Requested profile pictures (in up to 4 sizes each) */
   photos: PhotoSize[][];
+}
+
+/** This object represents the audios displayed on a user's profile. */
+export interface UserProfileAudios {
+  /** Total number of profile audios for the target user */
+  total_count: number;
+  /** Requested profile audios */
+  audios: Audio[];
 }
 
 /** This object represents a chat photo. */

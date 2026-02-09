@@ -16,6 +16,7 @@ import type {
   ForumTopic,
   UserChatBoosts,
   UserFromGetMe,
+  UserProfileAudios,
   UserProfilePhotos,
   WebhookInfo,
 } from "./manage.ts";
@@ -1063,6 +1064,16 @@ export type ApiMethods<F> = {
     limit?: number;
   }): UserProfilePhotos;
 
+  /** Use this method to get a list of profile audios for a user. Returns a UserProfileAudios object. */
+  getUserProfileAudios(args: {
+    /** Unique identifier of the target user */
+    user_id: number;
+    /** Sequential number of the first audio to be returned. By default, all audios are returned. */
+    offset?: number;
+    /** Limits the number of audios to be retrieved. Values between 1-100 are accepted. Defaults to 100. */
+    limit?: number;
+  }): UserProfileAudios;
+
   /** Changes the emoji status for a given user that previously allowed the bot to manage their emoji status via the Mini App method requestEmojiStatusAccess. Returns True on success. */
   setUserEmojiStatus(args: {
     /** Unique identifier of the target user */
@@ -1411,7 +1422,7 @@ export type ApiMethods<F> = {
 
   /** Use this method to get custom emoji stickers, which can be used as a forum topic icon by any user. Requires no parameters. Returns an Array of Sticker objects. */
   getForumTopicIconStickers(): Sticker[];
-  /** Use this method to create a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns information about the created topic as a ForumTopic object. */
+  /** Use this method to create a topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator right. Returns information about the created topic as a ForumTopic object. */
   createForumTopic(args: {
     /** Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`) */
     chat_id: number | string;
@@ -1658,6 +1669,15 @@ export type ApiMethods<F> = {
     /** A two-letter ISO 639-1 language code or an empty string */
     language_code?: LanguageCode;
   }): BotShortDescription;
+
+  /** Changes the profile photo of the bot. Returns True on success. */
+  setMyProfilePhoto(args: {
+    /** The new profile photo to set */
+    photo: InputProfilePhoto<F>;
+  }): true;
+
+  /** Removes the profile photo of the bot. Requires no parameters. Returns True on success. */
+  removeMyProfilePhoto(): true;
 
   /** Use this method to change the bot's menu button in a private chat, or the default menu button. Returns True on success. */
   setChatMenuButton(args: {
