@@ -181,7 +181,7 @@ export type ApiMethods<F> = {
     reply_to_message_id?: number;
   }): Message.TextMessage;
 
-  /** Use this method to stream a partial message to a user while the message is being generated; supported only for bots with forum topic mode enabled. Returns True on success. */
+  /** Use this method to stream a partial message to a user while the message is being generated. Returns True on success. */
   sendMessageDraft(args: {
     /** Unique identifier for the target private chat */
     chat_id: number;
@@ -1154,6 +1154,8 @@ export type ApiMethods<F> = {
     can_change_info?: boolean;
     /** Pass True if the administrator can invite new users to the chat */
     can_invite_users?: boolean;
+    /** Pass True if the administrator can edit the tags of regular members; for groups and supergroups only */
+    can_manage_tags?: boolean;
     /** True if the administrator can post stories to the chat */
     can_post_stories?: boolean;
     /** Pass True if the administrator can edit stories posted by other users, post stories to the chat page, pin chat stories, and access the chat's story archive */
@@ -1180,6 +1182,16 @@ export type ApiMethods<F> = {
     user_id: number;
     /** New custom title for the administrator; 0-16 characters, emoji are not allowed */
     custom_title: string;
+  }): true;
+
+  /** Use this method to set a tag for a regular member in a group or a supergroup. The bot must be an administrator in the chat for this to work and must have the “can_manage_tags” administrator right. Returns True on success. */
+  setChatMemberTag(args: {
+    /** Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername) */
+    chat_id: number | string;
+    /** Unique identifier of the target user */
+    user_id: number;
+    /** New tag for the member; 0-16 characters, emoji are not allowed */
+    tag?: string;
   }): true;
 
   /** Use this method to ban a channel chat in a supergroup or a channel. Until the chat is unbanned, the owner of the banned chat won't be able to send messages on behalf of any of their channels. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns True on success. */
