@@ -691,6 +691,8 @@ export interface ChatAdministratorRights {
   can_change_info: boolean;
   /** True, if the user is allowed to invite new users to the chat */
   can_invite_users: boolean;
+  /** True, if the administrator can edit the tags of regular members; for groups and supergroups only. If omitted defaults to the value of can_pin_messages. */
+  can_manage_tags?: boolean;
   /** True, if the administrator can post stories to the chat */
   can_post_stories: boolean;
   /** True, if the administrator can edit stories posted by other users, post stories to the chat page, pin chat stories, and access the chat's story archive */
@@ -780,6 +782,8 @@ export interface ChatMemberAdministrator {
   can_change_info: boolean;
   /** True, if the user is allowed to invite new users to the chat */
   can_invite_users: boolean;
+  /** True, if the administrator can edit the tags of regular members; for groups and supergroups only. If omitted defaults to the value of can_pin_messages. */
+  can_manage_tags?: boolean;
   /** True, if the administrator can post stories to the chat */
   can_post_stories: boolean;
   /** True, if the administrator can edit stories posted by other users, post stories to the chat page, pin chat stories, and access the chat's story archive */
@@ -806,6 +810,8 @@ export interface ChatMemberMember {
   status: "member";
   /** Information about the user */
   user: User;
+  /** Tag of the member */
+  tag?: string;
   /** Date when the user's subscription will expire; Unix time */
   until_date?: number;
 }
@@ -816,6 +822,8 @@ export interface ChatMemberRestricted {
   status: "restricted";
   /** Information about the user */
   user: User;
+  /** Tag of the member */
+  tag?: string;
   /** True, if the user is a member of the chat at the moment of the request */
   is_member: boolean;
   /** True, if the user is allowed to send text messages, contacts, giveaways, giveaway winners, invoices, locations and venues */
@@ -842,6 +850,8 @@ export interface ChatMemberRestricted {
   can_change_info: boolean;
   /** True, if the user is allowed to invite new users to the chat */
   can_invite_users: boolean;
+  /** True, if the user is allowed to edit their own tag */
+  can_edit_tag: boolean;
   /** True, if the user is allowed to pin messages */
   can_pin_messages: boolean;
   /** True, if the user is allowed to create forum topics */
@@ -910,6 +920,8 @@ export interface ChatPermissions {
   can_change_info?: boolean;
   /** True, if the user is allowed to invite new users to the chat */
   can_invite_users?: boolean;
+  /** True, if the user is allowed to edit their own tag */
+  can_edit_tag?: boolean;
   /** True, if the user is allowed to pin messages. Ignored in public supergroups */
   can_pin_messages?: boolean;
   /** True, if the user is allowed to create forum topics. If omitted defaults to the value of can_pin_messages */

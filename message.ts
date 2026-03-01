@@ -47,6 +47,8 @@ export declare namespace Message {
     direct_messages_topic?: DirectMessagesTopic;
   }
   export interface CommonMessage extends ServiceMessage {
+    /** Tag or custom title of the sender of the message; for supergroups only */
+    sender_tag?: string;
     /** If the sender of the message boosted the chat, the number of boosts added by the user */
     sender_boost_count?: number;
     /** The bot that actually sent the message on behalf of the business account. Available only for outgoing messages sent on behalf of the connected business account. */
@@ -95,7 +97,7 @@ export declare namespace Message {
     caption_entities?: MessageEntity[];
   }
   export interface MediaMessage extends CaptionableMessage {
-    /** The unique identifier of a media message group this message belongs to */
+    /** The unique identifier inside this chat of a media message group this message belongs to */
     media_group_id?: string;
     /** True, if the message media is covered by a spoiler animation */
     has_media_spoiler?: true;
@@ -469,6 +471,19 @@ Links `tg://user?id=<user_id>` can be used to mention a user by their identifier
 
 You can find the list of programming and markup languages for which syntax highlighting is supported at [libprisma#supported-languages](https://github.com/TelegramMessenger/libprisma#supported-languages).
 
+#### Date-time entity formatting
+
+Date-time entity formatting is specified by a format string, which must adhere to the following regular expression: `r|w?[dD]?[tT]?`.
+
+If the format string is empty, the underlying text is displayed as-is; however, the user can still receive the underlying date in their local format. When populated, the format string determines the output based on the presence of the following control characters:
+
+- `r`: Displays the time relative to the current time. Cannot be combined with any other control characters.
+- `w`: Displays the day of the week in the user's localized language.
+- `d`: Displays the date in short form (e.g., “17.03.22”).
+- `D`: Displays the date in long form (e.g., “March 17, 2022”).
+- `t`: Displays the time in short form (e.g., “22:45”).
+- `T`: Displays the time in long form (e.g., “22:45:00”).
+
 #### MarkdownV2 style
 To use this mode, pass *MarkdownV2* in the *parse_mode* field. Use the following syntax in your message:
 
@@ -482,6 +497,10 @@ __underline__
 [inline URL](http://www.example.com/)
 [inline mention of a user](tg://user?id=123456789)
 ![👍](tg://emoji?id=5368324170671202286)
+![22:45 tomorrow](tg://time?unix=1647531900&format=wDT)
+![22:45 tomorrow](tg://time?unix=1647531900&format=t)
+![22:45 tomorrow](tg://time?unix=1647531900&format=r)
+![22:45 tomorrow](tg://time?unix=1647531900)
 `inline fixed-width code`
 `​`​`
 pre-formatted fixed-width code block
@@ -510,6 +529,7 @@ Please note:
 - In case of ambiguity between `italic` and `underline` entities `__` is always greedily treated from left to right as beginning or end of an `underline` entity, so instead of `___italic underline___` use `___italic underline_**__`, adding an empty bold entity as a separator.
 - A valid emoji must be provided as an alternative value for the custom emoji. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the emoji field of the custom emoji sticker.
 - Custom emoji entities can only be used by bots that purchased additional usernames on Fragment.
+- See date-time entity formatting for more details about supported date-time formats.
 
 #### HTML style
 To use this mode, pass *HTML* in the *parse_mode* field. The following tags are currently supported:
@@ -524,6 +544,10 @@ To use this mode, pass *HTML* in the *parse_mode* field. The following tags are 
 <a href="http://www.example.com/">inline URL</a>
 <a href="tg://user?id=123456789">inline mention of a user</a>
 <tg-emoji emoji-id="5368324170671202286">👍</tg-emoji>
+<tg-time unix="1647531900" format="wDT">22:45 tomorrow</tg-time>
+<tg-time unix="1647531900" format="t">22:45 tomorrow</tg-time>
+<tg-time unix="1647531900" format="r">22:45 tomorrow</tg-time>
+<tg-time unix="1647531900">22:45 tomorrow</tg-time>
 <code>inline fixed-width code</code>
 <pre>pre-formatted fixed-width code block</pre>
 <pre><code class="language-python">pre-formatted fixed-width code block written in the Python programming language</code></pre>
@@ -540,6 +564,7 @@ Please note:
 - Programming language can't be specified for standalone `code` tags.
 - A valid emoji must be used as the content of the tg-emoji tag. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the emoji field of the custom emoji sticker.
 - Custom emoji entities can only be used by bots that purchased additional usernames on Fragment.
+- See date-time entity formatting for more details about supported date-time formats.
 
 #### Markdown style
 This is a legacy mode, retained for backward compatibility. To use this mode, pass *Markdown* in the *parse_mode* field. Use the following syntax in your message:
@@ -567,7 +592,7 @@ export type ParseMode = "Markdown" | "MarkdownV2" | "HTML";
 
 export declare namespace MessageEntity {
   interface AbstractMessageEntity {
-    /** Type of the entity. Currently, can be “mention” (`@username`), “hashtag” (#hashtag or `#hashtag@chatusername`), “cashtag” ($USD or `$USD@chatusername`), “bot_command” (`/start@jobs_bot`), “url” (https://telegram.org), “email” (`do-not-reply@telegram.org`), “phone_number” (+1-212-555-0123), “bold” (bold text), “italic” (italic text), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users without usernames), “custom_emoji” (for inline custom emoji stickers) */
+    /** Type of the entity. Currently, can be “mention” (@username), “hashtag” (#hashtag or #hashtag@chatusername), “cashtag” ($USD or $USD@chatusername), “bot_command” (/start@jobs_bot), “url” (https://telegram.org), “email” (do-not-reply@telegram.org), “phone_number” (+1-212-555-0123), “bold” (bold text), “italic” (italic text), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users without usernames), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time) */
     type: string;
     /** Offset in UTF-16 code units to the start of the entity */
     offset: number;
@@ -612,6 +637,13 @@ export declare namespace MessageEntity {
     /** For “custom_emoji” only, unique identifier of the custom emoji. Use getCustomEmojiStickers to get full information about the sticker */
     custom_emoji_id: string;
   }
+  export interface DateTimeMessageEntity extends AbstractMessageEntity {
+    type: "date_time";
+    /** For “date_time” only, the Unix time associated with the entity */
+    unix_time: number;
+    /** For “date_time” only, the string that defines the formatting of the date and time. See date-time entity formatting for more details. */
+    date_time_format: "r" | `${"w" | ""}${"d" | "D" | ""}${"t" | "T" | ""}`;
+  }
 }
 
 /** This object represents one special entity in a text message. For example, hashtags, usernames, URLs, etc. */
@@ -620,7 +652,8 @@ export type MessageEntity =
   | MessageEntity.CustomEmojiMessageEntity
   | MessageEntity.PreMessageEntity
   | MessageEntity.TextLinkMessageEntity
-  | MessageEntity.TextMentionMessageEntity;
+  | MessageEntity.TextMentionMessageEntity
+  | MessageEntity.DateTimeMessageEntity;
 
 /** This object contains information about the quoted part of a message that is replied to by the given message. */
 export interface TextQuote {
