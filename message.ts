@@ -4,7 +4,13 @@ import type {
   ChecklistTasksAdded,
   ChecklistTasksDone,
 } from "./checklist.ts";
-import type { Chat, ChatOwnerChanged, ChatOwnerLeft, User } from "./manage.ts";
+import type {
+  Chat,
+  ChatOwnerChanged,
+  ChatOwnerLeft,
+  ManagedBotCreated,
+  User,
+} from "./manage.ts";
 import type { InlineKeyboardMarkup } from "./markup.ts";
 import type { PassportData } from "./passport.ts";
 import type {
@@ -61,6 +67,8 @@ export declare namespace Message {
     reply_to_message?: ReplyMessage;
     /** Identifier of the specific checklist task that is being replied to */
     reply_to_checklist_task_id?: number;
+    /** Persistent identifier of the specific poll option that is being replied to */
+    reply_to_poll_option_id?: string;
     /** True, if the message is a paid post. Note that such posts must not be deleted for 24 hours to receive the payment and can't be edited. */
     is_paid_post?: true;
     /** Information about the message that is being replied to, which may come from another chat or forum topic */
@@ -177,6 +185,15 @@ export declare namespace Message {
   export type ChannelChatCreatedMessage =
     & ServiceMessage
     & MsgWith<"channel_chat_created">;
+  export type ManagedBotCreatedMessage =
+    & ServiceMessage
+    & MsgWith<"managed_bot_created">;
+  export type PollOptionAddedMessage =
+    & ServiceMessage
+    & MsgWith<"poll_option_added">;
+  export type PollOptionDeletedMessage =
+    & ServiceMessage
+    & MsgWith<"poll_option_deleted">;
   export type MessageAutoDeleteTimerChangedMessage =
     & ServiceMessage
     & MsgWith<"message_auto_delete_timer_changed">;
@@ -345,6 +362,12 @@ export interface Message extends Message.MediaMessage {
   supergroup_chat_created?: true;
   /** Service message: the channel has been created. This field can't be received in a message coming through updates, because bot can't be a member of a channel when it is created. It can only be found in reply_to_message if someone replies to a very first message in a channel. */
   channel_chat_created?: true;
+  /** Service message: user created a bot that will be managed by the current bot */
+  managed_bot_created?: ManagedBotCreated;
+  /** Service message: answer option was added to a poll */
+  poll_option_added?: PollOptionAdded;
+  /** Service message: answer option was deleted from a poll */
+  poll_option_deleted?: PollOptionDeleted;
   /** Service message: auto-delete timer settings changed in the chat */
   message_auto_delete_timer_changed?: MessageAutoDeleteTimerChanged;
   /** The group has been migrated to a supergroup with the specified identifier. */
@@ -585,7 +608,7 @@ pre-formatted fixed-width code block written in the Python programming language
 Please note:
 
 - Entities must not be nested, use parse mode MarkdownV2 instead.
-- There is no way to specify “underline”, “strikethrough”, “spoiler”, “blockquote”, “expandable_blockquote” and “custom_emoji” entities, use parse mode MarkdownV2 instead.
+- There is no way to specify “underline”, “strikethrough”, “spoiler”, “blockquote”, “expandable_blockquote”, “custom_emoji”, and “date_time” entities, use parse mode MarkdownV2 instead.
 - To escape characters '_', '*', '`', '[' outside of an entity, prepend the character '\' before them.
 - Escaping inside entities is not allowed, so entity must be closed first and reopened again: use `_snake_\__case_` for italic `snake_case` and `*2*\**2=4*` for bold `2*2=4`. */
 export type ParseMode = "Markdown" | "MarkdownV2" | "HTML";
@@ -659,7 +682,7 @@ export type MessageEntity =
 export interface TextQuote {
   /** Text of the quoted part of a message that is replied to by the given message */
   text: string;
-  /** Special entities that appear in the quote. Currently, only bold, italic, underline, strikethrough, spoiler, and custom_emoji entities are kept in quotes. */
+  /** Special entities that appear in the quote. Currently, only bold, italic, underline, strikethrough, spoiler, custom_emoji, and date_time entities are kept in quotes. */
   entities?: MessageEntity[];
   /** Approximate quote position in the original message in UTF-16 code units as specified by the sender */
   position: number;
@@ -729,9 +752,11 @@ export interface ReplyParameters {
   chat_id?: number | string;
   /** Identifier of the specific checklist task to be replied to */
   checklist_task_id?: number;
+  /** Persistent identifier of the specific poll option to be replied to */
+  poll_option_id?: string;
   /** Pass True if the message should be sent even if the specified message to be replied to is not found; can be used only for replies in the same chat and forum topic. Always True for messages sent on behalf of a business account. */
   allow_sending_without_reply?: boolean;
-  /** Quoted part of the message to be replied to; 0-1024 characters after entities parsing. The quote must be an exact substring of the message to be replied to, including bold, italic, underline, strikethrough, spoiler, and custom_emoji entities. The message will fail to send if the quote isn't found in the original message. */
+  /** Quoted part of the message to be replied to; 0-1024 characters after entities parsing. The quote must be an exact substring of the message to be replied to, including bold, italic, underline, strikethrough, spoiler, custom_emoji, and date_time entities. The message will fail to send if the quote isn't found in the original message. */
   quote?: string;
   /** Mode for parsing entities in the quote. See formatting options for more details. */
   quote_parse_mode?: ParseMode;
@@ -978,12 +1003,20 @@ export interface Dice {
 
 /** This object contains information about one answer option in a poll. */
 export interface PollOption {
+  /** Unique identifier of the option, persistent on option addition and deletion */
+  persistent_id: string;
   /** Option text, 1-100 characters */
   text: string;
   /** Special entities that appear in the option text. Currently, only custom emoji entities are allowed in poll option texts */
   text_entities?: MessageEntity[];
-  /** Number of users that voted for this option */
+  /** Number of users who voted for this option; may be 0 if unknown */
   voter_count: number;
+  /** User who added the option; omitted if the option wasn't added by a user after poll creation */
+  added_by_user?: User;
+  /** Chat that added the option; omitted if the option wasn't added by a chat after poll creation */
+  added_by_chat?: Chat;
+  /** Point in time (Unix timestamp) when the option was added; omitted if the option existed in the original poll */
+  addition_date?: number;
 }
 
 /** This object contains information about one answer option in a poll to send. */
@@ -1006,6 +1039,32 @@ export interface PollAnswer {
   user?: User;
   /** 0-based identifiers of chosen answer options. May be empty if the vote was retracted. */
   option_ids: number[];
+  /** Persistent identifiers of the chosen answer options. May be empty if the vote was retracted. */
+  option_persistent_ids: string[];
+}
+
+/** Describes a service message about an option added to a poll. */
+export interface PollOptionAdded {
+  /** Message containing the poll to which the option was added. Note that the Message object in this field will not contain the reply_to_message field even if it itself is a reply. */
+  poll_message?: MaybeInaccessibleMessage;
+  /** Unique identifier of the added option */
+  option_persistent_id: string;
+  /** Option text */
+  option_text: string;
+  /** Special entities that appear in the option_text */
+  option_text_entities?: MessageEntity[];
+}
+
+/** Describes a service message about an option deleted from a poll. */
+export interface PollOptionDeleted {
+  /** Message containing the poll from which the option was deleted. Note that the Message object in this field will not contain the reply_to_message field even if it itself is a reply. */
+  poll_message?: MaybeInaccessibleMessage;
+  /** Unique identifier of the deleted option */
+  option_persistent_id: string;
+  /** Option text */
+  option_text: string;
+  /** Special entities that appear in the option_text */
+  option_text_entities?: MessageEntity[];
 }
 
 /** This object contains information about a poll. */
@@ -1028,8 +1087,14 @@ export interface Poll {
   type: "regular" | "quiz";
   /** True, if the poll allows multiple answers */
   allows_multiple_answers: boolean;
-  /** 0-based identifier of the correct answer option. Available only for polls in the quiz mode, which are closed, or was sent (not forwarded) by the bot or to the private chat with the bot. */
-  correct_option_id?: number;
+  /** Array of 0-based identifiers of the correct answer options. Available only for polls in quiz mode which are closed or were sent (not forwarded) by the bot or to the private chat with the bot. */
+  correct_option_ids?: number[];
+  /** True, if the poll allows to change the chosen answer options */
+  allows_revoting: boolean;
+  /** Description of the poll; for polls inside the Message object only */
+  description?: string;
+  /** Special entities like usernames, URLs, bot commands, etc. that appear in the description */
+  description_entities?: MessageEntity[];
   /** Text that is shown when a user chooses an incorrect answer or taps on the lamp icon in a quiz-style poll, 0-200 characters */
   explanation?: string;
   /** Special entities like usernames, URLs, bot commands, etc. that appear in the explanation */

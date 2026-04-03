@@ -73,6 +73,8 @@ export interface UserFromGetMe extends User {
   can_join_groups: boolean;
   /** True, if privacy mode is disabled for the bot. Returned only in getMe. */
   can_read_all_group_messages: boolean;
+  /** True, if other bots can be created to be controlled by the bot. Returned only in getMe. */
+  can_manage_bots: boolean;
   /** True, if the bot supports inline queries. Returned only in getMe. */
   supports_inline_queries: boolean;
   /** True, if the bot can be connected to a Telegram Business account to receive its messages. Returned only in getMe. */
@@ -83,6 +85,20 @@ export interface UserFromGetMe extends User {
   has_topics_enabled: boolean;
   /** True, if the bot allows users to create and delete topics in private chats. Returned only in getMe. */
   allows_users_to_create_topics: boolean;
+}
+
+/** This object contains information about the bot that was created to be managed by the current bot. */
+export interface ManagedBotCreated {
+  /** Information about the bot. The bot's token can be fetched using the method getManagedBotToken. */
+  bot: User;
+}
+
+/** This object contains information about the creation or token update of a bot that is managed by the current bot. */
+export interface ManagedBotUpdated {
+  /** User that created the bot */
+  user: User;
+  /** Information about the bot. Token of the bot can be fetched using the method getManagedBotToken. */
+  bot: User;
 }
 
 /** Describes a service message about the chat owner leaving the chat. */
