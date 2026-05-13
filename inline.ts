@@ -18,7 +18,7 @@ export interface InlineQuery {
   query: string;
   /** Offset of the results to be returned, can be controlled by the bot */
   offset: string;
-  /** Type of the chat from which the inline query was sent. Can be either “sender” for a private chat with the inline query sender, “private”, “group”, “supergroup”, or “channel”. The chat type should be always known for requests sent from official clients and most third-party clients, unless the request was sent from a secret chat */
+  /** Type of the chat from which the inline query was sent. Can be either “sender” for a private chat with the inline query sender, “private”, “group”, “supergroup”, or “channel”. The chat type should be always known for requests sent from official clients and most third-party clients, unless the request was sent from a secret chat. */
   chat_type?: "sender" | Chat["type"];
   /** Sender location, only for bots that request user location */
   location?: Location;
@@ -99,7 +99,7 @@ export interface InlineQueryResultPhoto {
   type: "photo";
   /** Unique identifier for this result, 1-64 bytes */
   id: string;
-  /** A valid URL of the photo. Photo must be in JPEG format. Photo size must not exceed 5MB */
+  /** A valid URL of the photo. Photo must be in JPEG format. Photo size must not exceed 5MB. */
   photo_url: string;
   /** URL of the thumbnail for the photo */
   thumbnail_url: string;
@@ -141,7 +141,7 @@ export interface InlineQueryResultGif {
   gif_duration?: number;
   /** URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result */
   thumbnail_url: string;
-  /** MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or “video/mp4”. Defaults to “image/jpeg” */
+  /** MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or “video/mp4”. Defaults to “image/jpeg”. */
   thumbnail_mime_type?: "image/jpeg" | "image/gif" | "video/mp4";
   /** Title for the result */
   title?: string;
@@ -175,7 +175,7 @@ export interface InlineQueryResultMpeg4Gif {
   mpeg4_duration?: number;
   /** URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result */
   thumbnail_url: string;
-  /** MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or “video/mp4”. Defaults to “image/jpeg” */
+  /** MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or “video/mp4”. Defaults to “image/jpeg”. */
   thumbnail_mime_type?: "image/jpeg" | "image/gif" | "video/mp4";
   /** Title for the result */
   title?: string;
@@ -327,7 +327,7 @@ export interface InlineQueryResultLocation {
   title: string;
   /** The radius of uncertainty for the location, measured in meters; 0-1500 */
   horizontal_accuracy?: number;
-  /** Period in seconds during which the location can be updated, should be between 60 and 86400, or 0x7FFFFFFF for live locations that can be edited indefinitely. */
+  /** Period in seconds during which the location can be updated, must be between 60 and 86400, or 0x7FFFFFFF for live locations that can be edited indefinitely */
   live_period?: number;
   /** For live locations, a direction in which the user is moving, in degrees. Must be between 1 and 360 if specified. */
   heading?: number;
@@ -631,7 +631,7 @@ export interface InputLocationMessageContent {
   longitude: number;
   /** The radius of uncertainty for the location, measured in meters; 0-1500 */
   horizontal_accuracy?: number;
-  /** Period in seconds during which the location can be updated, should be between 60 and 86400, or 0x7FFFFFFF for live locations that can be edited indefinitely. */
+  /** Period in seconds during which the location can be updated, must be between 60 and 86400, or 0x7FFFFFFF for live locations that can be edited indefinitely */
   live_period?: number;
   /** For live locations, a direction in which the user is moving, in degrees. Must be between 1 and 360 if specified. */
   heading?: number;
