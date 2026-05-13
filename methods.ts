@@ -339,7 +339,7 @@ export type ApiMethods<F> = {
     /** Unique identifier of the business connection on behalf of which the message will be sent */
     business_connection_id?: string;
     /** Unique identifier for the target chat or username of the target channel (in the format @channelusername) */
-    chat_id?: number | string;
+    chat_id: number | string;
     /** Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only */
     message_thread_id?: number;
     /** Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat */
