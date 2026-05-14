@@ -25,7 +25,7 @@ export declare namespace InlineKeyboardButton {
     callback_data: string;
   }
   export interface WebAppButton extends AbstractInlineKeyboardButton {
-    /** Description of the Web App that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method answerWebAppQuery. Available only in private chats between a user and the bot. Not supported for messages sent on behalf of a Telegram Business account. */
+    /** Description of the Web App that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method answerWebAppQuery. Available only in private chats between a user and the bot. Not supported for messages sent on behalf of a business account. */
     web_app: WebAppInfo;
   }
   export interface LoginButton extends AbstractInlineKeyboardButton {
@@ -33,23 +33,23 @@ export declare namespace InlineKeyboardButton {
     login_url: LoginUrl;
   }
   export interface SwitchInlineButton extends AbstractInlineKeyboardButton {
-    /** If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot's username and the specified inline query in the input field. May be empty, in which case just the bot's username will be inserted. Not supported for messages sent in channel direct messages chats and on behalf of a Telegram Business account. */
+    /** If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot's username and the specified inline query in the input field. May be empty, in which case just the bot's username will be inserted. Not supported for messages sent in channel direct messages chats and on behalf of a business account. */
     switch_inline_query: string;
   }
   export interface SwitchInlineCurrentChatButton
     extends AbstractInlineKeyboardButton {
     /** If set, pressing the button will insert the bot's username and the specified inline query in the current chat's input field. May be empty, in which case only the bot's username will be inserted.
 
-    This offers a quick way for the user to open your bot in inline mode in the same chat - good for selecting something from multiple options. Not supported in channels and for messages sent in channel direct messages chats and on behalf of a Telegram Business account. */
+    This offers a quick way for the user to open your bot in inline mode in the same chat - good for selecting something from multiple options. Not supported in channels and for messages sent in channel direct messages chats and on behalf of a business account. */
     switch_inline_query_current_chat: string;
   }
   export interface SwitchInlineChosenChatButton
     extends AbstractInlineKeyboardButton {
-    /** If set, pressing the button will prompt the user to select one of their chats of the specified type, open that chat and insert the bot's username and the specified inline query in the input field. Not supported for messages sent in channel direct messages chats and on behalf of a Telegram Business account. */
+    /** If set, pressing the button will prompt the user to select one of their chats of the specified type, open that chat and insert the bot's username and the specified inline query in the input field. Not supported for messages sent in channel direct messages chats and on behalf of a business account. */
     switch_inline_query_chosen_chat: SwitchInlineQueryChosenChat;
   }
   export interface CopyTextButtonButton extends AbstractInlineKeyboardButton {
-    /** Description of the button that copies the specified text to the clipboard. */
+    /** Description of the button that copies the specified text to the clipboard */
     copy_text: CopyTextButton;
   }
   export interface GameButton extends AbstractInlineKeyboardButton {
@@ -86,17 +86,17 @@ export interface LoginUrl {
 
   NOTE: You must always check the hash of the received data to verify the authentication and the integrity of the data as described in Checking authorization. */
   url: string;
-  /** New text of the button in forwarded messages. */
+  /** New text of the button in forwarded messages */
   forward_text?: string;
   /** Username of a bot, which will be used for user authorization. See Setting up a bot for more details. If not specified, the current bot's username will be assumed. The url's domain must be the same as the domain linked with the bot. See Linking your domain to the bot for more details. */
   bot_username?: string;
-  /** Pass True to request the permission for your bot to send messages to the user. */
+  /** Pass True to request the permission for your bot to send messages to the user */
   request_write_access?: boolean;
 }
 
 /** This object represents an inline button that switches the current user to inline mode in a chosen chat, with an optional default inline query. */
 export interface SwitchInlineQueryChosenChat {
-  /** The default inline query to be inserted in the input field. If left empty, only the bot's username will be inserted */
+  /** The default inline query to be inserted in the input field. If left empty, only the bot's username will be inserted. */
   query?: string;
   /** True, if private chats with users can be chosen */
   allow_user_chats?: boolean;
@@ -121,7 +121,7 @@ export interface CallbackQuery {
   from: User;
   /** Message sent by the bot with the callback button that originated the query */
   message?: MaybeInaccessibleMessage;
-  /** Identifier of the message sent via the bot in inline mode, that originated the query. */
+  /** Identifier of the message sent via the bot in inline mode, that originated the query */
   inline_message_id?: string;
   /** Global identifier, uniquely corresponding to the chat to which the message with the callback button was sent. Useful for high scores in games. */
   chat_instance: string;
@@ -131,7 +131,7 @@ export interface CallbackQuery {
   game_short_name?: string;
 }
 
-/** This object represents a custom keyboard with reply options (see Introduction to bots for details and examples). Not supported in channels and for messages sent on behalf of a Telegram Business account. */
+/** This object represents a custom keyboard with reply options (see Introduction to bots for details and examples). Not supported in channels and for messages sent on behalf of a business account. */
 export interface ReplyKeyboardMarkup {
   /** Array of button rows, each represented by an Array of KeyboardButton objects */
   keyboard: KeyboardButton[][];
@@ -151,7 +151,7 @@ export interface ReplyKeyboardMarkup {
 
 export declare namespace KeyboardButton {
   export interface CommonButton {
-    /** Text of the button. If none of the fields other than text, icon_custom_emoji_id, and style are used, it will be sent as a message when the button is pressed */
+    /** Text of the button. If none of the fields other than text, icon_custom_emoji_id, and style are used, it will be sent as a message when the button is pressed. */
     text: string;
     /** Unique identifier of the custom emoji shown before the text of the button. Can only be used by bots that purchased additional usernames on Fragment or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription. */
     icon_custom_emoji_id?: string;
@@ -179,7 +179,7 @@ export declare namespace KeyboardButton {
     request_poll: KeyboardButtonPollType;
   }
   export interface RequestManagedBotButton extends CommonButton {
-    /** If specified, pressing the button will ask the user to create and share a bot that will be managed by the current bot. Available for bots that enabled management of other bots in the @BotFather Mini App. Available in private chats only. */
+    /** If specified, pressing the button will ask the user to create and share a bot that will be managed by the current bot. Available for bots that enabled management of other bots in the \@BotFather Mini App. Available in private chats only. */
     request_managed_bot: KeyboardButtonRequestManagedBot;
   }
   export interface WebAppButton extends CommonButton {
@@ -205,17 +205,8 @@ export interface KeyboardButtonPollType {
   /** If quiz is passed, the user will be allowed to create only polls in the quiz mode. If regular is passed, only regular polls will be allowed. Otherwise, the user will be allowed to create a poll of any type. */
   type?: "quiz" | "regular";
 }
-/** This object defines the parameters for the creation of a managed bot. Information about the created bot will be shared with the bot using the update managed_bot and a Message with the field managed_bot_created. */
-export interface KeyboardButtonRequestManagedBot {
-  /** Signed 32-bit identifier of the request. Must be unique within the message */
-  request_id: number;
-  /** Suggested name for the bot */
-  suggested_name?: string;
-  /** Suggested username for the bot */
-  suggested_username?: string;
-}
 
-/** Upon receiving a message with this object, Telegram clients will remove the current custom keyboard and display the default letter-keyboard. By default, custom keyboards are displayed until a new keyboard is sent by a bot. An exception is made for one-time keyboards that are hidden immediately after the user presses a button (see ReplyKeyboardMarkup). Not supported in channels and for messages sent on behalf of a Telegram Business account. */
+/** Upon receiving a message with this object, Telegram clients will remove the current custom keyboard and display the default letter-keyboard. By default, custom keyboards are displayed until a new keyboard is sent by a bot. An exception is made for one-time keyboards that are hidden immediately after the user presses a button (see ReplyKeyboardMarkup). Not supported in channels and for messages sent on behalf of a business account. */
 export interface ReplyKeyboardRemove {
   /** Requests clients to remove the custom keyboard (user will not be able to summon this keyboard; if you want to hide the keyboard from sight but keep it accessible, use one_time_keyboard in ReplyKeyboardMarkup) */
   remove_keyboard: true;
@@ -225,7 +216,7 @@ export interface ReplyKeyboardRemove {
   selective?: boolean;
 }
 
-/** Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot's message and tapped 'Reply'). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice privacy mode. Not supported in channels and for messages sent on behalf of a Telegram Business account.
+/** Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot's message and tapped 'Reply'). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice privacy mode. Not supported in channels and for messages sent on behalf of a user account.
 
 Example: A poll bot for groups runs in privacy mode (only receives commands, replies to its messages and mentions). There could be two ways to create a new poll:
 
@@ -257,7 +248,7 @@ export interface WebAppInfo {
 
 /** This object defines the criteria used to request suitable users. Information about the selected users will be shared with the bot when the corresponding button is pressed. */
 export interface KeyboardButtonRequestUsers {
-  /** Signed 32-bit identifier of the request that will be received back in the UsersShared object. Must be unique within the message */
+  /** Signed 32-bit identifier of the request that will be received back in the UsersShared object. Must be unique within the message. */
   request_id: number;
   /** Pass True to request bots, pass False to request regular users. If not specified, no additional restrictions are applied. */
   user_is_bot?: boolean;
@@ -275,9 +266,9 @@ export interface KeyboardButtonRequestUsers {
 
 /** This object defines the criteria used to request a suitable chat. Information about the selected chat will be shared with the bot when the corresponding button is pressed. The bot will be granted requested rights in the chat if appropriate. */
 export interface KeyboardButtonRequestChat {
-  /** Signed 32-bit identifier of the request, which will be received back in the ChatShared object. Must be unique within the message */
+  /** Signed 32-bit identifier of the request, which will be received back in the ChatShared object. Must be unique within the message. */
   request_id: number;
-  /** Pass True to request a channel chat, pass False to request a group or a supergroup chat. */
+  /** Pass True to request a channel chat, pass False to request a group or a supergroup chat */
   chat_is_channel: boolean;
   /** Pass True to request a forum supergroup, pass False to request a non-forum chat. If not specified, no additional restrictions are applied. */
   chat_is_forum?: boolean;
@@ -297,6 +288,16 @@ export interface KeyboardButtonRequestChat {
   request_username?: boolean;
   /** Pass True to request the chat's photo */
   request_photo?: boolean;
+}
+
+/** This object defines the parameters for the creation of a managed bot. Information about the created bot will be shared with the bot using the update managed_bot and a Message with the field managed_bot_created. */
+export interface KeyboardButtonRequestManagedBot {
+  /** Signed 32-bit identifier of the request. Must be unique within the message. */
+  request_id: number;
+  /** Suggested name for the bot */
+  suggested_name?: string;
+  /** Suggested username for the bot */
+  suggested_username?: string;
 }
 
 /** Describes a keyboard button to be used by a user of a Mini App. */

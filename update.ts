@@ -47,7 +47,7 @@ export declare namespace Update {
 }
 
 /** This object represents an incoming update.
-At most one of the optional parameters can be present in any given update. */
+At most one of the optional fields can be present in any given update. */
 export interface Update {
   /** The update's unique identifier. Update identifiers start from a certain positive number and increase sequentially. This identifier becomes especially handy if you're using webhooks, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order. If there are no new updates for at least a week, then identifier of the next update will be chosen randomly instead of sequentially. */
   update_id: number;
@@ -67,6 +67,8 @@ export interface Update {
   edited_business_message?: Message & Update.Edited & Update.Private;
   /** Messages were deleted from a connected business account */
   deleted_business_messages?: BusinessMessagesDeleted;
+  /** New guest message. The bot can use the field Message.guest_query_id and the method answerGuestQuery to send a message in response. */
+  guest_message?: Message;
   /** A reaction to a message was changed by a user. The bot must be an administrator in the chat and must explicitly specify "message_reaction" in the list of allowed_updates to receive these updates. The update isn't received for reactions set by bots. */
   message_reaction?: MessageReactionUpdated;
   /** Reactions to a message with anonymous reactions were changed. The bot must be an administrator in the chat and must explicitly specify "message_reaction_count" in the list of allowed_updates to receive these updates. The updates are grouped and can be sent with delay up to a few minutes. */
@@ -77,11 +79,11 @@ export interface Update {
   chosen_inline_result?: ChosenInlineResult;
   /** New incoming callback query */
   callback_query?: CallbackQuery;
-  /** New incoming shipping query. Only for invoices with flexible price */
+  /** New incoming shipping query. Only for invoices with flexible price. */
   shipping_query?: ShippingQuery;
-  /** New incoming pre-checkout query. Contains full information about checkout */
+  /** New incoming pre-checkout query. Contains full information about checkout. */
   pre_checkout_query?: PreCheckoutQuery;
-  /** New poll state. Bots receive only updates about manually stopped polls and polls, which are sent by the bot */
+  /** New poll state. Bots receive only updates about manually stopped polls and polls, which are sent by the bot. */
   poll?: Poll;
   /** A user changed their answer in a non-anonymous poll. Bots receive new votes only in polls that were sent by the bot itself. */
   poll_answer?: PollAnswer;
@@ -89,7 +91,7 @@ export interface Update {
   my_chat_member?: ChatMemberUpdated;
   /** A chat member's status was updated in a chat. The bot must be an administrator in the chat and must explicitly specify “chat_member” in the list of allowed_updates to receive these updates. */
   chat_member?: ChatMemberUpdated;
-  /** A new bot was created to be managed by the bot or token of a bot was changed */
+  /** A new bot was created to be managed by the bot, or token or owner of a managed bot was changed */
   managed_bot?: ManagedBotUpdated;
   /** A request to join the chat has been sent. The bot must have the can_invite_users administrator right in the chat to receive these updates. */
   chat_join_request?: ChatJoinRequest;

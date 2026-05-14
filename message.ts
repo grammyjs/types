@@ -33,16 +33,18 @@ type MsgWith<P extends keyof Message> = Record<P, NonNullable<Message[P]>>;
 
 export declare namespace Message {
   interface ServiceMessage {
-    /** Unique message identifier inside this chat. In specific instances (e.g., message containing a video sent to a big chat), the server might automatically schedule a message instead of sending it immediately. In such cases, this field will be 0 and the relevant message will be unusable until it is actually sent */
+    /** Unique message identifier inside this chat. In specific instances (e.g., message containing a video sent to a big chat), the server might automatically schedule a message instead of sending it immediately. In such cases, this field will be 0 and the relevant message will be unusable until it is actually sent. */
     message_id: number;
     /** Unique identifier of a message thread or forum topic to which the message belongs; for supergroups and private chats only */
     message_thread_id?: number;
-    /** Sender of the message; may be empty for messages sent to channels. For backward compatibility, if the message was sent on behalf of a chat, the field contains a fake sender user in non-channel chats */
+    /** Sender of the message; may be empty for messages sent to channels. For backward compatibility, if the message was sent on behalf of a chat, the field contains a fake sender user in non-channel chats. */
     from?: User;
     /** Sender of the message when sent on behalf of a chat. For example, the supergroup itself for messages sent by its anonymous administrators or a linked channel for messages automatically forwarded to the channel's discussion group. For backward compatibility, if the message was sent on behalf of a chat, the field from contains a fake sender user in non-channel chats. */
     sender_chat?: Chat;
     /** Date the message was sent in Unix time. It is always a positive number, representing a valid date. */
     date: number;
+    /** The unique identifier for the guest query. Use this identifier with the method answerGuestQuery to send a response message. If non-empty, the message belongs to a chat of the corresponding business account that is independent from any potential bot chat which might share the same identifier. */
+    guest_query_id?: string;
     /** Unique identifier of the business connection from which the message was received. If non-empty, the message belongs to a chat of the corresponding business account that is independent from any potential bot chat which might share the same identifier. */
     business_connection_id?: string;
     /** Chat the message belongs to */
@@ -79,6 +81,10 @@ export declare namespace Message {
     reply_to_story?: Story;
     /** Bot through which the message was sent */
     via_bot?: User;
+    /** For a message sent by a guest bot, this is the user whose original message triggered the bot's response. */
+    guest_bot_caller_user?: User;
+    /** For a message sent by a guest bot, this is the chat whose original message triggered the bot's response. */
+    guest_bot_caller_chat?: Chat;
     /** Date the message was last edited in Unix time */
     edit_date?: number;
     /** True, if the message can't be forwarded */
@@ -115,9 +121,11 @@ export declare namespace Message {
     & CommonMessage
     & MsgWith<"text">
     & Partial<MsgWith<"entities">>;
+  export type AnimationMessage = DocumentMessage & MsgWith<"animation">;
   export type AudioMessage = CaptionableMessage & MsgWith<"audio">;
   export type DocumentMessage = CaptionableMessage & MsgWith<"document">;
-  export type AnimationMessage = DocumentMessage & MsgWith<"animation">;
+  export type LivePhotoMessage = MediaMessage & MsgWith<"live_photo">;
+  export type PaidMediaMessage = CommonMessage & MsgWith<"paid_media">;
   export type PhotoMessage = MediaMessage & MsgWith<"photo">;
   export type StickerMessage = CommonMessage & MsgWith<"sticker">;
   export type StoryMessage = CommonMessage & MsgWith<"story">;
@@ -130,7 +138,6 @@ export declare namespace Message {
   export type PollMessage = CommonMessage & MsgWith<"poll">;
   export type VenueMessage = LocationMessage & MsgWith<"venue">;
   export type LocationMessage = CommonMessage & MsgWith<"location">;
-  export type PaidMediaMessage = CommonMessage & MsgWith<"paid_media">;
   export type DirectMessagePriceChangedMessage =
     & ServiceMessage
     & MsgWith<"direct_message_price_changed">;
@@ -292,12 +299,16 @@ export interface Message extends Message.MediaMessage {
   text?: string;
   /** For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text */
   entities?: MessageEntity[];
-  /** Message is an animation, information about the animation. For backward compatibility, when this field is set, the document field will also be set */
+  /** Message is an animation, information about the animation. For backward compatibility, when this field is set, the document field will also be set. */
   animation?: Animation;
   /** Message is an audio file, information about the file */
   audio?: Audio;
   /** Message is a general file, information about the file */
   document?: Document;
+  /** Message is a live photo, information about the live photo. For backward compatibility, when this field is set, the photo field will also be set */
+  live_photo?: LivePhoto;
+  /** Message contains paid media; information about the paid media */
+  paid_media?: PaidMediaInfo;
   /** Message is a photo, available sizes of the photo */
   photo?: PhotoSize[];
   /** Message is a sticker, information about the sticker */
@@ -314,16 +325,14 @@ export interface Message extends Message.MediaMessage {
   contact?: Contact;
   /** Message is a dice with random value */
   dice?: Dice;
-  /** Message is a game, information about the game. More about games » */
+  /** Message is a game, information about the game. */
   game?: Game;
   /** Message is a native poll, information about the poll */
   poll?: Poll;
-  /** Message is a venue, information about the venue. For backward compatibility, when this field is set, the location field will also be set */
+  /** Message is a venue, information about the venue. For backward compatibility, when this field is set, the location field will also be set. */
   venue?: Venue;
   /** Message is a shared location, information about the location */
   location?: Location;
-  /** Message contains paid media; information about the paid media */
-  paid_media?: PaidMediaInfo;
   /** Message is a checklist */
   checklist?: Checklist;
   /** Service message: some tasks in a checklist were marked as done or not done */
@@ -376,17 +385,17 @@ export interface Message extends Message.MediaMessage {
   migrate_from_chat_id?: number;
   /** Specified message was pinned. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply. */
   pinned_message?: MaybeInaccessibleMessage;
-  /** Message is an invoice for a payment, information about the invoice. More about payments » */
+  /** Message is an invoice for a payment, information about the invoice. */
   invoice?: Invoice;
-  /** Message is a service message about a successful payment, information about the payment. More about payments » */
+  /** Message is a service message about a successful payment, information about the payment. */
   successful_payment?: SuccessfulPayment;
-  /** Message is a service message about a refunded payment, information about the payment. More about payments » */
+  /** Message is a service message about a refunded payment, information about the payment. */
   refunded_payment?: RefundedPayment;
   /** Service message: users were shared with the bot */
   users_shared?: UsersShared;
   /** Service message: a chat was shared with the bot */
   chat_shared?: ChatShared;
-  /** The domain name of the website on which the user has logged in. More about Telegram Login » */
+  /** The domain name of the website on which the user has logged in. */
   connected_website?: string;
   /** Service message: the user allowed the bot to write messages after adding it to the attachment or side menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method requestWriteAccess */
   write_access_allowed?: WriteAccessAllowed;
@@ -442,7 +451,7 @@ export interface Message extends Message.MediaMessage {
 
 /** This object represents a unique message identifier. */
 export interface MessageId {
-  /** Unique message identifier. In specific instances (e.g., message containing a video sent to a big chat), the server might automatically schedule a message instead of sending it immediately. In such cases, this field will be 0 and the relevant message will be unusable until it is actually sent */
+  /** Unique message identifier. In specific instances (e.g., message containing a video sent to a big chat), the server might automatically schedule a message instead of sending it immediately. In such cases, this field will be 0 and the relevant message will be unusable until it is actually sent. */
   message_id: number;
 }
 
@@ -450,6 +459,20 @@ export interface MessageId {
 export interface SentWebAppMessage {
   /** Identifier of the sent inline message. Available only if there is an inline keyboard attached to the message. */
   inline_message_id: string;
+}
+
+/** Describes an inline message sent by a guest bot. */
+export interface SentGuestMessage {
+  /** Identifier of the sent inline message */
+  inline_message_id: string;
+}
+
+/** Describes an inline message to be sent by a user of a Mini App. */
+export interface PreparedInlineMessage {
+  /** Unique identifier of the prepared message */
+  id: string;
+  /** Expiration date of the prepared message, in Unix time. Expired prepared messages can no longer be used. */
+  expiration_date: number;
 }
 
 /** This object describes a message that was deleted or is otherwise inaccessible to the bot. */
@@ -615,7 +638,7 @@ export type ParseMode = "Markdown" | "MarkdownV2" | "HTML";
 
 export declare namespace MessageEntity {
   interface AbstractMessageEntity {
-    /** Type of the entity. Currently, can be “mention” (@username), “hashtag” (#hashtag or #hashtag@chatusername), “cashtag” ($USD or $USD@chatusername), “bot_command” (/start@jobs_bot), “url” (https://telegram.org), “email” (do-not-reply@telegram.org), “phone_number” (+1-212-555-0123), “bold” (bold text), “italic” (italic text), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users without usernames), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time) */
+    /** Type of the entity. Currently, can be “mention” (@username), “hashtag” (#hashtag or #hashtag@chatusername), “cashtag” ($USD or $USD@chatusername), “bot_command” (/start@jobs_bot), “url” (https://telegram.org), “email” (do-not-reply@telegram.org), “phone_number” (+1-212-555-0123), “bold” (bold text), “italic” (italic text), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users without usernames), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time). */
     type: string;
     /** Offset in UTF-16 code units to the start of the entity */
     offset: number;
@@ -657,7 +680,7 @@ export declare namespace MessageEntity {
   }
   export interface CustomEmojiMessageEntity extends AbstractMessageEntity {
     type: "custom_emoji";
-    /** For “custom_emoji” only, unique identifier of the custom emoji. Use getCustomEmojiStickers to get full information about the sticker */
+    /** For “custom_emoji” only, unique identifier of the custom emoji. Use getCustomEmojiStickers to get full information about the sticker. */
     custom_emoji_id: string;
   }
   export interface DateTimeMessageEntity extends AbstractMessageEntity {
@@ -706,6 +729,8 @@ export interface ExternalReplyInfo {
   audio?: Audio;
   /** Message is a general file, information about the file */
   document?: Document;
+  /** Message is a live photo, information about the live photo */
+  live_photo?: LivePhoto;
   /** Message is a photo, available sizes of the photo */
   photo?: PhotoSize[];
   /** Message is a sticker, information about the sticker */
@@ -724,13 +749,13 @@ export interface ExternalReplyInfo {
   contact?: Contact;
   /** Message is a dice with random value */
   dice?: Dice;
-  /** Message is a game, information about the game. More about games » */
+  /** Message is a game, information about the game. */
   game?: Game;
   /** Message is a scheduled giveaway, information about the giveaway */
   giveaway?: Giveaway;
   /** A giveaway with public winners was completed */
   giveaway_winners?: GiveawayWinners;
-  /** Message is an invoice for a payment, information about the invoice. More about payments » */
+  /** Message is an invoice for a payment, information about the invoice. */
   invoice?: Invoice;
   /** Message is a shared location, information about the location */
   location?: Location;
@@ -748,7 +773,7 @@ export interface ExternalReplyInfo {
 export interface ReplyParameters {
   /** Identifier of the message that will be replied to in the current chat, or in the chat chat_id if it is specified */
   message_id: number;
-  /** If the message to be replied to is from a different chat, unique identifier for the chat or username of the channel (in the format `@channelusername`). Not supported for messages sent on behalf of a business account and messages from channel direct messages chats. */
+  /** If the message to be replied to is from a different chat, unique identifier for the chat or username of the bot, supergroup or channel in the format `@username`. Not supported for messages sent on behalf of a business account and messages from channel direct messages chats. */
   chat_id?: number | string;
   /** Identifier of the specific checklist task to be replied to */
   checklist_task_id?: number;
@@ -834,6 +859,26 @@ export interface PhotoSize {
   width: number;
   /** Photo height */
   height: number;
+  /** File size in bytes */
+  file_size?: number;
+}
+
+/** This object represents a live photo. */
+export interface LivePhoto {
+  /** Available sizes of the corresponding static photo */
+  photo?: PhotoSize[];
+  /** Identifier for the video file which can be used to download or reuse the file */
+  file_id: string;
+  /** Unique identifier for the video file which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file. */
+  file_unique_id: string;
+  /** Video width as defined by the sender */
+  width: number;
+  /** Video height as defined by the sender */
+  height: number;
+  /** Duration of the video in seconds as defined by the sender */
+  duration: number;
+  /** MIME type of the file as defined by the sender */
+  mime_type?: string;
   /** File size in bytes */
   file_size?: number;
 }
@@ -945,7 +990,7 @@ export interface VideoQuality {
   height: number;
   /** Codec that was used to encode the video, for example, “h264”, “h265”, or “av01” */
   codec: string;
-  /** File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value. */
+  /** File size in bytes */
   file_size?: number;
 }
 
@@ -1001,6 +1046,28 @@ export interface Dice {
   value: number;
 }
 
+/** At most one of the optional fields can be present in any given object. */
+export interface PollMedia {
+  /** Media is an animation, information about the animation */
+  animation?: Animation;
+  /** Media is an audio file, information about the file; currently, can't be received in a poll option */
+  audio?: Audio;
+  /** Media is a general file, information about the file; currently, can't be received in a poll option */
+  document?: Document;
+  /** Media is a live photo, information about the live photo */
+  live_photo?: LivePhoto;
+  /** Media is a shared location, information about the location */
+  location?: Location;
+  /** Media is a photo, available sizes of the photo */
+  photo?: PhotoSize[];
+  /** Media is a sticker, information about the sticker; currently, for poll options only */
+  sticker?: Sticker;
+  /** Media is a venue, information about the venue */
+  venue?: Venue;
+  /** Media is a video, information about the video */
+  video?: Video;
+}
+
 /** This object contains information about one answer option in a poll. */
 export interface PollOption {
   /** Unique identifier of the option, persistent on option addition and deletion */
@@ -1009,6 +1076,8 @@ export interface PollOption {
   text: string;
   /** Special entities that appear in the option text. Currently, only custom emoji entities are allowed in poll option texts */
   text_entities?: MessageEntity[];
+  /** Media added to the poll option */
+  media?: PollMedia;
   /** Number of users who voted for this option; may be 0 if unknown */
   voter_count: number;
   /** User who added the option; omitted if the option wasn't added by a user after poll creation */
@@ -1017,16 +1086,6 @@ export interface PollOption {
   added_by_chat?: Chat;
   /** Point in time (Unix timestamp) when the option was added; omitted if the option existed in the original poll */
   addition_date?: number;
-}
-
-/** This object contains information about one answer option in a poll to send. */
-export interface InputPollOption {
-  /** Option text, 1-100 characters */
-  text: string;
-  /** Mode for parsing entities in the text. See formatting options for more details. Currently, only custom emoji entities are allowed */
-  text_parse_mode?: ParseMode;
-  /** A list of special entities that appear in the poll option text. It can be specified instead of text_parse_mode */
-  text_entities?: MessageEntity[];
 }
 
 /** This object represents an answer of a user in a non-anonymous poll. */
@@ -1087,22 +1146,30 @@ export interface Poll {
   type: "regular" | "quiz";
   /** True, if the poll allows multiple answers */
   allows_multiple_answers: boolean;
-  /** Array of 0-based identifiers of the correct answer options. Available only for polls in quiz mode which are closed or were sent (not forwarded) by the bot or to the private chat with the bot. */
-  correct_option_ids?: number[];
   /** True, if the poll allows to change the chosen answer options */
   allows_revoting: boolean;
-  /** Description of the poll; for polls inside the Message object only */
-  description?: string;
-  /** Special entities like usernames, URLs, bot commands, etc. that appear in the description */
-  description_entities?: MessageEntity[];
+  /** True if voting is limited to users who have been members of the chat where the poll was originally sent for more than 24 hours */
+  members_only: boolean;
+  /** A list of two-letter ISO 3166-1 alpha-2 country codes indicating the countries from which users can vote in the poll. The country code “FT” is used for users with anonymous numbers. If omitted, then users from any country can participate in the poll. */
+  country_codes?: string[];
+  /** Array of 0-based identifiers of the correct answer options. Available only for polls in quiz mode which are closed or were sent (not forwarded) by the bot or to the private chat with the bot. */
+  correct_option_ids?: number[];
   /** Text that is shown when a user chooses an incorrect answer or taps on the lamp icon in a quiz-style poll, 0-200 characters */
   explanation?: string;
   /** Special entities like usernames, URLs, bot commands, etc. that appear in the explanation */
   explanation_entities?: MessageEntity[];
+  /** Media added to the quiz explanation */
+  explanation_media?: PollMedia;
   /** Amount of time in seconds the poll will be active after creation */
   open_period?: number;
   /** Point in time (Unix timestamp) when the poll will be automatically closed */
   close_date?: number;
+  /** Description of the poll; for polls inside the Message object only */
+  description?: string;
+  /** Special entities like usernames, URLs, bot commands, etc. that appear in the description */
+  description_entities?: MessageEntity[];
+  /** Media added to the poll description; for polls inside the Message object only */
+  media?: PollMedia;
 }
 
 /** This object represents a point on the map. */
@@ -1131,13 +1198,30 @@ export interface PaidMediaInfo {
 
 /** This object describes paid media. Currently, it can be one of
 
-- PaidMediaPreview
+- PaidMediaLivePhoto
 - PaidMediaPhoto
+- PaidMediaPreview
 - PaidMediaVideo */
 export type PaidMedia =
-  | PaidMediaPreview
+  | PaidMediaLivePhoto
   | PaidMediaPhoto
+  | PaidMediaPreview
   | PaidMediaVideo;
+
+export interface PaidMediaLivePhoto {
+  /** Type of the paid media, always “live_photo” */
+  type: "live_photo";
+  /** The photo */
+  live_photo: LivePhoto;
+}
+
+/** The paid media is a photo. */
+export interface PaidMediaPhoto {
+  /** Type of the paid media, always “photo” */
+  type: "photo";
+  /** The photo */
+  photo: PhotoSize[];
+}
 
 /** The paid media isn't available before the payment. */
 export interface PaidMediaPreview {
@@ -1151,14 +1235,6 @@ export interface PaidMediaPreview {
   duration?: number;
 }
 
-/** The paid media is a photo. */
-export interface PaidMediaPhoto {
-  /** Type of the paid media, always “photo” */
-  type: "photo";
-  /** The photo */
-  photo: PhotoSize[];
-}
-
 /** The paid media is a video. */
 export interface PaidMediaVideo {
   /** Type of the paid media, always “video” */
@@ -1169,7 +1245,7 @@ export interface PaidMediaVideo {
 
 /** This object represents a venue. */
 export interface Venue {
-  /** Venue location. Can't be a live location */
+  /** Venue location. Can't be a live location. */
   location: Location;
   /** Name of the venue */
   title: string;
@@ -1300,7 +1376,7 @@ export interface BackgroundTypePattern {
   fill: BackgroundFill;
   /** Intensity of the pattern when it is shown above the filled background; 0-100 */
   intensity: number;
-  /** True, if the background fill must be applied only to the pattern itself. All other pixels are black in this case. For dark themes only */
+  /** True, if the background fill must be applied only to the pattern itself. All other pixels are black in this case. For dark themes only. */
   is_inverted?: true;
   /** True, if the background moves slightly when the device is tilted */
   is_moving?: true;
@@ -1370,7 +1446,7 @@ export interface SharedUser {
 export interface UsersShared {
   /** Identifier of the request */
   request_id: number;
-  /** Information about users shared with the bot. */
+  /** Information about users shared with the bot */
   users: SharedUser[];
 }
 
@@ -1380,9 +1456,9 @@ export interface ChatShared {
   request_id: number;
   /** Identifier of the shared chat. The bot may not have access to the chat and could be unable to use this identifier, unless the chat is already known to the bot by some other means. */
   chat_id: number;
-  /** Title of the chat, if the title was requested by the bot. */
+  /** Title of the chat, if the title was requested by the bot */
   title?: string;
-  /** Username of the chat, if the username was requested by the bot and available. */
+  /** Username of the chat, if the username was requested by the bot and available */
   username?: string;
   /** Available sizes of the chat photo, if the photo was requested by the bot */
   photo?: PhotoSize[];
@@ -1499,7 +1575,7 @@ export interface GiveawayCompleted {
 export interface LinkPreviewOptions {
   /** True, if the link preview is disabled */
   is_disabled?: boolean;
-  /** URL to use for the link preview. If empty, then the first URL found in the message text will be used */
+  /** URL to use for the link preview. If empty, then the first URL found in the message text will be used. */
   url?: string;
   /** True, if the media in the link preview is supposed to be shrunk; ignored if the URL isn't explicitly specified or media size change isn't supported for the preview */
   prefer_small_media?: boolean;
@@ -1573,13 +1649,13 @@ export interface Game {
   title: string;
   /** Description of the game */
   description: string;
-  /** Photo that will be displayed in the game message in chats. */
+  /** Photo that will be displayed in the game message in chats */
   photo: PhotoSize[];
   /** Brief description of the game or high scores included in the game message. Can be automatically edited to include current high scores for the game when the bot calls setGameScore, or manually edited using editMessageText. 0-4096 characters. */
   text: string;
   /** Special entities that appear in text, such as usernames, URLs, bot commands, etc. */
   text_entities: MessageEntity[];
-  /** Animation that will be displayed in the game message in chats. Upload via BotFather */
+  /** Animation that will be displayed in the game message in chats. Upload via BotFather. */
   animation: Animation;
 }
 
@@ -1593,7 +1669,7 @@ export interface GameHighScore {
   score: number;
 }
 
-/** This object represents a file ready to be downloaded. The file can be downloaded via the link https://api.telegram.org/file/bot<token>/<file_path>. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling getFile. */
+/** This object represents a file ready to be downloaded. The file can be downloaded via the link https://api.telegram.org/file/bot<token>/\<file_path>. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling getFile. */
 export interface File {
   /** Identifier for this file, which can be used to download or reuse the file */
   file_id: string;
@@ -1601,7 +1677,7 @@ export interface File {
   file_unique_id: string;
   /** File size in bytes */
   file_size?: number;
-  /** File path. Use https://api.telegram.org/file/bot<token>/<file_path> to get the file. */
+  /** File path. Use https://api.telegram.org/file/bot<token>/\<file_path> to get the file. */
   file_path?: string;
 }
 
@@ -1619,7 +1695,7 @@ export type ReactionType =
 export interface ReactionTypeEmoji {
   /** Type of the reaction, always “emoji” */
   type: "emoji";
-  /** Reaction emoji. Currently, it can be one of "👍", "👎", "❤", "🔥", "🥰", "👏", "😁", "🤔", "🤯", "😱", "🤬", "😢", "🎉", "🤩", "🤮", "💩", "🙏", "👌", "🕊", "🤡", "🥱", "🥴", "😍", "🐳", "❤‍🔥", "🌚", "🌭", "💯", "🤣", "⚡", "🍌", "🏆", "💔", "🤨", "😐", "🍓", "🍾", "💋", "🖕", "😈", "😴", "😭", "🤓", "👻", "👨‍💻", "👀", "🎃", "🙈", "😇", "😨", "🤝", "✍", "🤗", "🫡", "🎅", "🎄", "☃", "💅", "🤪", "🗿", "🆒", "💘", "🙉", "🦄", "😘", "💊", "🙊", "😎", "👾", "🤷‍♂", "🤷", "🤷‍♀", "😡" */
+  /** Reaction emoji. Currently, it can be one of "👍", "👎", "❤", "🔥", "🥰", "👏", "😁", "🤔", "🤯", "😱", "🤬", "😢", "🎉", "🤩", "🤮", "💩", "🙏", "👌", "🕊", "🤡", "🥱", "🥴", "😍", "🐳", "❤‍🔥", "🌚", "🌭", "💯", "🤣", "⚡", "🍌", "🏆", "💔", "🤨", "😐", "🍓", "🍾", "💋", "🖕", "😈", "😴", "😭", "🤓", "👻", "👨‍💻", "👀", "🎃", "🙈", "😇", "😨", "🤝", "✍", "🤗", "🫡", "🎅", "🎄", "☃", "💅", "🤪", "🗿", "🆒", "💘", "🙉", "🦄", "😘", "💊", "🙊", "😎", "👾", "🤷‍♂", "🤷", "🤷‍♀", "😡". */
   emoji:
     | "👍"
     | "👎"
@@ -1748,19 +1824,11 @@ export interface MessageReactionCountUpdated {
   reactions: ReactionCount[];
 }
 
-/** Describes an inline message to be sent by a user of a Mini App. */
-export interface PreparedInlineMessage {
-  /** Unique identifier of the prepared message */
-  id: string;
-  /** Expiration date of the prepared message, in Unix time. Expired prepared messages can no longer be used */
-  expiration_date: number;
-}
-
 /** Describes a topic of a direct messages chat. */
 export interface DirectMessagesTopic {
   /** Unique identifier of the topic */
   topic_id: number;
-  /** Information about the user that created the topic. Currently, it is always present */
+  /** Information about the user that created the topic. Currently, it is always present. */
   user: User;
 }
 

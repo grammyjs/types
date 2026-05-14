@@ -87,7 +87,7 @@ export interface SuccessfulPayment {
 
 /** This object contains basic information about a refunded payment. */
 export interface RefundedPayment {
-  /** Three-letter ISO 4217 currency code, or “XTR” for payments in Telegram Stars. Currently, always “XTR” */
+  /** Three-letter ISO 4217 currency code, or “XTR” for payments in Telegram Stars. Currently, always “XTR”. */
   currency: string;
   /** Total refunded price in the smallest units of the currency (integer, not float/double). For example, for a price of US$ 1.45, total_amount = 145. See the exp parameter in currencies.json, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). */
   total_amount: number;
@@ -280,9 +280,9 @@ export interface StarTransaction {
   nanostar_amount?: number;
   /** Date the transaction was created in Unix time */
   date: number;
-  /** Source of an incoming transaction (e.g., a user purchasing goods or services, Fragment refunding a failed withdrawal). Only for incoming transactions */
+  /** Source of an incoming transaction (e.g., a user purchasing goods or services, Fragment refunding a failed withdrawal). Only for incoming transactions. */
   source?: TransactionPartner;
-  /** Receiver of an outgoing transaction (e.g., a user for a purchase refund, Fragment for a withdrawal). Only for outgoing transactions */
+  /** Receiver of an outgoing transaction (e.g., a user for a purchase refund, Fragment for a withdrawal). Only for outgoing transactions. */
   receiver?: TransactionPartner;
 }
 
@@ -396,7 +396,7 @@ export interface UniqueGift {
   gift_id: string;
   /** Human-readable name of the regular gift from which this unique gift was upgraded */
   base_name: string;
-  /** Unique name of the gift. This name can be used in https://t.me/nft/... links and story areas */
+  /** Unique name of the gift. This name can be used in https://t.me/nft/... links and story areas. */
   name: string;
   /** Information about the chat that published the gift */
   publisher_chat?: Chat;
@@ -448,7 +448,7 @@ export interface GiftInfo {
   can_be_upgraded?: true;
   /** True, if the gift's upgrade was purchased after the gift was sent */
   is_upgrade_separate?: true;
-  /** Unique number reserved for this gift when upgraded. See the number field in UniqueGift */
+  /** Unique number reserved for this gift when upgraded. See the number field in UniqueGift. */
   unique_gift_number?: number;
   /** Text of the message that was added to the gift */
   text?: string;
@@ -462,7 +462,7 @@ export interface GiftInfo {
 export interface UniqueGiftInfo {
   /** Information about the gift */
   gift: UniqueGift;
-  /** Origin of the gift. Currently, either “upgrade” for gifts upgraded from regular gifts, “transfer” for gifts transferred from other users or channels, “resale” for gifts bought from other users, “gifted_upgrade” for upgrades purchased after the gift was sent, or “offer” for gifts bought or sold through gift purchase offers */
+  /** Origin of the gift. Currently, either “upgrade” for gifts upgraded from regular gifts, “transfer” for gifts transferred from other users or channels, “resale” for gifts bought from other users, “gifted_upgrade” for upgrades purchased after the gift was sent, or “offer” for gifts bought or sold through gift purchase offers. */
   origin: "upgrade" | "transfer" | "resale" | "gifted_upgrade" | "offer";
   /** Unique identifier of the received gift for the bot; only present for gifts received on behalf of business accounts */
   owned_gift_id?: string;
@@ -472,7 +472,7 @@ export interface UniqueGiftInfo {
   last_resale_currency?: "XTR" | "TON";
   /** For gifts bought from other users, the price paid for the gift in either Telegram Stars or nanotoncoins */
   last_resale_amount?: number;
-  /** Point in time (Unix timestamp) when the gift can be transferred. If it is in the past, then the gift can be transferred now */
+  /** Point in time (Unix timestamp) when the gift can be transferred. If it is in the past, then the gift can be transferred now. */
   next_transfer_date?: number;
 }
 
@@ -508,7 +508,7 @@ export interface OwnedGiftRegular {
   sender_user?: User;
   /** Date the gift was sent in Unix time */
   send_date: number;
-  /** Unique number reserved for this gift when upgraded. See the number field in UniqueGift */
+  /** Unique number reserved for this gift when upgraded. See the number field in UniqueGift. */
   unique_gift_number?: number;
   /** Text of the message that was added to the gift */
   text?: string;
@@ -548,7 +548,7 @@ export interface OwnedGiftUnique {
   can_be_transferred?: true;
   /** Number of Telegram Stars that must be paid to transfer the gift; omitted if the bot cannot transfer the gift */
   transfer_star_count?: number;
-  /** Point in time (Unix timestamp) when the gift can be transferred. If it is in the past, then the gift can be transferred now */
+  /** Point in time (Unix timestamp) when the gift can be transferred. If it is in the past, then the gift can be transferred now. */
   next_transfer_date?: number;
 }
 
@@ -562,9 +562,17 @@ export interface OwnedGifts {
   next_offset?: string;
 }
 
+/** This object describes the access settings of a bot. */
+export interface BotAccessSettings {
+  /** True, if only selected users can access the bot. The bot's owner can always access it. */
+  is_access_restricted: boolean;
+  /** The list of other users who have access to the bot if the access is restricted */
+  added_users?: User[];
+}
+
 /** Describes the price of a suggested post. */
 export interface SuggestedPostPrice {
-  /** Currency in which the post will be paid. Currently, must be one of “XTR” for Telegram Stars or “TON” for toncoins */
+  /** Currency in which the post will be paid. Currently, must be one of “XTR” for Telegram Stars or “TON” for toncoins. */
   currency: "XTR" | "TON";
   /** The amount of the currency that will be paid for the post in the smallest units of the currency, i.e. Telegram Stars or nanotoncoins. Currently, price in Telegram Stars must be between 5 and 100000, and price in nanotoncoins must be between 10000000 and 10000000000000. */
   amount: number;
@@ -610,7 +618,7 @@ export interface SuggestedPostDeclined {
 export interface SuggestedPostPaid {
   /** Message containing the suggested post. Note that the Message object in this field will not contain the reply_to_message field even if it itself is a reply. */
   suggested_post_message?: Message;
-  /** Currency in which the payment was made. Currently, one of “XTR” for Telegram Stars or “TON” for toncoins */
+  /** Currency in which the payment was made. Currently, one of “XTR” for Telegram Stars or “TON” for toncoins. */
   currency: string;
   /** The amount of the currency that was received by the channel in nanotoncoins; for payments in toncoins only */
   amount?: number;

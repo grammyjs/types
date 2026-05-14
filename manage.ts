@@ -27,7 +27,7 @@ export interface WebhookInfo {
   last_synchronization_error_date?: number;
   /** The maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery */
   max_connections?: number;
-  /** A list of update types the bot is subscribed to. Defaults to all update types except chat_member */
+  /** A list of update types the bot is subscribed to. Defaults to all update types except chat_member, message_reaction, and message_reaction_count. */
   allowed_updates?: Array<Exclude<keyof Update, "update_id">>;
 }
 
@@ -75,9 +75,11 @@ export interface UserFromGetMe extends User {
   can_read_all_group_messages: boolean;
   /** True, if other bots can be created to be controlled by the bot. Returned only in getMe. */
   can_manage_bots: boolean;
+  /** True, if the bot supports guest queries from chats it is not a member of. Returned only in getMe. */
+  supports_guest_queries?: boolean;
   /** True, if the bot supports inline queries. Returned only in getMe. */
   supports_inline_queries: boolean;
-  /** True, if the bot can be connected to a Telegram Business account to receive its messages. Returned only in getMe. */
+  /** True, if the bot can be connected to a user account to manage it. Returned only in getMe. */
   can_connect_to_business: boolean;
   /** True, if the bot has main Web App. Returned only in getMe. */
   has_main_web_app: boolean;
@@ -93,7 +95,7 @@ export interface ManagedBotCreated {
   bot: User;
 }
 
-/** This object contains information about the creation or token update of a bot that is managed by the current bot. */
+/** This object contains information about the creation, token update, or owner update of a bot that is managed by the current bot. */
 export interface ManagedBotUpdated {
   /** User that created the bot */
   user: User;
@@ -103,7 +105,7 @@ export interface ManagedBotUpdated {
 
 /** Describes a service message about the chat owner leaving the chat. */
 export interface ChatOwnerLeft {
-  /** The user which will be the new owner of the chat if the previous owner does not return to the chat */
+  /** The user who will become the new owner of the chat if the previous owner does not return to the chat */
   new_owner?: User;
 }
 
@@ -739,7 +741,7 @@ export interface ChatMemberUpdated {
   old_chat_member: ChatMember;
   /** New information about the chat member */
   new_chat_member: ChatMember;
-  /** Chat invite link, which was used by the user to join the chat; for joining by invite link events only. */
+  /** Chat invite link, which was used by the user to join the chat; for joining by invite link events only */
   invite_link?: ChatInviteLink;
   /** True, if the user joined the chat after sending a direct join request without using an invite link without using an invite link and being approved by an administrator */
   via_join_request?: boolean;
@@ -862,6 +864,8 @@ export interface ChatMemberRestricted {
   can_send_other_messages: boolean;
   /** True, if the user is allowed to add web page previews to their messages */
   can_add_web_page_previews: boolean;
+  /** True, if the user is allowed to react to messages */
+  can_react_to_messages: boolean;
   /** True, if the user is allowed to change the chat title, photo and other settings */
   can_change_info: boolean;
   /** True, if the user is allowed to invite new users to the chat */
@@ -872,7 +876,7 @@ export interface ChatMemberRestricted {
   can_pin_messages: boolean;
   /** True, if the user is allowed to create forum topics */
   can_manage_topics: boolean;
-  /** Date when restrictions will be lifted for this user; Unix time. If 0, then the user is restricted forever */
+  /** Date when restrictions will be lifted for this user; Unix time. If 0, then the user is restricted forever. */
   until_date: number;
 }
 
@@ -890,7 +894,7 @@ export interface ChatMemberBanned {
   status: "kicked";
   /** Information about the user */
   user: User;
-  /** Date when restrictions will be lifted for this user; Unix time. If 0, then the user is banned forever */
+  /** Date when restrictions will be lifted for this user; Unix time. If 0, then the user is banned forever. */
   until_date: number;
 }
 
@@ -904,7 +908,7 @@ export interface ChatJoinRequest {
   user_chat_id: number;
   /** Date the request was sent in Unix time */
   date: number;
-  /** Bio of the user. */
+  /** Bio of the user */
   bio?: string;
   /** Chat invite link that was used by the user to send the join request */
   invite_link?: ChatInviteLink;
@@ -932,15 +936,17 @@ export interface ChatPermissions {
   can_send_other_messages?: boolean;
   /** True, if the user is allowed to add web page previews to their messages */
   can_add_web_page_previews?: boolean;
-  /** True, if the user is allowed to change the chat title, photo and other settings. Ignored in public supergroups */
+  /** True, if the user is allowed to react to messages. If omitted, defaults to the value of can_send_messages. */
+  can_react_to_messages?: boolean;
+  /** True, if the user is allowed to change the chat title, photo and other settings. Ignored in public supergroups. */
   can_change_info?: boolean;
   /** True, if the user is allowed to invite new users to the chat */
   can_invite_users?: boolean;
-  /** True, if the user is allowed to edit their own tag */
+  /** True, if the user is allowed to edit their own tag. If omitted, defaults to the value of can_pin_messages. */
   can_edit_tag?: boolean;
-  /** True, if the user is allowed to pin messages. Ignored in public supergroups */
+  /** True, if the user is allowed to pin messages. Ignored in public supergroups. */
   can_pin_messages?: boolean;
-  /** True, if the user is allowed to create forum topics. If omitted defaults to the value of can_pin_messages */
+  /** True, if the user is allowed to create forum topics. If omitted defaults to the value of can_pin_messages. */
   can_manage_topics?: boolean;
 }
 
@@ -1014,7 +1020,7 @@ export interface ForumTopic {
 export interface BotCommand {
   /** Text of the command; 1-32 characters. Can contain only lowercase English letters, digits and underscores. */
   command: string;
-  /** Description of the command; 1-256 characters. */
+  /** Description of the command; 1-256 characters */
   description: string;
 }
 
