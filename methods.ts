@@ -1969,7 +1969,7 @@ export type ApiMethods<F> = {
     chat_id: number | string;
     /** Identifier of the user whose reactions will be removed, if the reactions were added by a user */
     user_id?: number;
-    /**  */
+    /** Identifier of the chat whose reactions will be removed, if the reactions were added by a chat */
     actor_chat_id?: number;
   }): true;
 
