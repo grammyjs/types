@@ -948,7 +948,7 @@ export type ApiMethods<F> = {
     hide_results_until_closes?: boolean;
     /** Pass True, if voting is limited to users who have been members of the chat where the poll is being sent for more than 24 hours; for channel chats only */
     members_only?: boolean;
-    /** A list of 0-12 two-letter ISO 3166-1 alpha-2 country codes indicating the countries from which users can vote in the poll; for channel chats only. If omitted or empty, then users from any country can participate in the poll. */
+    /** A list of 0-12 two-letter ISO 3166-1 alpha-2 country codes indicating the countries from which users can vote in the poll; for channel chats only. Use “FT” as a country code to allow users with anonymous numbers to vote. If omitted or empty, then users from any country can participate in the poll. */
     country_codes?: string[];
     /** A list of monotonically increasing 0-based identifiers of the correct answer options, required for polls in quiz mode */
     correct_option_ids?: number[];
