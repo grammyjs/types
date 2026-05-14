@@ -27,7 +27,7 @@ export interface WebhookInfo {
   last_synchronization_error_date?: number;
   /** The maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery */
   max_connections?: number;
-  /** A list of update types the bot is subscribed to. Defaults to all update types except chat_member, message_reaction, and message_reaction_count.. */
+  /** A list of update types the bot is subscribed to. Defaults to all update types except chat_member, message_reaction, and message_reaction_count. */
   allowed_updates?: Array<Exclude<keyof Update, "update_id">>;
 }
 
