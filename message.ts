@@ -43,7 +43,7 @@ export declare namespace Message {
     sender_chat?: Chat;
     /** Date the message was sent in Unix time. It is always a positive number, representing a valid date. */
     date: number;
-    /** The unique identifier for the guest query. Use this identifier with the method answerGuestQuery to send a response message. If non-empty, the message belongs to a chat of the corresponding business account that is independent from any potential bot chat which might share the same identifier. */
+    /** The unique identifier for the guest query. Use this identifier with the method answerGuestQuery to send a response message. If non-empty, the message belongs to the chat where the guest bot was summoned, which may not coincide with other existing bot chats sharing the same identifier. */
     guest_query_id?: string;
     /** Unique identifier of the business connection from which the message was received. If non-empty, the message belongs to a chat of the corresponding business account that is independent from any potential bot chat which might share the same identifier. */
     business_connection_id?: string;

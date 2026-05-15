@@ -316,6 +316,8 @@ export declare namespace ChatFullInfo {
     linked_chat_id?: undefined;
     /** For supergroups, the location to which the supergroup is connected */
     location?: undefined;
+    /** The number of Telegram Stars a general user have to pay to send a message to the chat */
+    paid_message_star_count?: number;
   }
   /** Internal type for group chats */
   export interface GroupChat {
@@ -419,6 +421,8 @@ export declare namespace ChatFullInfo {
     linked_chat_id?: undefined;
     /** For supergroups, the location to which the supergroup is connected */
     location?: undefined;
+    /** The number of Telegram Stars a general user have to pay to send a message to the chat */
+    paid_message_star_count?: number;
   }
   /** Internal type for supergroup chats */
   export interface SupergroupChat {
@@ -522,6 +526,8 @@ export declare namespace ChatFullInfo {
     linked_chat_id?: number;
     /** For supergroups, the location to which the supergroup is connected */
     location?: ChatLocation;
+    /** The number of Telegram Stars a general user have to pay to send a message to the chat */
+    paid_message_star_count?: number;
   }
   /** Internal type for channel chats */
   export interface ChannelChat {
@@ -625,6 +631,8 @@ export declare namespace ChatFullInfo {
     linked_chat_id?: number;
     /** For supergroups, the location to which the supergroup is connected */
     location?: undefined;
+    /** The number of Telegram Stars a general user have to pay to send a message to the chat */
+    paid_message_star_count?: number;
   }
 }
 

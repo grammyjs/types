@@ -675,7 +675,7 @@ export type ApiMethods<F> = {
     message_thread_id?: number;
     /** Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat */
     direct_messages_topic_id?: number;
-    /** The number of Telegram Stars that must be paid to buy access to the media; 1-2500 */
+    /** The number of Telegram Stars that must be paid to buy access to the media; 1-25000 */
     star_count: number;
     /** An array describing the media to be sent; up to 10 items */
     media: InputPaidMedia<F>[];
@@ -740,6 +740,7 @@ export type ApiMethods<F> = {
   }): Array<
     | Message.AudioMessage
     | Message.DocumentMessage
+    | Message.LivePhotoMessage
     | Message.PhotoMessage
     | Message.VideoMessage
   >;
