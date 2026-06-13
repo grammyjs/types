@@ -533,7 +533,7 @@ export type MaybeInaccessibleMessage = Message | InaccessibleMessage;
  * #### MarkdownV2 style
  * To use this mode, pass *MarkdownV2* in the *parse_mode* field. Use the following syntax in your message:
  *
- * ````
+ * ````markdown
  * *bold \*text*
  * _italic \*text_
  * __underline__
@@ -615,7 +615,7 @@ export type MaybeInaccessibleMessage = Message | InaccessibleMessage;
  * #### Markdown style
  * This is a legacy mode, retained for backward compatibility. To use this mode, pass *Markdown* in the *parse_mode* field. Use the following syntax in your message:
  *
- * ````
+ * ````markdown
  * *bold text*
  * _italic text_
  * [inline URL](http://www.example.com/)
