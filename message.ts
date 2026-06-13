@@ -533,7 +533,7 @@ export type MaybeInaccessibleMessage = Message | InaccessibleMessage;
  * #### MarkdownV2 style
  * To use this mode, pass *MarkdownV2* in the *parse_mode* field. Use the following syntax in your message:
  *
- * ```
+ * ````
  * *bold \*text*
  * _italic \*text_
  * __underline__
@@ -548,12 +548,12 @@ export type MaybeInaccessibleMessage = Message | InaccessibleMessage;
  * ![22:45 tomorrow](tg://time?unix=1647531900&format=r)
  * ![22:45 tomorrow](tg://time?unix=1647531900)
  * `inline fixed-width code`
- * `​`​`
+ * ```
  * pre-formatted fixed-width code block
- * `​`​`
- * `​`​`python
+ * ```
+ * ```python
  * pre-formatted fixed-width code block written in the Python programming language
- * `​`​`
+ * ```
  * >Block quotation started
  * >Block quotation continued
  * >Block quotation continued
@@ -565,7 +565,7 @@ export type MaybeInaccessibleMessage = Message | InaccessibleMessage;
  * >Hidden by default part of the expandable block quotation started
  * >Expandable block quotation continued
  * >The last line of the expandable block quotation with the expandability mark||
- * ```
+ * ````
  * Please note:
  *
  * - Any character with code between 1 and 126 inclusively can be escaped anywhere with a preceding '\' character, in which case it is treated as an ordinary character and not a part of the markup. This implies that '\' character usually must be escaped with a preceding '\' character.
@@ -615,19 +615,19 @@ export type MaybeInaccessibleMessage = Message | InaccessibleMessage;
  * #### Markdown style
  * This is a legacy mode, retained for backward compatibility. To use this mode, pass *Markdown* in the *parse_mode* field. Use the following syntax in your message:
  *
- * ```
+ * ````
  * *bold text*
  * _italic text_
  * [inline URL](http://www.example.com/)
  * [inline mention of a user](tg://user?id=123456789)
  * `inline fixed-width code`
- * `​`​`
- * pre-formatted fixed-width code block
- * `​`​`
- * `​`​`python
- * pre-formatted fixed-width code block written in the Python programming language
- * `​`​`
  * ```
+ * pre-formatted fixed-width code block
+ * ```
+ * ```python
+ * pre-formatted fixed-width code block written in the Python programming language
+ * ```
+ * ````
  * Please note:
  *
  * - Entities must not be nested, use parse mode MarkdownV2 instead.
