@@ -7,7 +7,7 @@ import type {
   ParseMode,
 } from "./message.ts";
 import type { LabeledPrice } from "./payment.ts";
-import { InputRichMessage } from "./rich.ts";
+import type { InputRichMessage } from "./rich.ts";
 
 /** This object represents an incoming inline query. When the user sends an empty query, your bot could return some default or trending results. */
 export interface InlineQuery {

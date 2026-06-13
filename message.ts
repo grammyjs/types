@@ -27,7 +27,7 @@ import type {
   SuggestedPostRefunded,
   UniqueGiftInfo,
 } from "./payment.ts";
-import { RichBlock } from "./rich.ts";
+import type { RichBlock } from "./rich.ts";
 
 type MsgWith<P extends keyof Message> = Record<P, NonNullable<Message[P]>>;
 

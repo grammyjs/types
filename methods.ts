@@ -58,7 +58,7 @@ import type {
   StarAmount,
   StarTransactions,
 } from "./payment.ts";
-import { InputRichMessage } from "./rich.ts";
+import type { InputRichMessage } from "./rich.ts";
 import type {
   BotCommandScope,
   BotDescription,
@@ -66,7 +66,7 @@ import type {
   BotShortDescription,
   MenuButton,
 } from "./settings.ts";
-import { StoryArea } from "./story.ts";
+import type { StoryArea } from "./story.ts";
 import type { Update } from "./update.ts";
 
 /** Extracts the parameters of a given method name */
