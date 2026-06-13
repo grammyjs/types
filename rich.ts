@@ -272,10 +272,10 @@ import type { Animation, Audio, PhotoSize, Video, Voice } from "./message.ts";
  * - Links mailto:..., tel:..., and tg://user?id=... are rendered as e-mail links, phone links, and inline mentions respectively. Other supported links are rendered as regular inline links.
  * - Images, videos, and audio files can be specified only as separate media blocks.
  * - Media blocks support only HTTP and HTTPS URLs.
- * - An empty <a name="..."></a> on its own creates an anchor that can be linked to with <a href="#...">...</a>.
- * - In <figcaption>, you can use <cite> tags to specify caption credit.
- * - Use <tg-reference name="...">...</tg-reference> to define referenced text that can be linked to with <a href="#...">...</a>.
- * - The body of a <details> tag can contain rich message content. If the open attribute is specified, the block is expanded by default.
+ * - An empty \<a name="..."></a> on its own creates an anchor that can be linked to with \<a href="#...">...</a>.
+ * - In \<figcaption>, you can use \<cite> tags to specify caption credit.
+ * - Use \<tg-reference name="...">...</tg-reference> to define referenced text that can be linked to with \<a href="#...">...</a>.
+ * - The body of a \<details> tag can contain rich message content. If the open attribute is specified, the block is expanded by default.
  * - Formula source is treated as raw LaTeX.
  * - See date-time entity formatting for more details about supported date-time formats. */
 export interface InputRichMessage {
@@ -577,7 +577,7 @@ export interface RichTextReferenceLink {
 export interface RichBlockCaption {
   /** Block caption */
   text: "caption";
-  /** Block credit which corresponds to the HTML tag <cite> */
+  /** Block credit which corresponds to the HTML tag \<cite> */
   credit?: RichText;
 }
 
@@ -659,7 +659,7 @@ export type RichBlock =
   | RichBlockVoiceNote
   | RichBlockThinking;
 
-/** A text paragraph, corresponding to the HTML tag <p>. */
+/** A text paragraph, corresponding to the HTML tag \<p>. */
 export interface RichBlockParagraph {
   /** Type of the block, always “paragraph” */
   type: "paragraph";
@@ -667,7 +667,7 @@ export interface RichBlockParagraph {
   text: RichText;
 }
 
-/** A section heading, corresponding to the HTML tags <h1>, <h2>, <h3>, <h4>, <h5>, or <h6>. */
+/** A section heading, corresponding to the HTML tags \<h1>, \<h2>, \<h3>, \<h4>, \<h5>, or \<h6>. */
 export interface RichBlockSectionHeading {
   /** Type of the block, always “heading” */
   type: "heading";
@@ -677,7 +677,7 @@ export interface RichBlockSectionHeading {
   size: 1 | 2 | 3 | 4 | 5 | 6;
 }
 
-/** A preformatted text block, corresponding to the nested HTML tags <pre> and <code>. */
+/** A preformatted text block, corresponding to the nested HTML tags \<pre> and \<code>. */
 export interface RichBlockPreformatted {
   /** Type of the block, always “pre” */
   type: "pre";
@@ -687,7 +687,7 @@ export interface RichBlockPreformatted {
   language?: string;
 }
 
-/** A footer, corresponding to the HTML tag <footer>. */
+/** A footer, corresponding to the HTML tag \<footer>. */
 export interface RichBlockFooter {
   /** Type of the block, always “footer” */
   type: "footer";
@@ -695,13 +695,13 @@ export interface RichBlockFooter {
   text: RichText;
 }
 
-/** A divider, corresponding to the HTML tag <hr/>. */
+/** A divider, corresponding to the HTML tag \<hr/>. */
 export interface RichBlockDivider {
   /** Type of the block, always “divider” */
   type: "divider";
 }
 
-/** A block with a mathematical expression in LaTeX format, corresponding to the custom HTML tag <tg-math-block>. */
+/** A block with a mathematical expression in LaTeX format, corresponding to the custom HTML tag \<tg-math-block>. */
 export interface RichBlockMathematicalExpression {
   /** Type of the block, always “mathematical_expression” */
   type: "mathematical_expression";
@@ -709,7 +709,7 @@ export interface RichBlockMathematicalExpression {
   expression: string;
 }
 
-/** A block with an anchor, corresponding to the HTML tag <a> with the attribute name. */
+/** A block with an anchor, corresponding to the HTML tag \<a> with the attribute name. */
 export interface RichBlockAnchor {
   /** Type of the block, always “anchor” */
   type: "anchor";
@@ -717,7 +717,7 @@ export interface RichBlockAnchor {
   name: string;
 }
 
-/** A list of blocks, corresponding to the HTML tag <ul> or <ol> with multiple nested tags <li>. */
+/** A list of blocks, corresponding to the HTML tag \<ul> or \<ol> with multiple nested tags \<li>. */
 export interface RichBlockList {
   /** Type of the block, always “list” */
   type: "list";
@@ -725,7 +725,7 @@ export interface RichBlockList {
   items: RichBlockListItem[];
 }
 
-/** A block quotation, corresponding to the HTML tag <blockquote>. */
+/** A block quotation, corresponding to the HTML tag \<blockquote>. */
 export interface RichBlockBlockQuotation {
   /** Type of the block, always “blockquote” */
   type: "blockquote";
@@ -735,7 +735,7 @@ export interface RichBlockBlockQuotation {
   credit?: RichText;
 }
 
-/** A quotation with centered text, loosely corresponding to the HTML tag <aside>. */
+/** A quotation with centered text, loosely corresponding to the HTML tag \<aside>. */
 export interface RichBlockPullQuotation {
   /** Type of the block, always “pullquote” */
   type: "pullquote";
@@ -745,7 +745,7 @@ export interface RichBlockPullQuotation {
   credit?: RichText;
 }
 
-/** A collage, corresponding to the custom HTML tag <tg-collage>. */
+/** A collage, corresponding to the custom HTML tag \<tg-collage>. */
 export interface RichBlockCollage {
   /** Type of the block, always “collage” */
   type: "collage";
@@ -755,7 +755,7 @@ export interface RichBlockCollage {
   caption?: RichBlockCaption;
 }
 
-/** A slideshow, corresponding to the custom HTML tag <tg-slideshow>. */
+/** A slideshow, corresponding to the custom HTML tag \<tg-slideshow>. */
 export interface RichBlockSlideshow {
   /** Type of the block, always “slideshow” */
   type: "slideshow";
@@ -765,7 +765,7 @@ export interface RichBlockSlideshow {
   caption?: RichBlockCaption;
 }
 
-/** A table, corresponding to the HTML tag <table>. */
+/** A table, corresponding to the HTML tag \<table>. */
 export interface RichBlockTable {
   /** Type of the block, always “table” */
   type: "table";
@@ -779,7 +779,7 @@ export interface RichBlockTable {
   caption?: RichText;
 }
 
-/** An expandable block for details disclosure, corresponding to the HTML tag <details>. */
+/** An expandable block for details disclosure, corresponding to the HTML tag \<details>. */
 export interface RichBlockDetails {
   /** Type of the block, always “details” */
   type: "details";
@@ -791,7 +791,7 @@ export interface RichBlockDetails {
   is_open?: true;
 }
 
-/** A block with a map, corresponding to the custom HTML tag <tg-map>. */
+/** A block with a map, corresponding to the custom HTML tag \<tg-map>. */
 export interface RichBlockMap {
   /** Type of the block, always “map” */
   type: "map";
@@ -807,7 +807,7 @@ export interface RichBlockMap {
   caption?: RichBlockCaption;
 }
 
-/** A block with an animation, corresponding to the HTML tag <video>. */
+/** A block with an animation, corresponding to the HTML tag \<video>. */
 export interface RichBlockAnimation {
   /** Type of the block, always “animation” */
   type: "animation";
@@ -819,7 +819,7 @@ export interface RichBlockAnimation {
   caption?: RichBlockCaption;
 }
 
-/** A block with a music file, corresponding to the HTML tag <audio>. */
+/** A block with a music file, corresponding to the HTML tag \<audio>. */
 export interface RichBlockAudio {
   /** Type of the block, always “audio” */
   type: "audio";
@@ -829,7 +829,7 @@ export interface RichBlockAudio {
   caption?: RichBlockCaption;
 }
 
-/** A block with a photo, corresponding to the HTML tag <photo>. */
+/** A block with a photo, corresponding to the HTML tag \<photo>. */
 export interface RichBlockPhoto {
   /** Type of the block, always “photo” */
   type: "photo";
@@ -841,7 +841,7 @@ export interface RichBlockPhoto {
   caption?: RichBlockCaption;
 }
 
-/** A block with a video, corresponding to the HTML tag <video>. */
+/** A block with a video, corresponding to the HTML tag \<video>. */
 export interface RichBlockVideo {
   /** Type of the block, always “video” */
   type: "video";
@@ -853,7 +853,7 @@ export interface RichBlockVideo {
   caption?: RichBlockCaption;
 }
 
-/** A block with a voice note, corresponding to the HTML tag <audio>. */
+/** A block with a voice note, corresponding to the HTML tag \<audio>. */
 export interface RichBlockVoiceNote {
   /** Type of the block, always “voice_note” */
   type: "voice_note";
@@ -863,7 +863,7 @@ export interface RichBlockVoiceNote {
   caption?: RichBlockCaption;
 }
 
-/** A block with a “Thinking…” placeholder, corresponding to the custom HTML tag <tg-thinking>. The block may be used only in sendRichMessageDraft, therefore it can't be received in messages. See https://t.me/addemoji/AIActions for examples of custom emoji, which are recommended for usage in the block. */
+/** A block with a “Thinking…” placeholder, corresponding to the custom HTML tag \<tg-thinking>. The block may be used only in sendRichMessageDraft, therefore it can't be received in messages. See https://t.me/addemoji/AIActions for examples of custom emoji, which are recommended for usage in the block. */
 export interface RichBlockThinking {
   /** Type of the block, always “thinking” */
   type: "thinking";
