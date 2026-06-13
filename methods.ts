@@ -210,7 +210,7 @@ export type ApiMethods<F> = {
     /** Description of the message to reply to */
     reply_parameters?: ReplyParameters;
     /** Additional interface options. An object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. */
-    reply_markup:
+    reply_markup?:
       | InlineKeyboardMarkup
       | ReplyKeyboardMarkup
       | ReplyKeyboardRemove
@@ -1923,7 +1923,10 @@ export type ApiMethods<F> = {
     rich_message?: InputRichMessage;
     /** An object for an inline keyboard */
     reply_markup?: InlineKeyboardMarkup;
-  }): (Update.Edited & Message.TextMessage) | true;
+  }):
+    | (Update.Edited & Message.TextMessage)
+    | (Update.Edited & Message.RichMessageMessage)
+    | true;
 
   /** Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent. */
   editMessageCaption(args: {
