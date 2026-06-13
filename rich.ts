@@ -324,6 +324,8 @@ export interface InputRichMessage {
 - RichTextReference
 - RichTextReferenceLink */
 export type RichText =
+  | string
+  | RichText[]
   | RichTextBold
   | RichTextItalic
   | RichTextUnderline
