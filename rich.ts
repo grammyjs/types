@@ -1,5 +1,12 @@
 import type { User } from "./manage.ts";
-import type { Animation, Audio, PhotoSize, Video, Voice } from "./message.ts";
+import type {
+  Animation,
+  Audio,
+  Location,
+  PhotoSize,
+  Video,
+  Voice,
+} from "./message.ts";
 
 /** Describes a rich message to be sent. Exactly one of the fields html or markdown must be used.
  *
@@ -576,7 +583,7 @@ export interface RichTextReferenceLink {
 /** Caption of a rich formatted block. */
 export interface RichBlockCaption {
   /** Block caption */
-  text: "caption";
+  text: RichText;
   /** Block credit which corresponds to the HTML tag \<cite> */
   credit?: RichText;
 }
