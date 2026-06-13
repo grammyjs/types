@@ -1,4 +1,3 @@
-// deno-lint-ignore-file no-irregular-whitespace
 import type {
   Checklist,
   ChecklistTasksAdded,
@@ -28,6 +27,7 @@ import type {
   SuggestedPostRefunded,
   UniqueGiftInfo,
 } from "./payment.ts";
+import { RichBlock } from "./rich.ts";
 
 type MsgWith<P extends keyof Message> = Record<P, NonNullable<Message[P]>>;
 
@@ -121,6 +121,7 @@ export declare namespace Message {
     & CommonMessage
     & MsgWith<"text">
     & Partial<MsgWith<"entities">>;
+  export type RichMessageMessage = CommonMessage & MsgWith<"rich_message">;
   export type AnimationMessage = DocumentMessage & MsgWith<"animation">;
   export type AudioMessage = CaptionableMessage & MsgWith<"audio">;
   export type DocumentMessage = CaptionableMessage & MsgWith<"document">;
@@ -299,6 +300,8 @@ export interface Message extends Message.MediaMessage {
   text?: string;
   /** For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text */
   entities?: MessageEntity[];
+  /** Message is a rich formatted message */
+  rich_message?: RichMessage;
   /** Message is an animation, information about the animation. For backward compatibility, when this field is set, the document field will also be set. */
   animation?: Animation;
   /** Message is an audio file, information about the file */
@@ -883,6 +886,14 @@ export interface LivePhoto {
   file_size?: number;
 }
 
+/** Rich formatted message. */
+export interface RichMessage {
+  /** Content of the message */
+  blocks: RichBlock[];
+  /** True, if the rich message must be shown right-to-left */
+  is_rtl?: boolean;
+}
+
 /** This object represents an animation file (GIF or H.264/MPEG-4 AVC video without sound). */
 export interface Animation {
   /** Identifier for this file, which can be used to download or reuse the file */
@@ -1046,6 +1057,12 @@ export interface Dice {
   value: number;
 }
 
+/** Represents an HTTP link. */
+export interface Link {
+  /** URL of the link */
+  url: string;
+}
+
 /** At most one of the optional fields can be present in any given object. */
 export interface PollMedia {
   /** Media is an animation, information about the animation */
@@ -1054,6 +1071,8 @@ export interface PollMedia {
   audio?: Audio;
   /** Media is a general file, information about the file; currently, can't be received in a poll option */
   document?: Document;
+  /** The HTTP link attached to the poll option */
+  link?: Link;
   /** Media is a live photo, information about the live photo */
   live_photo?: LivePhoto;
   /** Media is a shared location, information about the location */

@@ -7,6 +7,7 @@ import type {
   ParseMode,
 } from "./message.ts";
 import type { LabeledPrice } from "./payment.ts";
+import { InputRichMessage } from "./rich.ts";
 
 /** This object represents an incoming inline query. When the user sends an empty query, your bot could return some default or trending results. */
 export interface InlineQuery {
@@ -597,15 +598,17 @@ export interface InlineQueryResultCachedAudio {
   input_message_content?: InputMessageContent;
 }
 
-/** This object represents the content of a message to be sent as a result of an inline query. Telegram clients currently support the following 5 types:
+/** This object represents the content of a message to be sent as a result of an inline query. Telegram clients currently support the following types:
 
 - InputTextMessageContent
+- InputRichMessageContent
 - InputLocationMessageContent
 - InputVenueMessageContent
 - InputContactMessageContent
 - InputInvoiceMessageContent */
 export type InputMessageContent =
   | InputTextMessageContent
+  | InputRichMessageContent
   | InputLocationMessageContent
   | InputVenueMessageContent
   | InputContactMessageContent
@@ -621,6 +624,12 @@ export interface InputTextMessageContent {
   entities?: MessageEntity[];
   /** Link preview generation options for the message */
   link_preview_options?: LinkPreviewOptions;
+}
+
+/** Represents the content of a rich message to be sent as the result of an inline query. */
+export interface InputRichMessageContent {
+  /** The message to be sent */
+  rich_message: InputRichMessage;
 }
 
 /** Represents the content of a location message to be sent as the result of an inline query. */

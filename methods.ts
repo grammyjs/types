@@ -58,6 +58,7 @@ import type {
   StarAmount,
   StarTransactions,
 } from "./payment.ts";
+import { InputRichMessage } from "./rich.ts";
 import type {
   BotCommandScope,
   BotDescription,
@@ -183,6 +184,38 @@ export type ApiMethods<F> = {
     /** @deprecated Use `reply_parameters` instead. */
     reply_to_message_id?: number;
   }): Message.TextMessage;
+
+  /** Use this method to send rich messages. If the message contains a block with a media element, then the bot must have the right to send the media to the chat. On success, the sent Message is returned. */
+  sendRichMessage(args: {
+    /** Unique identifier of the business connection on behalf of which the message will be sent */
+    business_connection_id?: string;
+    /** Unique identifier for the target chat or username of the target bot, supergroup or channel in the format @username */
+    chat_id: number | string;
+    /** Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only */
+    message_thread_id?: number;
+    /** Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat */
+    direct_messages_topic_id?: number;
+    /** The message to be sent */
+    rich_message: InputRichMessage;
+    /** Sends the message silently. Users will receive a notification with no sound. */
+    disable_notification?: boolean;
+    /** Protects the contents of the sent message from forwarding and saving */
+    protect_content?: boolean;
+    /** Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance. */
+    allow_paid_broadcast?: boolean;
+    /** Unique identifier of the message effect to be added to the message; for private chats only */
+    message_effect_id?: string;
+    /** An object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined. */
+    suggested_post_parameters?: SuggestedPostParameters;
+    /** Description of the message to reply to */
+    reply_parameters?: ReplyParameters;
+    /** Additional interface options. An object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. */
+    reply_markup:
+      | InlineKeyboardMarkup
+      | ReplyKeyboardMarkup
+      | ReplyKeyboardRemove
+      | ForceReply;
+  }): Message.RichMessageMessage;
 
   /** Use this method to forward messages of any kind. Service messages and messages with protected content can't be forwarded. On success, the sent Message is returned. */
   forwardMessage(args: {
@@ -1076,7 +1109,7 @@ export type ApiMethods<F> = {
     chat_id: number;
     /** Unique identifier for the target message thread */
     message_thread_id?: number;
-    /** Unique identifier of the message draft; must be non-zero. Changes of drafts with the same identifier are animated. */
+    /** Unique identifier of the message draft; must be non-zero. Changes to drafts with the same identifier are animated. */
     draft_id: number;
     /** Text of the message to be sent, 0-4096 characters after entities parsing. Pass an empty text to show a “Thinking…” placeholder. */
     text?: string;
@@ -1084,6 +1117,18 @@ export type ApiMethods<F> = {
     parse_mode?: ParseMode;
     /** A list of special entities that appear in message text, which can be specified instead of parse_mode */
     entities?: MessageEntity[];
+  }): true;
+
+  /** Use this method to stream a partial rich message to a user while the message is being generated. Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you must call sendRichMessage with the complete message to persist it in the user's chat. Returns True on success. */
+  sendRichMessageDraft(args: {
+    /** Unique identifier for the target private chat */
+    chat_id: number;
+    /** Unique identifier for the target message thread */
+    message_thread_id?: number;
+    /** Unique identifier of the message draft; must be non-zero. Changes to drafts with the same identifier are animated. */
+    draft_id: number;
+    /** The partial message to be streamed */
+    rich_message: InputRichMessage;
   }): true;
 
   /** Use this method when you need to tell the user that something is happening on the bot's side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns True on success.
@@ -1373,6 +1418,22 @@ export type ApiMethods<F> = {
     chat_id: number | string;
     /** Unique identifier of the target user */
     user_id: number;
+  }): true;
+
+  /** Use this method to process a received chat join request query. Returns True on success. */
+  answerChatJoinRequestQuery(args: {
+    /** Unique identifier of the join request query */
+    chat_join_request_query_id: string;
+    /** Result of the query. Must be either “approve” to allow the user to join the chat, “decline” to disallow the user to join the chat, or “queue” to leave the decision to other administrators. */
+    result: "approve" | "decline" | "queue";
+  }): true;
+
+  /** Use this method to process a received chat join request query by showing a Mini App to the user before deciding the outcome. Returns True on success. */
+  sendChatJoinRequestWebApp(args: {
+    /** Unique identifier of the join request query */
+    chat_join_request_query_id: string;
+    /** The URL of the Mini App to be opened */
+    web_app_url: string;
   }): true;
 
   /** Use this method to approve a suggested post in a direct messages chat. The bot must have the 'can_post_messages' administrator right in the corresponding channel chat. Returns True on success. */
@@ -1840,7 +1901,7 @@ export type ApiMethods<F> = {
   /** A method to get the current Telegram Stars balance of the bot. Requires no parameters. On success, returns a StarAmount object. */
   getMyStarBalance(): StarAmount;
 
-  /** Use this method to edit text and game messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent. */
+  /** Use this method to edit text, rich and game messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent. */
   editMessageText(args: {
     /** Unique identifier of the business connection on behalf of which the message to be edited was sent */
     business_connection_id?: string;
@@ -1850,14 +1911,16 @@ export type ApiMethods<F> = {
     message_id?: number;
     /** Required if chat_id and message_id are not specified. Identifier of the inline message. */
     inline_message_id?: string;
-    /** New text of the message, 1-4096 characters after entities parsing */
-    text: string;
+    /** New text of the message, 1-4096 characters after entity parsing; required if rich_message isn't specified */
+    text?: string;
     /** Mode for parsing entities in the message text. See formatting options for more details. */
     parse_mode?: ParseMode;
     /** A list of special entities that appear in message text, which can be specified instead of parse_mode */
     entities?: MessageEntity[];
     /** Link preview generation options for the message */
     link_preview_options?: LinkPreviewOptions;
+    /** New rich content of the message; required if text isn't specified */
+    rich_message?: InputRichMessage;
     /** An object for an inline keyboard */
     reply_markup?: InlineKeyboardMarkup;
   }): (Update.Edited & Message.TextMessage) | true;
@@ -1884,7 +1947,7 @@ export type ApiMethods<F> = {
     reply_markup?: InlineKeyboardMarkup;
   }): (Update.Edited & Message.CaptionableMessage) | true;
 
-  /** Use this method to edit animation, audio, document, live photo, photo, or video messages, or to add media to text messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo, a live photo, or a video otherwise. When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent. */
+  /** Use this method to edit animation, audio, document, live photo, photo, or video messages, or to replace a text or a rich message with a media. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo, a live photo, or a video otherwise. When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent. */
   editMessageMedia(args: {
     /** Unique identifier of the business connection on behalf of which the message to be edited was sent */
     business_connection_id?: string;
@@ -2733,7 +2796,7 @@ export type InputMedia<F> =
 
 /** Represents an animation file (GIF or H.264/MPEG-4 AVC video without sound) to be sent. */
 export interface InputMediaAnimation<F> {
-  /** Type of the result, must be animation */
+  /** Type of the media, must be animation */
   type: "animation";
   /** File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass "attach://\<file_attach_name>" to upload a new one using multipart/form-data under \<file_attach_name> name. */
   media: F | string;
@@ -2759,7 +2822,7 @@ export interface InputMediaAnimation<F> {
 
 /** Represents an audio file to be treated as music to be sent. */
 export interface InputMediaAudio<F> {
-  /** Type of the result, must be audio */
+  /** Type of the media, must be audio */
   type: "audio";
   /** File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass "attach://\<file_attach_name>" to upload a new one using multipart/form-data under \<file_attach_name> name. */
   media: F | string;
@@ -2781,7 +2844,7 @@ export interface InputMediaAudio<F> {
 
 /** Represents a general file to be sent. */
 export interface InputMediaDocument<F> {
-  /** Type of the result, must be document */
+  /** Type of the media, must be document */
   type: "document";
   /** File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass "attach://\<file_attach_name>" to upload a new one using multipart/form-data under \<file_attach_name> name. */
   media: F | string;
@@ -2797,9 +2860,17 @@ export interface InputMediaDocument<F> {
   disable_content_type_detection?: boolean;
 }
 
+/** Represents an HTTP link to be sent. */
+export interface InputMediaLink {
+  /** Type of the media, must be link */
+  type: "link";
+  /** HTTP URL of the link */
+  url: string;
+}
+
 /** Represents a live photo to be sent. */
 export interface InputMediaLivePhoto<F> {
-  /** Type of the result, must be live_photo */
+  /** Type of the media, must be live_photo */
   type: "live_photo";
   /** Video of the live photo to send. Pass a file_id to send a file that exists on the Telegram servers (recommended) or pass “attach://\<file_attach_name>” to upload a new one using multipart/form-data under \<file_attach_name> name. Sending live photos by a URL is currently unsupported. */
   media: F | string;
@@ -2819,7 +2890,7 @@ export interface InputMediaLivePhoto<F> {
 
 /** Represents a location to be sent. */
 export interface InputMediaLocation {
-  /** Type of the result, must be location */
+  /** Type of the media, must be location */
   type: "location";
   /** Latitude of the location */
   latitude: number;
@@ -2831,7 +2902,7 @@ export interface InputMediaLocation {
 
 /** Represents a photo to be sent. */
 export interface InputMediaPhoto<F> {
-  /** Type of the result, must be photo */
+  /** Type of the media, must be photo */
   type: "photo";
   /** File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass "attach://\<file_attach_name>" to upload a new one using multipart/form-data under \<file_attach_name> name. */
   media: F | string;
@@ -2849,7 +2920,7 @@ export interface InputMediaPhoto<F> {
 
 /** Represents a sticker file to be sent. */
 export interface InputMediaSticker<F> {
-  /** Type of the result, must be sticker */
+  /** Type of the media, must be sticker */
   type: "sticker";
   /** File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a .WEBP sticker from the Internet, or pass “attach://\<file_attach_name>” to upload a new .WEBP, .TGS, or .WEBM sticker using multipart/form-data under \<file_attach_name> name. */
   media: F | string;
@@ -2859,7 +2930,7 @@ export interface InputMediaSticker<F> {
 
 /** Represents a venue to be sent. */
 export interface InputMediaVenue {
-  /** Type of the result, must be venue */
+  /** Type of the media, must be venue */
   type: "venue";
   /** Latitude of the location */
   latitude: number;
@@ -2881,7 +2952,7 @@ export interface InputMediaVenue {
 
 /** Represents a video to be sent. */
 export interface InputMediaVideo<F> {
-  /** Type of the result, must be video */
+  /** Type of the media, must be video */
   type: "video";
   /** File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass "attach://\<file_attach_name>" to upload a new one using multipart/form-data under \<file_attach_name> name. */
   media: F | string;
@@ -2946,6 +3017,7 @@ export type InputPollMedia<F> =
 /** This object represents the content of a poll option to be sent. It should be one of
 
  - InputMediaAnimation
+ - InputMediaLink
  - InputMediaLivePhoto
  - InputMediaLocation
  - InputMediaPhoto
@@ -2954,6 +3026,7 @@ export type InputPollMedia<F> =
  - InputMediaVideo */
 export type InputPollOptionMedia<F> =
   | InputMediaAnimation<F>
+  | InputMediaLink
   | InputMediaLivePhoto<F>
   | InputMediaLocation
   | InputMediaPhoto<F>
