@@ -1811,7 +1811,7 @@ export type ApiMethods<F> = {
 
   /** Use this method to change the bot's menu button in a private chat, or the default menu button. Returns True on success. */
   setChatMenuButton(args: {
-    /** Unique identifier for the target private chat. If not specified, default bot's menu button will be changed. */
+    /** Unique identifier for the target private chat. If not specified, the bot's default menu button will be changed. */
     chat_id?: number;
     /** An object for the bot's new menu button. Defaults to MenuButtonDefault. */
     menu_button?: MenuButton;
@@ -1819,7 +1819,7 @@ export type ApiMethods<F> = {
 
   /** Use this method to get the current value of the bot's menu button in a private chat, or the default menu button. Returns MenuButton on success. */
   getChatMenuButton(args: {
-    /** Unique identifier for the target private chat. If not specified, default bot's menu button will be returned. */
+    /** Unique identifier for the target private chat. If not specified, the bot's default menu button will be returned. */
     chat_id?: number;
   }): MenuButton;
 
@@ -1954,7 +1954,7 @@ export type ApiMethods<F> = {
 
   /** Use this method to remove a reaction from a message in a group or a supergroup chat. The bot must have the 'can_delete_messages' administrator right in the chat. Returns True on success. */
   deleteMessageReaction(args: {
-    /** Unique identifier for the target chat or username of the target supergroup (in the format `@username`) */
+    /** Unique identifier for the target chat or username of the target supergroup in the format `@username` */
     chat_id: number | string;
     /** Identifier of the target message */
     message_id: number;
@@ -1966,7 +1966,7 @@ export type ApiMethods<F> = {
 
   /** Use this method to remove up to 10000 recent reactions in a group or a supergroup chat added by a given user or chat. The bot must have the 'can_delete_messages' administrator right in the chat. Returns True on success. */
   deleteAllMessageReactions(args: {
-    /** Unique identifier for the target chat or username of the target supergroup (in the format `@username`) */
+    /** Unique identifier for the target chat or username of the target supergroup in the format `@username` */
     chat_id: number | string;
     /** Identifier of the user whose reactions will be removed, if the reactions were added by a user */
     user_id?: number;
