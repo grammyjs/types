@@ -73,8 +73,6 @@ export interface UserFromGetMe extends User {
   can_join_groups: boolean;
   /** True, if privacy mode is disabled for the bot. Returned only in getMe. */
   can_read_all_group_messages: boolean;
-  /** True, if other bots can be created to be controlled by the bot. Returned only in getMe. */
-  can_manage_bots: boolean;
   /** True, if the bot supports guest queries from chats it is not a member of. Returned only in getMe. */
   supports_guest_queries?: boolean;
   /** True, if the bot supports inline queries. Returned only in getMe. */
@@ -87,6 +85,10 @@ export interface UserFromGetMe extends User {
   has_topics_enabled: boolean;
   /** True, if the bot allows users to create and delete topics in private chats. Returned only in getMe. */
   allows_users_to_create_topics: boolean;
+  /** True, if other bots can be created to be controlled by the bot. Returned only in getMe. */
+  can_manage_bots: boolean;
+  /** True, if the bot supports join request queries and can be assigned to process them. Returned only in getMe. */
+  supports_join_request_queries: boolean;
 }
 
 /** This object contains information about the bot that was created to be managed by the current bot. */
@@ -318,6 +320,8 @@ export declare namespace ChatFullInfo {
     location?: undefined;
     /** The number of Telegram Stars a general user have to pay to send a message to the chat */
     paid_message_star_count?: number;
+    /** The bot that processes join request queries in the chat. The field is only available to chat administrators. */
+    guard_bot?: undefined;
   }
   /** Internal type for group chats */
   export interface GroupChat {
@@ -423,6 +427,8 @@ export declare namespace ChatFullInfo {
     location?: undefined;
     /** The number of Telegram Stars a general user have to pay to send a message to the chat */
     paid_message_star_count?: number;
+    /** The bot that processes join request queries in the chat. The field is only available to chat administrators. */
+    guard_bot?: User;
   }
   /** Internal type for supergroup chats */
   export interface SupergroupChat {
@@ -528,6 +534,8 @@ export declare namespace ChatFullInfo {
     location?: ChatLocation;
     /** The number of Telegram Stars a general user have to pay to send a message to the chat */
     paid_message_star_count?: number;
+    /** The bot that processes join request queries in the chat. The field is only available to chat administrators. */
+    guard_bot?: User;
   }
   /** Internal type for channel chats */
   export interface ChannelChat {
@@ -633,6 +641,8 @@ export declare namespace ChatFullInfo {
     location?: undefined;
     /** The number of Telegram Stars a general user have to pay to send a message to the chat */
     paid_message_star_count?: number;
+    /** The bot that processes join request queries in the chat. The field is only available to chat administrators. */
+    guard_bot?: User;
   }
 }
 
@@ -852,7 +862,7 @@ export interface ChatMemberRestricted {
   tag?: string;
   /** True, if the user is a member of the chat at the moment of the request */
   is_member: boolean;
-  /** True, if the user is allowed to send text messages, contacts, giveaways, giveaway winners, invoices, locations and venues */
+  /** True, if the user is allowed to send text messages, rich messages, contacts, giveaways, giveaway winners, invoices, locations and venues */
   can_send_messages: boolean;
   /** True, if the user is allowed to send audios */
   can_send_audios: boolean;
@@ -920,11 +930,13 @@ export interface ChatJoinRequest {
   bio?: string;
   /** Chat invite link that was used by the user to send the join request */
   invite_link?: ChatInviteLink;
+  /** Identifier of the join request query. If present, then the bot must call sendChatJoinRequestWebApp or directly call answerChatJoinRequestQuery within 10 seconds. */
+  query_id?: string;
 }
 
 /** Describes actions that a non-administrator user is allowed to take in a chat. */
 export interface ChatPermissions {
-  /** True, if the user is allowed to send text messages, contacts, giveaways, giveaway winners, invoices, locations and venues */
+  /** True, if the user is allowed to send text messages, rich messages, contacts, giveaways, giveaway winners, invoices, locations and venues */
   can_send_messages?: boolean;
   /** True, if the user is allowed to send audios */
   can_send_audios?: boolean;
