@@ -930,7 +930,7 @@ export interface ChatJoinRequest {
   bio?: string;
   /** Chat invite link that was used by the user to send the join request */
   invite_link?: ChatInviteLink;
-  /** Identifier of the join request query. If present, then the bot must call sendChatJoinRequestWebApp or directly call answerChatJoinRequestQuery within 10 seconds. */
+  /** Identifier of the join request query; for bots assigned to process join requests only. If present, then the bot must call sendChatJoinRequestWebApp or directly call answerChatJoinRequestQuery within 10 seconds. */
   query_id?: string;
 }
 

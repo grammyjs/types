@@ -468,9 +468,9 @@ export interface UniqueGiftInfo {
   owned_gift_id?: string;
   /** Number of Telegram Stars that must be paid to transfer the gift; omitted if the bot cannot transfer the gift */
   transfer_star_count?: number;
-  /** For gifts bought from other users, the currency in which the payment for the gift was done. Currently, one of “XTR” for Telegram Stars or “TON” for toncoins. */
+  /** For gifts bought from other users, the currency in which the payment for the gift was done. Currently, one of “XTR” for Telegram Stars or “TON” for TON grams. */
   last_resale_currency?: "XTR" | "TON";
-  /** For gifts bought from other users, the price paid for the gift in either Telegram Stars or nanotoncoins */
+  /** For gifts bought from other users, the price paid for the gift in either Telegram Stars or nanograms */
   last_resale_amount?: number;
   /** Point in time (Unix timestamp) when the gift can be transferred. If it is in the past, then the gift can be transferred now. */
   next_transfer_date?: number;
@@ -572,9 +572,9 @@ export interface BotAccessSettings {
 
 /** Describes the price of a suggested post. */
 export interface SuggestedPostPrice {
-  /** Currency in which the post will be paid. Currently, must be one of “XTR” for Telegram Stars or “TON” for toncoins. */
+  /** Currency in which the post will be paid. Currently, must be one of “XTR” for Telegram Stars or “TON” for TON grams. */
   currency: "XTR" | "TON";
-  /** The amount of the currency that will be paid for the post in the smallest units of the currency, i.e. Telegram Stars or nanotoncoins. Currently, price in Telegram Stars must be between 5 and 100000, and price in nanotoncoins must be between 10000000 and 10000000000000. */
+  /** The amount of the currency that will be paid for the post in the smallest units of the currency, i.e. Telegram Stars or nanograms. Currently, price in Telegram Stars must be between 5 and 100000, and price in nanograms must be between 10000000 and 10000000000000. */
   amount: number;
 }
 
@@ -618,9 +618,9 @@ export interface SuggestedPostDeclined {
 export interface SuggestedPostPaid {
   /** Message containing the suggested post. Note that the Message object in this field will not contain the reply_to_message field even if it itself is a reply. */
   suggested_post_message?: Message;
-  /** Currency in which the payment was made. Currently, one of “XTR” for Telegram Stars or “TON” for toncoins. */
-  currency: string;
-  /** The amount of the currency that was received by the channel in nanotoncoins; for payments in toncoins only */
+  /** Currency in which the payment was made. Currently, one of “XTR” for Telegram Stars or “TON” for TON grams. */
+  currency: "XTR" | "TON";
+  /** The amount of the currency that was received by the channel in nanograms; for payments in TON grams only */
   amount?: number;
   /** The amount of Telegram Stars that was received by the channel; for payments in Telegram Stars only */
   star_amount?: StarAmount;
