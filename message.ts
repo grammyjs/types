@@ -7,6 +7,8 @@ import type {
   Chat,
   ChatOwnerChanged,
   ChatOwnerLeft,
+  CommunityChatAdded,
+  CommunityChatRemoved,
   ManagedBotCreated,
   User,
 } from "./manage.ts";
@@ -33,7 +35,7 @@ type MsgWith<P extends keyof Message> = Record<P, NonNullable<Message[P]>>;
 
 export declare namespace Message {
   interface ServiceMessage {
-    /** Unique message identifier inside this chat. In specific instances (e.g., message containing a video sent to a big chat), the server might automatically schedule a message instead of sending it immediately. In such cases, this field will be 0 and the relevant message will be unusable until it is actually sent. */
+    /** Unique message identifier inside this chat; 0 for ephemeral messages. In specific instances (e.g., a message containing a video sent to a big chat), the server might automatically schedule a message instead of sending it immediately. In such cases, this field will be 0 and the relevant message will be unusable until it is actually sent. */
     message_id: number;
     /** Unique identifier of a message thread or forum topic to which the message belongs; for supergroups and private chats only */
     message_thread_id?: number;
@@ -57,6 +59,10 @@ export declare namespace Message {
   export interface CommonMessage extends ServiceMessage {
     /** Tag or custom title of the sender of the message; for supergroups only */
     sender_tag?: string;
+    /** For ephemeral messages, the user who received the message */
+    receiver_user?: User;
+    /** For ephemeral messages, identifier of the ephemeral message inside this chat. The identifier may be reused for another ephemeral message after the message is deleted or expires. */
+    ephemeral_message_id?: number;
     /** If the sender of the message boosted the chat, the number of boosts added by the user */
     sender_boost_count?: number;
     /** The bot that actually sent the message on behalf of the business account. Available only for outgoing messages sent on behalf of the connected business account. */
@@ -65,7 +71,7 @@ export declare namespace Message {
     forward_origin?: MessageOrigin;
     /** True, if the message is a channel post that was automatically forwarded to the connected discussion group */
     is_automatic_forward?: true;
-    /** For replies in the same chat and message thread, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply. */
+    /** For replies in the same chat and message thread, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply. If the message is a reply to an ephemeral message, then this field may be omitted. */
     reply_to_message?: ReplyMessage;
     /** Identifier of the specific checklist task that is being replied to */
     reply_to_checklist_task_id?: number;
@@ -342,6 +348,10 @@ export interface Message extends Message.MediaMessage {
   checklist_tasks_done?: ChecklistTasksDone;
   /** Service message: tasks were added to a checklist */
   checklist_tasks_added?: ChecklistTasksAdded;
+  /** Service message: chat added to a Community */
+  community_chat_added?: CommunityChatAdded;
+  /** Service message: chat removed from a Community */
+  community_chat_removed?: CommunityChatRemoved;
   /** Information about suggested post parameters if the message is a suggested post in a channel direct messages chat. If the message is an approved or declined suggested post, then it can't be edited. */
   suggested_post_info?: SuggestedPostInfo;
   /** Service message: a suggested post was approved */
@@ -774,17 +784,19 @@ export interface ExternalReplyInfo {
 
 /** Describes reply parameters for the message that is being sent. */
 export interface ReplyParameters {
-  /** Identifier of the message that will be replied to in the current chat, or in the chat chat_id if it is specified */
-  message_id: number;
+  /** Identifier of the message that will be replied to in the current chat, or in the chat chat_id if it is specified. Required if ephemeral_message_id isn't specified. */
+  message_id?: number;
   /** If the message to be replied to is from a different chat, unique identifier for the chat or username of the bot, supergroup or channel in the format `@username`. Not supported for messages sent on behalf of a business account and messages from channel direct messages chats. */
   chat_id?: number | string;
+  /** Identifier of the incoming ephemeral message that will be replied to in the current chat. A reply to an ephemeral message must itself be an ephemeral message. An ephemeral message may only be replied to within 15 seconds of being sent. Required if message_id isn't specified. */
+  ephemeral_message_id?: number;
   /** Identifier of the specific checklist task to be replied to */
   checklist_task_id?: number;
   /** Persistent identifier of the specific poll option to be replied to */
   poll_option_id?: string;
-  /** Pass True if the message should be sent even if the specified message to be replied to is not found; can be used only for replies in the same chat and forum topic. Always True for messages sent on behalf of a business account. */
+  /** Pass True if the message should be sent even if the specified message to be replied to is not found. Always False for replies in another chat or forum topic, and sent ephemeral messages. Always True for messages sent on behalf of a business account. */
   allow_sending_without_reply?: boolean;
-  /** Quoted part of the message to be replied to; 0-1024 characters after entities parsing. The quote must be an exact substring of the message to be replied to, including bold, italic, underline, strikethrough, spoiler, custom_emoji, and date_time entities. The message will fail to send if the quote isn't found in the original message. */
+  /** Quoted part of the message to be replied to; 0-1024 characters after entities parsing. The quote must be an exact substring of the message to be replied to, including bold, italic, underline, strikethrough, spoiler, custom_emoji, and date_time entities. The message will fail to send if the quote isn't found in the original message. Ignored for ephemeral messages. */
   quote?: string;
   /** Mode for parsing entities in the quote. See formatting options for more details. */
   quote_parse_mode?: ParseMode;
@@ -1495,7 +1507,7 @@ export interface WriteAccessAllowed {
 
 /** Describes a service message about a change in the price of direct messages sent to a channel chat. */
 export interface DirectMessagePriceChanged {
-  /** True, if direct messages are enabled for the channel chat; false otherwise */
+  /** True, if direct messages are enabled for the channel chat; False otherwise */
   are_direct_messages_enabled: boolean;
   /** The new number of Telegram Stars that must be paid by users for each direct message sent to the channel. Defaults to 0. */
   direct_message_star_count?: number;

@@ -322,6 +322,8 @@ export declare namespace ChatFullInfo {
     paid_message_star_count?: number;
     /** The bot that processes join request queries in the chat. The field is only available to chat administrators. */
     guard_bot?: undefined;
+    /** The Community to which the chat belongs */
+    community?: Community;
   }
   /** Internal type for group chats */
   export interface GroupChat {
@@ -429,6 +431,8 @@ export declare namespace ChatFullInfo {
     paid_message_star_count?: number;
     /** The bot that processes join request queries in the chat. The field is only available to chat administrators. */
     guard_bot?: User;
+    /** The Community to which the chat belongs */
+    community?: Community;
   }
   /** Internal type for supergroup chats */
   export interface SupergroupChat {
@@ -536,6 +540,8 @@ export declare namespace ChatFullInfo {
     paid_message_star_count?: number;
     /** The bot that processes join request queries in the chat. The field is only available to chat administrators. */
     guard_bot?: User;
+    /** The Community to which the chat belongs */
+    community?: Community;
   }
   /** Internal type for channel chats */
   export interface ChannelChat {
@@ -643,6 +649,8 @@ export declare namespace ChatFullInfo {
     paid_message_star_count?: number;
     /** The bot that processes join request queries in the chat. The field is only available to chat administrators. */
     guard_bot?: User;
+    /** The Community to which the chat belongs */
+    community?: Community;
   }
 }
 
@@ -727,7 +735,7 @@ export interface ChatAdministratorRights {
   can_change_info: boolean;
   /** True, if the user is allowed to invite new users to the chat */
   can_invite_users: boolean;
-  /** True, if the administrator can edit the tags of regular members; for groups and supergroups only. If omitted defaults to the value of can_pin_messages. */
+  /** True, if the administrator can edit the tags of regular members; for groups and supergroups only. If omitted, defaults to the value of can_pin_messages. */
   can_manage_tags?: boolean;
   /** True, if the administrator can post stories to the chat */
   can_post_stories: boolean;
@@ -818,7 +826,7 @@ export interface ChatMemberAdministrator {
   can_change_info: boolean;
   /** True, if the user is allowed to invite new users to the chat */
   can_invite_users: boolean;
-  /** True, if the administrator can edit the tags of regular members; for groups and supergroups only. If omitted defaults to the value of can_pin_messages. */
+  /** True, if the administrator can edit the tags of regular members; for groups and supergroups only. If omitted, defaults to the value of can_pin_messages. */
   can_manage_tags?: boolean;
   /** True, if the administrator can post stories to the chat */
   can_post_stories: boolean;
@@ -966,7 +974,7 @@ export interface ChatPermissions {
   can_edit_tag?: boolean;
   /** True, if the user is allowed to pin messages. Ignored in public supergroups. */
   can_pin_messages?: boolean;
-  /** True, if the user is allowed to create forum topics. If omitted defaults to the value of can_pin_messages. */
+  /** True, if the user is allowed to create forum topics. If omitted, defaults to the value of can_pin_messages. */
   can_manage_topics?: boolean;
 }
 
@@ -1042,6 +1050,8 @@ export interface BotCommand {
   command: string;
   /** Description of the command; 1-256 characters */
   description: string;
+  /** True, if the command sends an ephemeral message, which can be seen only by the sender of the message and the bot */
+  is_ephemeral?: boolean;
 }
 
 /** This object describes the source of a chat boost. It can be one of
@@ -1178,4 +1188,31 @@ export interface BusinessMessagesDeleted {
   chat: Chat.PrivateChat;
   /** The list of identifiers of deleted messages in the chat of the business account */
   message_ids: number[];
+}
+
+/** This object contains information about changes to a user payment subscription toward the current bot. */
+export interface BotSubscriptionUpdated {
+  /** User who subscribed for payments toward the bot */
+  user: User;
+  /** Bot-specified invoice payload */
+  invoice_payload: string;
+  /** The new state of the subscription. Currently, it can be one of “canceled” if the user canceled the subscription, “active” if the user re-enabled a previously canceled subscription, or “failed” if payment for the subscription failed. */
+  state: "canceled" | "active" | "failed";
+}
+
+/** Describes a service message about a chat being added to a community. */
+export interface CommunityChatAdded {
+  /** The new community to which the chat belongs */
+  community: Community;
+}
+
+/** Describes a service message about a chat being removed from a community. Currently holds no information. */
+export interface CommunityChatRemoved {}
+
+/** Represents a community (a group of chats). */
+export interface Community {
+  /** Unique identifier for this community */
+  id: number;
+  /** Name of the community */
+  name: string;
 }
