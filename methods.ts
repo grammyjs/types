@@ -435,10 +435,8 @@ export type ApiMethods<F> = {
     message_thread_id?: number;
     /** Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat */
     direct_messages_topic_id?: number;
-    /** For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See ephemeral message sending for more details. */
-    receiver_user_id?: number;
-    /** For outgoing ephemeral messages, identifier of the callback query which triggerred the message if any */
-    callback_query_id?: string;    audio: F | string;
+    /** Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data. */
+    audio: F | string;
     /** Audio caption, 0-1024 characters after entities parsing */
     caption?: string;
     /** Mode for parsing entities in the audio caption. See formatting options for more details. */
