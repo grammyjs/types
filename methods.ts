@@ -786,7 +786,7 @@ export type ApiMethods<F> = {
     message_thread_id?: number;
     /** Identifier of the direct messages topic to which the messages will be sent; required if the messages are sent to a direct messages chat */
     direct_messages_topic_id?: number;
-    /** An array describing messages to be sent, must include 2-10 items */
+    /** An Array describing messages to be sent, must include 2-10 items */
     media:
       | ReadonlyArray<InputMediaAudio<F>>
       | ReadonlyArray<InputMediaDocument<F>>
@@ -1177,7 +1177,7 @@ export type ApiMethods<F> = {
     /** Unique identifier of the message draft; must be non-zero. Changes to drafts with the same identifier are animated. */
     draft_id: number;
     /** The partial message to be streamed. Direct upload of new files isn't supported. */
-    rich_message: InputRichMessage<F>;
+    rich_message: InputRichMessage<never>;
   }): true;
 
   /** Use this method when you need to tell the user that something is happening on the bot's side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns True on success.
@@ -1583,7 +1583,7 @@ export type ApiMethods<F> = {
     return_bots?: boolean;
   }): Array<ChatMemberOwner | ChatMemberAdministrator>;
 
-  /** Use this method to get the number of members in a chat. Returns Int on success.
+  /** Use this method to get the number of members in a chat. Returns Integer on success.
    * @deprecated Use `getChatMemberCount` instead. */
   getChatMembersCount: ApiMethods<F>["getChatMemberCount"];
 
@@ -2057,7 +2057,7 @@ export type ApiMethods<F> = {
     entities?: MessageEntity[];
     /** Link preview generation options for the message */
     link_preview_options?: LinkPreviewOptions;
-    /** A object for an inline keyboard */
+    /** An object for an inline keyboard */
     reply_markup?: InlineKeyboardMarkup;
   }): true;
 
@@ -2069,9 +2069,9 @@ export type ApiMethods<F> = {
     receiver_user_id: number;
     /** Identifier of the ephemeral message to edit */
     ephemeral_message_id: number;
-    /** A object for the new media content of the message. A new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. */
-    media: InputMedia<F>;
-    /** A object for an inline keyboard */
+    /** An object for the new media content of the message. A new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. */
+    media: InputMedia<never>;
+    /** An object for an inline keyboard */
     reply_markup?: InlineKeyboardMarkup;
   }): true;
 
@@ -2089,7 +2089,7 @@ export type ApiMethods<F> = {
     parse_mode?: ParseMode;
     /** A list of special entities that appear in the caption, which can be specified instead of parse_mode */
     caption_entities?: MessageEntity[];
-    /** A object for an inline keyboard */
+    /** An object for an inline keyboard */
     reply_markup?: InlineKeyboardMarkup;
   }): true;
 
@@ -2101,7 +2101,7 @@ export type ApiMethods<F> = {
     receiver_user_id: number;
     /** Identifier of the ephemeral message to edit */
     ephemeral_message_id: number;
-    /** A object for an inline keyboard */
+    /** An object for an inline keyboard */
     reply_markup?: InlineKeyboardMarkup;
   }): true;
 

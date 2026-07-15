@@ -984,7 +984,7 @@ export interface InputRichBlockSectionHeading {
   size: 1 | 2 | 3 | 4 | 5 | 6;
 }
 
-/** A preformatted text block, corresponding to the nested HTML tags <pre> and <code>. */
+/** A preformatted text block, corresponding to the nested HTML tags \<pre> and \<code>. */
 export interface InputRichBlockPreformatted {
   /** Type of the block, always “pre” */
   type: "pre";
@@ -994,7 +994,7 @@ export interface InputRichBlockPreformatted {
   language?: string;
 }
 
-/** A footer, corresponding to the HTML tag <footer>. */
+/** A footer, corresponding to the HTML tag \<footer>. */
 export interface InputRichBlockFooter {
   /** Type of the block, always “footer” */
   type: "footer";
