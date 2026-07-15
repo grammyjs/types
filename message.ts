@@ -414,7 +414,7 @@ export interface Message extends Message.MediaMessage {
   write_access_allowed?: WriteAccessAllowed;
   /** Telegram Passport data */
   passport_data?: PassportData;
-  /** Service message. A user in the chat triggered another user's proximity alert while sharing Live Location. */
+  /** Service message: a user in the chat triggered another user's proximity alert while sharing Live Location. */
   proximity_alert_triggered?: ProximityAlertTriggered;
   /** Service message: user boosted the chat */
   boost_added?: ChatBoostAdded;

@@ -157,7 +157,7 @@ export type ApiMethods<F> = {
     direct_messages_topic_id?: number;
     /** For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See ephemeral message sending for more details. */
     receiver_user_id?: number;
-    /** For outgoing ephemeral messages, identifier of the callback query which triggerred the message if any */
+    /** For outgoing ephemeral messages, identifier of the callback query which triggered the message if any */
     callback_query_id?: string;
     /** Text of the message to be sent, 1-4096 characters after entities parsing */
     text: string;
@@ -339,7 +339,7 @@ export type ApiMethods<F> = {
     direct_messages_topic_id?: number;
     /** For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See ephemeral message sending for more details. */
     receiver_user_id?: number;
-    /** For outgoing ephemeral messages, identifier of the callback query which triggerred the message if any */
+    /** For outgoing ephemeral messages, identifier of the callback query which triggered the message if any */
     callback_query_id?: string;
     /** Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. The photo must be at most 10 MB in size. The photo's width and height must not exceed 10000 in total. Width and height ratio must be at most 20. */
     photo: F | string;
@@ -387,7 +387,7 @@ export type ApiMethods<F> = {
     direct_messages_topic_id?: number;
     /** For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See ephemeral message sending for more details. */
     receiver_user_id?: number;
-    /** For outgoing ephemeral messages, identifier of the callback query which triggerred the message if any */
+    /** For outgoing ephemeral messages, identifier of the callback query which triggered the message if any */
     callback_query_id?: string;
     /** Live photo video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. Sending live photos by a URL is currently unsupported. */
     live_photo: F | string;
@@ -437,7 +437,7 @@ export type ApiMethods<F> = {
     direct_messages_topic_id?: number;
     /** For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See ephemeral message sending for more details. */
     receiver_user_id?: number;
-    /** For outgoing ephemeral messages, identifier of the callback query which triggerred the message if any */
+    /** For outgoing ephemeral messages, identifier of the callback query which triggered the message if any */
     callback_query_id?: string;
     /** Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data. */
     audio: F | string;
@@ -489,7 +489,7 @@ export type ApiMethods<F> = {
     direct_messages_topic_id?: number;
     /** For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See ephemeral message sending for more details. */
     receiver_user_id?: number;
-    /** For outgoing ephemeral messages, identifier of the callback query which triggerred the message if any */
+    /** For outgoing ephemeral messages, identifier of the callback query which triggered the message if any */
     callback_query_id?: string;
     /** File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. */
     document: F | string;
@@ -537,7 +537,7 @@ export type ApiMethods<F> = {
     direct_messages_topic_id?: number;
     /** For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See ephemeral message sending for more details. */
     receiver_user_id?: number;
-    /** For outgoing ephemeral messages, identifier of the callback query which triggerred the message if any */
+    /** For outgoing ephemeral messages, identifier of the callback query which triggered the message if any */
     callback_query_id?: string;
     /** Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data. */
     video: F | string;
@@ -599,7 +599,7 @@ export type ApiMethods<F> = {
     direct_messages_topic_id?: number;
     /** For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See ephemeral message sending for more details. */
     receiver_user_id?: number;
-    /** For outgoing ephemeral messages, identifier of the callback query which triggerred the message if any */
+    /** For outgoing ephemeral messages, identifier of the callback query which triggered the message if any */
     callback_query_id?: string;
     /** Animation to send. Pass a file_id as String to send an animation that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an animation from the Internet, or upload a new animation using multipart/form-data. */
     animation: F | string;
@@ -655,7 +655,7 @@ export type ApiMethods<F> = {
     direct_messages_topic_id?: number;
     /** For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See ephemeral message sending for more details. */
     receiver_user_id?: number;
-    /** For outgoing ephemeral messages, identifier of the callback query which triggerred the message if any */
+    /** For outgoing ephemeral messages, identifier of the callback query which triggered the message if any */
     callback_query_id?: string;
     /** Audio file to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. */
     voice: F | string;
@@ -702,7 +702,7 @@ export type ApiMethods<F> = {
     direct_messages_topic_id?: number;
     /** For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See ephemeral message sending for more details. */
     receiver_user_id?: number;
-    /** For outgoing ephemeral messages, identifier of the callback query which triggerred the message if any */
+    /** For outgoing ephemeral messages, identifier of the callback query which triggered the message if any */
     callback_query_id?: string;
     /** Video note to send. Pass a file_id as String to send a video note that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data.. Sending video notes by a URL is currently unsupported */
     video_note: F | string;
@@ -827,7 +827,7 @@ export type ApiMethods<F> = {
     direct_messages_topic_id?: number;
     /** For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See ephemeral message sending for more details. */
     receiver_user_id?: number;
-    /** For outgoing ephemeral messages, identifier of the callback query which triggerred the message if any */
+    /** For outgoing ephemeral messages, identifier of the callback query which triggered the message if any */
     callback_query_id?: string;
     /** Latitude of the location */
     latitude: number;
@@ -915,7 +915,7 @@ export type ApiMethods<F> = {
     direct_messages_topic_id?: number;
     /** For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See ephemeral message sending for more details. */
     receiver_user_id?: number;
-    /** For outgoing ephemeral messages, identifier of the callback query which triggerred the message if any */
+    /** For outgoing ephemeral messages, identifier of the callback query which triggered the message if any */
     callback_query_id?: string;
     /** Latitude of the venue */
     latitude: number;
@@ -967,7 +967,7 @@ export type ApiMethods<F> = {
     direct_messages_topic_id?: number;
     /** For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See ephemeral message sending for more details. */
     receiver_user_id?: number;
-    /** For outgoing ephemeral messages, identifier of the callback query which triggerred the message if any */
+    /** For outgoing ephemeral messages, identifier of the callback query which triggered the message if any */
     callback_query_id?: string;
     /** Contact's phone number */
     phone_number: string;
@@ -2373,7 +2373,7 @@ export type ApiMethods<F> = {
     direct_messages_topic_id?: number;
     /** For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See ephemeral message sending for more details. */
     receiver_user_id?: number;
-    /** For outgoing ephemeral messages, identifier of the callback query which triggerred the message if any */
+    /** For outgoing ephemeral messages, identifier of the callback query which triggered the message if any */
     callback_query_id?: string;
     /** Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP sticker from the Internet, or upload a new .WEBP, .TGS, or .WEBM sticker using multipart/form-data. Video and animated stickers can't be sent via an HTTP URL. */
     sticker: F | string;
