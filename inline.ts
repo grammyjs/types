@@ -26,6 +26,7 @@ export interface InlineQuery {
 }
 
 /** This object represents one result of an inline query. Telegram clients currently support results of the following 20 types:
+
 - InlineQueryResultCachedAudio
 - InlineQueryResultCachedDocument
 - InlineQueryResultCachedGif
@@ -48,30 +49,30 @@ export interface InlineQuery {
 - InlineQueryResultVoice
 
 Note: All URLs passed in inline query results will be available to end users and therefore must be assumed to be public. */
-export type InlineQueryResult =
-  | InlineQueryResultCachedAudio
-  | InlineQueryResultCachedDocument
-  | InlineQueryResultCachedGif
-  | InlineQueryResultCachedMpeg4Gif
-  | InlineQueryResultCachedPhoto
-  | InlineQueryResultCachedSticker
-  | InlineQueryResultCachedVideo
-  | InlineQueryResultCachedVoice
-  | InlineQueryResultArticle
-  | InlineQueryResultAudio
-  | InlineQueryResultContact
+export type InlineQueryResult<F> =
+  | InlineQueryResultCachedAudio<F>
+  | InlineQueryResultCachedDocument<F>
+  | InlineQueryResultCachedGif<F>
+  | InlineQueryResultCachedMpeg4Gif<F>
+  | InlineQueryResultCachedPhoto<F>
+  | InlineQueryResultCachedSticker<F>
+  | InlineQueryResultCachedVideo<F>
+  | InlineQueryResultCachedVoice<F>
+  | InlineQueryResultArticle<F>
+  | InlineQueryResultAudio<F>
+  | InlineQueryResultContact<F>
   | InlineQueryResultGame
-  | InlineQueryResultDocument
-  | InlineQueryResultGif
-  | InlineQueryResultLocation
-  | InlineQueryResultMpeg4Gif
-  | InlineQueryResultPhoto
-  | InlineQueryResultVenue
-  | InlineQueryResultVideo
-  | InlineQueryResultVoice;
+  | InlineQueryResultDocument<F>
+  | InlineQueryResultGif<F>
+  | InlineQueryResultLocation<F>
+  | InlineQueryResultMpeg4Gif<F>
+  | InlineQueryResultPhoto<F>
+  | InlineQueryResultVenue<F>
+  | InlineQueryResultVideo<F>
+  | InlineQueryResultVoice<F>;
 
 /** Represents a link to an article or web page. */
-export interface InlineQueryResultArticle {
+export interface InlineQueryResultArticle<F> {
   /** Type of the result, must be article */
   type: "article";
   /** Unique identifier for this result, 1-64 Bytes */
@@ -79,7 +80,7 @@ export interface InlineQueryResultArticle {
   /** Title of the result */
   title: string;
   /** Content of the message to be sent */
-  input_message_content: InputMessageContent;
+  input_message_content: InputMessageContent<F>;
   /** Inline keyboard attached to the message */
   reply_markup?: InlineKeyboardMarkup;
   /** URL of the result */
@@ -95,7 +96,7 @@ export interface InlineQueryResultArticle {
 }
 
 /** Represents a link to a photo. By default, this photo will be sent by the user with optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the photo. */
-export interface InlineQueryResultPhoto {
+export interface InlineQueryResultPhoto<F> {
   /** Type of the result, must be photo */
   type: "photo";
   /** Unique identifier for this result, 1-64 bytes */
@@ -114,7 +115,7 @@ export interface InlineQueryResultPhoto {
   description?: string;
   /** Caption of the photo to be sent, 0-1024 characters after entities parsing */
   caption?: string;
-  /** Pass True, if the caption must be shown above the message media */
+  /** Pass True if the caption must be shown above the message media */
   show_caption_above_media?: boolean;
   /** Mode for parsing entities in the photo caption. See formatting options for more details. */
   parse_mode?: ParseMode;
@@ -123,11 +124,11 @@ export interface InlineQueryResultPhoto {
   /** Inline keyboard attached to the message */
   reply_markup?: InlineKeyboardMarkup;
   /** Content of the message to be sent instead of the photo */
-  input_message_content?: InputMessageContent;
+  input_message_content?: InputMessageContent<F>;
 }
 
 /** Represents a link to an animated GIF file. By default, this animated GIF file will be sent by the user with optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the animation. */
-export interface InlineQueryResultGif {
+export interface InlineQueryResultGif<F> {
   /** Type of the result, must be gif */
   type: "gif";
   /** Unique identifier for this result, 1-64 bytes */
@@ -148,7 +149,7 @@ export interface InlineQueryResultGif {
   title?: string;
   /** Caption of the GIF file to be sent, 0-1024 characters after entities parsing */
   caption?: string;
-  /** Pass True, if the caption must be shown above the message media */
+  /** Pass True if the caption must be shown above the message media */
   show_caption_above_media?: boolean;
   /** Mode for parsing entities in the caption. See formatting options for more details. */
   parse_mode?: ParseMode;
@@ -157,11 +158,11 @@ export interface InlineQueryResultGif {
   /** Inline keyboard attached to the message */
   reply_markup?: InlineKeyboardMarkup;
   /** Content of the message to be sent instead of the GIF animation */
-  input_message_content?: InputMessageContent;
+  input_message_content?: InputMessageContent<F>;
 }
 
 /** Represents a link to a video animation (H.264/MPEG-4 AVC video without sound). By default, this animated MPEG-4 file will be sent by the user with optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the animation. */
-export interface InlineQueryResultMpeg4Gif {
+export interface InlineQueryResultMpeg4Gif<F> {
   /** Type of the result, must be mpeg4_gif */
   type: "mpeg4_gif";
   /** Unique identifier for this result, 1-64 bytes */
@@ -182,7 +183,7 @@ export interface InlineQueryResultMpeg4Gif {
   title?: string;
   /** Caption of the MPEG-4 file to be sent, 0-1024 characters after entities parsing */
   caption?: string;
-  /** Pass True, if the caption must be shown above the message media */
+  /** Pass True if the caption must be shown above the message media */
   show_caption_above_media?: boolean;
   /** Mode for parsing entities in the caption. See formatting options for more details. */
   parse_mode?: ParseMode;
@@ -191,13 +192,13 @@ export interface InlineQueryResultMpeg4Gif {
   /** Inline keyboard attached to the message */
   reply_markup?: InlineKeyboardMarkup;
   /** Content of the message to be sent instead of the video animation */
-  input_message_content?: InputMessageContent;
+  input_message_content?: InputMessageContent<F>;
 }
 
 /** Represents a link to a page containing an embedded video player or a video file. By default, this video file will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the video.
 
-> If an InlineQueryResultVideo message contains an embedded video (e.g., YouTube), you must replace its content using input_message_content. */
-export interface InlineQueryResultVideo {
+> If an InlineQueryResultVideo<F> message contains an embedded video (e.g., YouTube), you must replace its content using input_message_content. */
+export interface InlineQueryResultVideo<F> {
   /** Type of the result, must be video */
   type: "video";
   /** Unique identifier for this result, 1-64 bytes */
@@ -212,7 +213,7 @@ export interface InlineQueryResultVideo {
   title: string;
   /** Caption of the video to be sent, 0-1024 characters after entities parsing */
   caption?: string;
-  /** Pass True, if the caption must be shown above the message media */
+  /** Pass True if the caption must be shown above the message media */
   show_caption_above_media?: boolean;
   /** Mode for parsing entities in the video caption. See formatting options for more details. */
   parse_mode?: ParseMode;
@@ -228,12 +229,12 @@ export interface InlineQueryResultVideo {
   description?: string;
   /** Inline keyboard attached to the message */
   reply_markup?: InlineKeyboardMarkup;
-  /** Content of the message to be sent instead of the video. This field is required if InlineQueryResultVideo is used to send an HTML-page as a result (e.g., a YouTube video). */
-  input_message_content?: InputMessageContent;
+  /** Content of the message to be sent instead of the video. This field is required if InlineQueryResultVideo<F> is used to send an HTML-page as a result (e.g., a YouTube video). */
+  input_message_content?: InputMessageContent<F>;
 }
 
 /** Represents a link to an MP3 audio file. By default, this audio file will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the audio. */
-export interface InlineQueryResultAudio {
+export interface InlineQueryResultAudio<F> {
   /** Type of the result, must be audio */
   type: "audio";
   /** Unique identifier for this result, 1-64 bytes */
@@ -255,11 +256,11 @@ export interface InlineQueryResultAudio {
   /** Inline keyboard attached to the message */
   reply_markup?: InlineKeyboardMarkup;
   /** Content of the message to be sent instead of the audio */
-  input_message_content?: InputMessageContent;
+  input_message_content?: InputMessageContent<F>;
 }
 
 /** Represents a link to a voice recording in an .OGG container encoded with OPUS. By default, this voice recording will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the the voice message. */
-export interface InlineQueryResultVoice {
+export interface InlineQueryResultVoice<F> {
   /** Type of the result, must be voice */
   type: "voice";
   /** Unique identifier for this result, 1-64 bytes */
@@ -279,11 +280,11 @@ export interface InlineQueryResultVoice {
   /** Inline keyboard attached to the message */
   reply_markup?: InlineKeyboardMarkup;
   /** Content of the message to be sent instead of the voice recording */
-  input_message_content?: InputMessageContent;
+  input_message_content?: InputMessageContent<F>;
 }
 
 /** Represents a link to a file. By default, this file will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the file. Currently, only .PDF and .ZIP files can be sent using this method. */
-export interface InlineQueryResultDocument {
+export interface InlineQueryResultDocument<F> {
   /** Type of the result, must be document */
   type: "document";
   /** Unique identifier for this result, 1-64 bytes */
@@ -305,7 +306,7 @@ export interface InlineQueryResultDocument {
   /** Inline keyboard attached to the message */
   reply_markup?: InlineKeyboardMarkup;
   /** Content of the message to be sent instead of the file */
-  input_message_content?: InputMessageContent;
+  input_message_content?: InputMessageContent<F>;
   /** URL of the thumbnail (JPEG only) for the file */
   thumbnail_url?: string;
   /** Thumbnail width */
@@ -315,7 +316,7 @@ export interface InlineQueryResultDocument {
 }
 
 /** Represents a location on a map. By default, the location will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the location. */
-export interface InlineQueryResultLocation {
+export interface InlineQueryResultLocation<F> {
   /** Type of the result, must be location */
   type: "location";
   /** Unique identifier for this result, 1-64 Bytes */
@@ -337,7 +338,7 @@ export interface InlineQueryResultLocation {
   /** Inline keyboard attached to the message */
   reply_markup?: InlineKeyboardMarkup;
   /** Content of the message to be sent instead of the location */
-  input_message_content?: InputMessageContent;
+  input_message_content?: InputMessageContent<F>;
   /** Url of the thumbnail for the result */
   thumbnail_url?: string;
   /** Thumbnail width */
@@ -347,7 +348,7 @@ export interface InlineQueryResultLocation {
 }
 
 /** Represents a venue. By default, the venue will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the venue. */
-export interface InlineQueryResultVenue {
+export interface InlineQueryResultVenue<F> {
   /** Type of the result, must be venue */
   type: "venue";
   /** Unique identifier for this result, 1-64 Bytes */
@@ -371,7 +372,7 @@ export interface InlineQueryResultVenue {
   /** Inline keyboard attached to the message */
   reply_markup?: InlineKeyboardMarkup;
   /** Content of the message to be sent instead of the venue */
-  input_message_content?: InputMessageContent;
+  input_message_content?: InputMessageContent<F>;
   /** Url of the thumbnail for the result */
   thumbnail_url?: string;
   /** Thumbnail width */
@@ -381,7 +382,7 @@ export interface InlineQueryResultVenue {
 }
 
 /** Represents a contact with a phone number. By default, this contact will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the contact. */
-export interface InlineQueryResultContact {
+export interface InlineQueryResultContact<F> {
   /** Type of the result, must be contact */
   type: "contact";
   /** Unique identifier for this result, 1-64 Bytes */
@@ -397,7 +398,7 @@ export interface InlineQueryResultContact {
   /** Inline keyboard attached to the message */
   reply_markup?: InlineKeyboardMarkup;
   /** Content of the message to be sent instead of the contact */
-  input_message_content?: InputMessageContent;
+  input_message_content?: InputMessageContent<F>;
   /** Url of the thumbnail for the result */
   thumbnail_url?: string;
   /** Thumbnail width */
@@ -419,7 +420,7 @@ export interface InlineQueryResultGame {
 }
 
 /** Represents a link to a photo stored on the Telegram servers. By default, this photo will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the photo. */
-export interface InlineQueryResultCachedPhoto {
+export interface InlineQueryResultCachedPhoto<F> {
   /** Type of the result, must be photo */
   type: "photo";
   /** Unique identifier for this result, 1-64 bytes */
@@ -432,7 +433,7 @@ export interface InlineQueryResultCachedPhoto {
   description?: string;
   /** Caption of the photo to be sent, 0-1024 characters after entities parsing */
   caption?: string;
-  /** Pass True, if the caption must be shown above the message media */
+  /** Pass True if the caption must be shown above the message media */
   show_caption_above_media?: boolean;
   /** Mode for parsing entities in the photo caption. See formatting options for more details. */
   parse_mode?: ParseMode;
@@ -441,11 +442,11 @@ export interface InlineQueryResultCachedPhoto {
   /** Inline keyboard attached to the message */
   reply_markup?: InlineKeyboardMarkup;
   /** Content of the message to be sent instead of the photo */
-  input_message_content?: InputMessageContent;
+  input_message_content?: InputMessageContent<F>;
 }
 
 /** Represents a link to an animated GIF file stored on the Telegram servers. By default, this animated GIF file will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with specified content instead of the animation. */
-export interface InlineQueryResultCachedGif {
+export interface InlineQueryResultCachedGif<F> {
   /** Type of the result, must be gif */
   type: "gif";
   /** Unique identifier for this result, 1-64 bytes */
@@ -456,7 +457,7 @@ export interface InlineQueryResultCachedGif {
   title?: string;
   /** Caption of the GIF file to be sent, 0-1024 characters after entities parsing */
   caption?: string;
-  /** Pass True, if the caption must be shown above the message media */
+  /** Pass True if the caption must be shown above the message media */
   show_caption_above_media?: boolean;
   /** Mode for parsing entities in the caption. See formatting options for more details. */
   parse_mode?: ParseMode;
@@ -465,11 +466,11 @@ export interface InlineQueryResultCachedGif {
   /** Inline keyboard attached to the message */
   reply_markup?: InlineKeyboardMarkup;
   /** Content of the message to be sent instead of the GIF animation */
-  input_message_content?: InputMessageContent;
+  input_message_content?: InputMessageContent<F>;
 }
 
 /** Represents a link to a video animation (H.264/MPEG-4 AVC video without sound) stored on the Telegram servers. By default, this animated MPEG-4 file will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the animation. */
-export interface InlineQueryResultCachedMpeg4Gif {
+export interface InlineQueryResultCachedMpeg4Gif<F> {
   /** Type of the result, must be mpeg4_gif */
   type: "mpeg4_gif";
   /** Unique identifier for this result, 1-64 bytes */
@@ -480,7 +481,7 @@ export interface InlineQueryResultCachedMpeg4Gif {
   title?: string;
   /** Caption of the MPEG-4 file to be sent, 0-1024 characters after entities parsing */
   caption?: string;
-  /** Pass True, if the caption must be shown above the message media */
+  /** Pass True if the caption must be shown above the message media */
   show_caption_above_media?: boolean;
   /** Mode for parsing entities in the caption. See formatting options for more details. */
   parse_mode?: ParseMode;
@@ -489,11 +490,11 @@ export interface InlineQueryResultCachedMpeg4Gif {
   /** Inline keyboard attached to the message */
   reply_markup?: InlineKeyboardMarkup;
   /** Content of the message to be sent instead of the video animation */
-  input_message_content?: InputMessageContent;
+  input_message_content?: InputMessageContent<F>;
 }
 
 /** Represents a link to a sticker stored on the Telegram servers. By default, this sticker will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the sticker. */
-export interface InlineQueryResultCachedSticker {
+export interface InlineQueryResultCachedSticker<F> {
   /** Type of the result, must be sticker */
   type: "sticker";
   /** Unique identifier for this result, 1-64 bytes */
@@ -503,11 +504,11 @@ export interface InlineQueryResultCachedSticker {
   /** Inline keyboard attached to the message */
   reply_markup?: InlineKeyboardMarkup;
   /** Content of the message to be sent instead of the sticker */
-  input_message_content?: InputMessageContent;
+  input_message_content?: InputMessageContent<F>;
 }
 
 /** Represents a link to a file stored on the Telegram servers. By default, this file will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the file. */
-export interface InlineQueryResultCachedDocument {
+export interface InlineQueryResultCachedDocument<F> {
   /** Type of the result, must be document */
   type: "document";
   /** Unique identifier for this result, 1-64 bytes */
@@ -527,11 +528,11 @@ export interface InlineQueryResultCachedDocument {
   /** Inline keyboard attached to the message */
   reply_markup?: InlineKeyboardMarkup;
   /** Content of the message to be sent instead of the file */
-  input_message_content?: InputMessageContent;
+  input_message_content?: InputMessageContent<F>;
 }
 
 /** Represents a link to a video file stored on the Telegram servers. By default, this video file will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the video. */
-export interface InlineQueryResultCachedVideo {
+export interface InlineQueryResultCachedVideo<F> {
   /** Type of the result, must be video */
   type: "video";
   /** Unique identifier for this result, 1-64 bytes */
@@ -544,7 +545,7 @@ export interface InlineQueryResultCachedVideo {
   description?: string;
   /** Caption of the video to be sent, 0-1024 characters after entities parsing */
   caption?: string;
-  /** Pass True, if the caption must be shown above the message media */
+  /** Pass True if the caption must be shown above the message media */
   show_caption_above_media?: boolean;
   /** Mode for parsing entities in the video caption. See formatting options for more details. */
   parse_mode?: ParseMode;
@@ -553,11 +554,11 @@ export interface InlineQueryResultCachedVideo {
   /** Inline keyboard attached to the message */
   reply_markup?: InlineKeyboardMarkup;
   /** Content of the message to be sent instead of the video */
-  input_message_content?: InputMessageContent;
+  input_message_content?: InputMessageContent<F>;
 }
 
 /** Represents a link to a voice message stored on the Telegram servers. By default, this voice message will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the voice message. */
-export interface InlineQueryResultCachedVoice {
+export interface InlineQueryResultCachedVoice<F> {
   /** Type of the result, must be voice */
   type: "voice";
   /** Unique identifier for this result, 1-64 bytes */
@@ -575,11 +576,11 @@ export interface InlineQueryResultCachedVoice {
   /** Inline keyboard attached to the message */
   reply_markup?: InlineKeyboardMarkup;
   /** Content of the message to be sent instead of the voice message */
-  input_message_content?: InputMessageContent;
+  input_message_content?: InputMessageContent<F>;
 }
 
 /** Represents a link to an MP3 audio file stored on the Telegram servers. By default, this audio file will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the audio. */
-export interface InlineQueryResultCachedAudio {
+export interface InlineQueryResultCachedAudio<F> {
   /** Type of the result, must be audio */
   type: "audio";
   /** Unique identifier for this result, 1-64 bytes */
@@ -595,7 +596,7 @@ export interface InlineQueryResultCachedAudio {
   /** Inline keyboard attached to the message */
   reply_markup?: InlineKeyboardMarkup;
   /** Content of the message to be sent instead of the audio */
-  input_message_content?: InputMessageContent;
+  input_message_content?: InputMessageContent<F>;
 }
 
 /** This object represents the content of a message to be sent as a result of an inline query. Telegram clients currently support the following types:
@@ -606,9 +607,9 @@ export interface InlineQueryResultCachedAudio {
 - InputVenueMessageContent
 - InputContactMessageContent
 - InputInvoiceMessageContent */
-export type InputMessageContent =
+export type InputMessageContent<F> =
   | InputTextMessageContent
-  | InputRichMessageContent
+  | InputRichMessageContent<F>
   | InputLocationMessageContent
   | InputVenueMessageContent
   | InputContactMessageContent
@@ -627,9 +628,9 @@ export interface InputTextMessageContent {
 }
 
 /** Represents the content of a rich message to be sent as the result of an inline query. */
-export interface InputRichMessageContent {
+export interface InputRichMessageContent<F> {
   /** The message to be sent */
-  rich_message: InputRichMessage;
+  rich_message: InputRichMessage<F>;
 }
 
 /** Represents the content of a location message to be sent as the result of an inline query. */
@@ -696,7 +697,7 @@ export interface InputInvoiceMessageContent {
   prices: LabeledPrice[];
   /** The maximum accepted amount for tips in the smallest units of the currency (integer, not float/double). For example, for a maximum tip of US$ 1.45 pass max_tip_amount = 145. See the exp parameter in currencies.json, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in Telegram Stars. */
   max_tip_amount?: number;
-  /** An array of suggested amounts of tip in the smallest units of the currency (integer, not float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed max_tip_amount. */
+  /** An Array of suggested amounts of tip in the smallest units of the currency (integer, not float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed max_tip_amount. */
   suggested_tip_amounts?: number[];
   /** Data about the invoice, which will be shared with the payment provider. A detailed description of the required fields should be provided by the payment provider. */
   provider_data?: string;

@@ -1,5 +1,6 @@
 import type { ChosenInlineResult, InlineQuery } from "./inline.ts";
 import type {
+  BotSubscriptionUpdated,
   BusinessConnection,
   BusinessMessagesDeleted,
   Chat,
@@ -83,6 +84,8 @@ export interface Update {
   shipping_query?: ShippingQuery;
   /** New incoming pre-checkout query. Contains full information about checkout. */
   pre_checkout_query?: PreCheckoutQuery;
+  /** A user purchased paid media with a non-empty payload sent by the bot in a non-channel chat */
+  purchased_paid_media?: PaidMediaPurchased;
   /** New poll state. Bots receive only updates about manually stopped polls and polls, which are sent by the bot. */
   poll?: Poll;
   /** A user changed their answer in a non-anonymous poll. Bots receive new votes only in polls that were sent by the bot itself. */
@@ -91,14 +94,14 @@ export interface Update {
   my_chat_member?: ChatMemberUpdated;
   /** A chat member's status was updated in a chat. The bot must be an administrator in the chat and must explicitly specify “chat_member” in the list of allowed_updates to receive these updates. */
   chat_member?: ChatMemberUpdated;
-  /** A new bot was created to be managed by the bot, or token or owner of a managed bot was changed */
-  managed_bot?: ManagedBotUpdated;
   /** A request to join the chat has been sent. The bot must have the can_invite_users administrator right in the chat to receive these updates. */
   chat_join_request?: ChatJoinRequest;
   /** A chat boost was added or changed. The bot must be an administrator in the chat to receive these updates. */
   chat_boost?: ChatBoostUpdated;
   /** A boost was removed from a chat. The bot must be an administrator in the chat to receive these updates. */
   removed_chat_boost?: ChatBoostRemoved;
-  /** A user purchased paid media with a non-empty payload sent by the bot in a non-channel chat */
-  purchased_paid_media?: PaidMediaPurchased;
+  /** A new bot was created to be managed by the bot, or token or owner of a managed bot was changed */
+  managed_bot?: ManagedBotUpdated;
+  /** User payment subscription has changed */
+  subscription?: BotSubscriptionUpdated;
 }
