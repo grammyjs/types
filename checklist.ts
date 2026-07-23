@@ -56,7 +56,7 @@ export interface InputChecklist {
   /** Pass True if other users can add tasks to the checklist */
   others_can_add_tasks?: boolean;
   /** Pass True if other users can mark tasks as done or not done in the checklist */
-  others_can_mark_tasks_as_done?: true;
+  others_can_mark_tasks_as_done?: boolean;
 }
 
 /** Describes a service message about checklist tasks marked as done or not done. */
