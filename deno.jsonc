@@ -1,4 +1,8 @@
 {
+  "name": "@grammyjs/types",
+  "version": "4.0.0",
+  "description": "Telegram Bot API type declarations for grammY",
+  "exports": "./mod.ts",
   "lock": false,
   "tasks": {
     "check": "deno cache --check=all mod.ts",
