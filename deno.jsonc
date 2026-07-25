@@ -6,7 +6,7 @@
   "lock": false,
   "tasks": {
     "check": "deno cache --check=all mod.ts",
-    "publish-check": "deno test --allow-run publish.test.ts",
+    "publish-check": "deno publish --dry-run --allow-dirty",
     "ok": "deno fmt && deno lint && deno task check && deno task publish-check",
     "build": "deno -RW=. https://deno.land/x/deno2node@v1.14.0/src/cli.ts tsconfig.json",
     "clean": "git clean -fX '*.d.ts'"
