@@ -628,9 +628,9 @@ export interface InputTextMessageContent {
 }
 
 /** Represents the content of a rich message to be sent as the result of an inline query. */
-export interface InputRichMessageContent<F> {
-  /** The message to be sent */
-  rich_message: InputRichMessage<F>;
+export interface InputRichMessageContent {
+  /** The message to be sent. Only previously uploaded files may be used in the message. */
+  rich_message: InputRichMessage<never>;
 }
 
 /** Represents the content of a location message to be sent as the result of an inline query. */
