@@ -117,6 +117,12 @@ export interface ChatOwnerChanged {
   new_owner: User;
 }
 
+/** Describes a service message about a chat being joined by a user from a community. */
+export interface CommunityChatJoined {
+  /** The community from which the chat was joined */
+  community: Community;
+}
+
 /** This object describes the rating of a user based on their Telegram Star spendings. */
 export interface UserRating {
   /** Current level of the user, indicating their reliability when purchasing digital goods and services. A higher level suggests a more trustworthy customer; a negative level is likely reason for concern. */
@@ -735,7 +741,7 @@ export interface ChatAdministratorRights {
   can_change_info: boolean;
   /** True, if the user is allowed to invite new users to the chat */
   can_invite_users: boolean;
-  /** True, if the administrator can edit the tags of regular members; for groups and supergroups only. If omitted, defaults to the value of can_pin_messages. */
+  /** True, if the administrator can edit the tags of regular members; for groups and supergroups only */
   can_manage_tags?: boolean;
   /** True, if the administrator can post stories to the chat */
   can_post_stories: boolean;
@@ -753,6 +759,8 @@ export interface ChatAdministratorRights {
   can_manage_topics?: boolean;
   /** True, if the administrator can manage direct messages of the channel and decline suggested posts; for channels only */
   can_manage_direct_messages?: boolean;
+  /** True, if the administrator can manage chat welcome messages or directly send them in the case of bots */
+  can_send_welcome_messages?: boolean;
 }
 
 /** This object represents changes in the status of a chat member. */
@@ -826,7 +834,7 @@ export interface ChatMemberAdministrator {
   can_change_info: boolean;
   /** True, if the user is allowed to invite new users to the chat */
   can_invite_users: boolean;
-  /** True, if the administrator can edit the tags of regular members; for groups and supergroups only. If omitted, defaults to the value of can_pin_messages. */
+  /** True, if the administrator can edit the tags of regular members; for groups and supergroups only */
   can_manage_tags?: boolean;
   /** True, if the administrator can post stories to the chat */
   can_post_stories: boolean;
@@ -844,6 +852,8 @@ export interface ChatMemberAdministrator {
   can_manage_topics?: boolean;
   /** True, if the administrator can manage direct messages of the channel and decline suggested posts; for channels only */
   can_manage_direct_messages?: boolean;
+  /** True, if the administrator can manage chat welcome messages or directly send them in the case of bots */
+  can_send_welcome_messages?: boolean;
   /** Custom title for this user */
   custom_title?: string;
 }
@@ -1200,13 +1210,13 @@ export interface BotSubscriptionUpdated {
   state: "canceled" | "active" | "failed";
 }
 
-/** Describes a service message about a chat being added to a community. */
+/** Describes a service message about a chat or a bot being added to a community. */
 export interface CommunityChatAdded {
-  /** The new community to which the chat belongs */
+  /** The new community to which the chat or the bot belongs */
   community: Community;
 }
 
-/** Describes a service message about a chat being removed from a community. Currently holds no information. */
+/** Describes a service message about a chat or a bot being removed from a community. Currently holds no information. */
 export interface CommunityChatRemoved {}
 
 /** Represents a community (a group of chats). */

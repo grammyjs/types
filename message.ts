@@ -8,6 +8,7 @@ import type {
   ChatOwnerChanged,
   ChatOwnerLeft,
   CommunityChatAdded,
+  CommunityChatJoined,
   CommunityChatRemoved,
   ManagedBotCreated,
   User,
@@ -182,6 +183,9 @@ export declare namespace Message {
   export type NewChatMembersMessage =
     & ServiceMessage
     & MsgWith<"new_chat_members">;
+  export type CommunityChatJoinedMessage =
+    & ServiceMessage
+    & MsgWith<"community_chat_joined">;
   export type LeftChatMemberMessage =
     & ServiceMessage
     & MsgWith<"left_chat_member">;
@@ -348,9 +352,9 @@ export interface Message extends Message.MediaMessage {
   checklist_tasks_done?: ChecklistTasksDone;
   /** Service message: tasks were added to a checklist */
   checklist_tasks_added?: ChecklistTasksAdded;
-  /** Service message: chat added to a Community */
+  /** Service message: chat or bot added to a Community */
   community_chat_added?: CommunityChatAdded;
-  /** Service message: chat removed from a Community */
+  /** Service message: chat or bot removed from a Community */
   community_chat_removed?: CommunityChatRemoved;
   /** Information about suggested post parameters if the message is a suggested post in a channel direct messages chat. If the message is an approved or declined suggested post, then it can't be edited. */
   suggested_post_info?: SuggestedPostInfo;
@@ -370,6 +374,8 @@ export interface Message extends Message.MediaMessage {
   chat_owner_changed?: ChatOwnerChanged;
   /** New members that were added to the group or supergroup and information about them (the bot itself may be one of these members) */
   new_chat_members?: User[];
+  /** Service message: chat was joined by a user from a Community */
+  community_chat_joined?: CommunityChatJoined;
   /** A member was removed from the group, information about them (this member may be the bot itself) */
   left_chat_member?: User;
   /** A chat title was changed to this value */
@@ -1869,4 +1875,23 @@ export interface SuggestedPostParameters {
   price?: SuggestedPostPrice;
   /** Proposed send date of the post. If specified, then the date must be between 300 second and 2678400 seconds (30 days) in the future. If the field is omitted, then the post can be published at any time within 30 days at the sole discretion of the user who approves it. */
   send_date?: number;
+}
+
+export interface EphemeralMessageParameters {
+  /** Identifier of the user who will receive the message. It is not guaranteed that the user will receive the message, especially if they are offline. See here for more details. */
+  receiver_user_id: number;
+  /** Identifier of the callback query which triggered the message, if any */
+  callback_query_id?: string;
+  /** Pass True if the ephemeral message must be shown in place of the original message */
+  replace_callback_query_message?: boolean;
+}
+
+/** This object describes an update about a user stopping message generation. */
+export interface MessageGenerationStopped {
+  /** Chat in which the message is generated */
+  chat: Chat.PrivateChat;
+  /** Unique identifier of the message thread in which the message is generated */
+  message_thread_id?: number;
+  /** Unique identifier of the message draft which was stopped */
+  draft_id: number;
 }
