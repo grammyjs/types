@@ -395,6 +395,7 @@ export interface InputRichMessageMedia<F> {
   media:
     | InputMediaAnimation<F>
     | InputMediaAudio<F>
+    | InputMediaDocument<F>
     | InputMediaPhoto<F>
     | InputMediaVideo<F>
     | InputMediaVoiceNote<F>;
