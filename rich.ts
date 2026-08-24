@@ -452,6 +452,7 @@ export type RichText =
   | RichTextHashtag
   | RichTextCashtag
   | RichTextBotCommand
+  | RichTextButton
   | RichTextAnchor
   | RichTextAnchorLink
   | RichTextReference
