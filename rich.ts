@@ -1348,7 +1348,7 @@ export interface InputRichBlockDocument<F> {
   /** The document. Caption is ignored. */
   document: InputMediaDocument<F>;
   /** Caption of the block	 */
-  caption: RichBlockCaption;
+  caption?: RichBlockCaption;
 }
 
 /** A block with a photo, corresponding to the HTML tag \<img>. */
