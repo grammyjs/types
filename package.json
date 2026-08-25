@@ -1,6 +1,6 @@
 {
   "name": "@grammyjs/types",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "description": "Telegram Bot API type declarations for grammY",
   "main": "mod.js",
   "repository": {
