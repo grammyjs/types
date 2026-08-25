@@ -14,6 +14,7 @@ import type {
 import type { CallbackQuery } from "./markup.ts";
 import type {
   Message,
+  MessageGenerationStopped,
   MessageReactionCountUpdated,
   MessageReactionUpdated,
   Poll,
@@ -70,6 +71,8 @@ export interface Update {
   deleted_business_messages?: BusinessMessagesDeleted;
   /** New guest message. The bot can use the field Message.guest_query_id and the method answerGuestQuery to send a message in response. */
   guest_message?: Message & Update.NonChannel;
+  /** A user asked the bot to stop the generation of a message */
+  stopped_message_generation?: MessageGenerationStopped;
   /** A reaction to a message was changed by a user. The bot must be an administrator in the chat and must explicitly specify "message_reaction" in the list of allowed_updates to receive these updates. The update isn't received for reactions set by bots. */
   message_reaction?: MessageReactionUpdated;
   /** Reactions to a message with anonymous reactions were changed. The bot must be an administrator in the chat and must explicitly specify "message_reaction_count" in the list of allowed_updates to receive these updates. The updates are grouped and can be sent with delay up to a few minutes. */
