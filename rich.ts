@@ -916,7 +916,7 @@ export declare namespace RichMessageButton {
   }
   export interface LoginUrlButton extends AbstractRichMessageButton {
     /** An HTTPS URL used to automatically authorize the user. Can be used as a replacement for the Telegram Login Widget. Not supported for ephemeral messages. */
-    login_url: LoginUrl;
+    login_url: Omit<LoginUrl, "bot_username">;
   }
   export interface SwitchInlineButton extends AbstractRichMessageButton {
     /** If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot's username and the specified inline query in the input field. May be empty, in which case just the bot's username will be inserted. Not supported for messages sent in channel direct messages chats and on behalf of a business account. */
