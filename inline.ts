@@ -229,7 +229,7 @@ export interface InlineQueryResultVideo {
   description?: string;
   /** Inline keyboard attached to the message */
   reply_markup?: InlineKeyboardMarkup;
-  /** Content of the message to be sent instead of the video. This field is required if InlineQueryResultVideo<F> is used to send an HTML-page as a result (e.g., a YouTube video). */
+  /** Content of the message to be sent instead of the video. This field is required if InlineQueryResultVideo is used to send an HTML-page as a result (e.g., a YouTube video). */
   input_message_content?: InputMessageContent;
 }
 

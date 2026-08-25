@@ -424,6 +424,7 @@ export interface InputRichMessageMedia<F> {
 - RichTextHashtag
 - RichTextCashtag
 - RichTextBotCommand
+- RichTextButton
 - RichTextAnchor
 - RichTextAnchorLink
 - RichTextReference
@@ -752,6 +753,7 @@ export interface RichBlockListItem {
 - RichBlockPhoto
 - RichBlockVideo
 - RichBlockVoiceNote
+- RichBlockButtons
 - RichBlockThinking */
 export type RichBlock =
   | RichBlockParagraph
@@ -1136,6 +1138,7 @@ export interface InputRichBlockListItem<F> {
 - InputRichBlockPhoto
 - InputRichBlockVideo
 - InputRichBlockVoiceNote
+- InputRichBlockButtons
 - InputRichBlockThinking */
 export type InputRichBlock<F> =
   | InputRichBlockParagraph
