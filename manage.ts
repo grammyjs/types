@@ -760,7 +760,7 @@ export interface ChatAdministratorRights {
   /** True, if the administrator can manage direct messages of the channel and decline suggested posts; for channels only */
   can_manage_direct_messages?: boolean;
   /** True, if the administrator can manage chat welcome messages or directly send them in the case of bots */
-  can_send_welcome_messages?: boolean;
+  can_send_welcome_messages: boolean;
 }
 
 /** This object represents changes in the status of a chat member. */
@@ -853,7 +853,7 @@ export interface ChatMemberAdministrator {
   /** True, if the administrator can manage direct messages of the channel and decline suggested posts; for channels only */
   can_manage_direct_messages?: boolean;
   /** True, if the administrator can manage chat welcome messages or directly send them in the case of bots */
-  can_send_welcome_messages?: boolean;
+  can_send_welcome_messages: boolean;
   /** Custom title for this user */
   custom_title?: string;
 }
