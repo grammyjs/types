@@ -752,6 +752,7 @@ export interface RichBlockListItem {
 - RichBlockPhoto
 - RichBlockVideo
 - RichBlockVoiceNote
+- RichBlockButtons
 - RichBlockThinking */
 export type RichBlock =
   | RichBlockParagraph
