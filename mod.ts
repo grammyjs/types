@@ -12,3 +12,4 @@ export * from "./rich.ts";
 export * from "./settings.ts";
 export * from "./story.ts";
 export * from "./update.ts";
+export * from "./widget.ts";

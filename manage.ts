@@ -1,3 +1,9 @@
+import type { EmojiType } from "./message.ts";
+import type {
+  TonWalletCard,
+  UniqueGift,
+  UniqueGiftBackdropColors,
+} from "./payment.ts";
 import type {
   Audio,
   Location,
@@ -262,6 +268,10 @@ export declare namespace ChatFullInfo {
     rating?: UserRating;
     /** The color scheme based on a unique gift that must be used for the chat's name, message replies and link previews */
     unique_gift_colors?: UniqueGiftColors;
+    /** For private chats, supergroups and channels, the theme of the screen for sharing a link to the user or the chat; omitted if the default theme is used */
+    share_theme?: ChatShareTheme;
+    /** For private chats, the TON wallet card of the user, which is shown on their profile page */
+    ton_wallet_card?: TonWalletCard;
     /** For private chats, the personal channel of the user */
     personal_chat?: Chat;
     /** Information about the corresponding channel chat; for direct messages chats only */
@@ -371,6 +381,10 @@ export declare namespace ChatFullInfo {
     rating?: undefined;
     /** The color scheme based on a unique gift that must be used for the chat's name, message replies and link previews */
     unique_gift_colors?: UniqueGiftColors;
+    /** For private chats, supergroups and channels, the theme of the screen for sharing a link to the user or the chat; omitted if the default theme is used */
+    share_theme?: undefined;
+    /** For private chats, the TON wallet card of the user, which is shown on their profile page */
+    ton_wallet_card?: undefined;
     /** For private chats, the personal channel of the user */
     personal_chat?: undefined;
     /** Information about the corresponding channel chat; for direct messages chats only */
@@ -480,6 +494,10 @@ export declare namespace ChatFullInfo {
     rating?: undefined;
     /** The color scheme based on a unique gift that must be used for the chat's name, message replies and link previews */
     unique_gift_colors?: UniqueGiftColors;
+    /** For private chats, supergroups and channels, the theme of the screen for sharing a link to the user or the chat; omitted if the default theme is used */
+    share_theme?: ChatShareTheme;
+    /** For private chats, the TON wallet card of the user, which is shown on their profile page */
+    ton_wallet_card?: undefined;
     /** For private chats, the personal channel of the user */
     personal_chat?: undefined;
     /** Information about the corresponding channel chat; for direct messages chats only */
@@ -589,6 +607,10 @@ export declare namespace ChatFullInfo {
     rating?: undefined;
     /** The color scheme based on a unique gift that must be used for the chat's name, message replies and link previews */
     unique_gift_colors?: UniqueGiftColors;
+    /** For private chats, supergroups and channels, the theme of the screen for sharing a link to the user or the chat; omitted if the default theme is used */
+    share_theme?: ChatShareTheme;
+    /** For private chats, the TON wallet card of the user, which is shown on their profile page */
+    ton_wallet_card?: undefined;
     /** For private chats, the personal channel of the user */
     personal_chat?: undefined;
     /** Information about the corresponding channel chat; for direct messages chats only */
@@ -896,7 +918,7 @@ export interface ChatMemberRestricted {
   can_send_voice_notes: boolean;
   /** True, if the user is allowed to send polls and checklists */
   can_send_polls: boolean;
-  /** True, if the user is allowed to send animations, games, stickers and use inline bots */
+  /** True, if the user is allowed to send animations, games, stickers, widgets and use inline bots */
   can_send_other_messages: boolean;
   /** True, if the user is allowed to add web page previews to their messages */
   can_add_web_page_previews: boolean;
@@ -970,7 +992,7 @@ export interface ChatPermissions {
   can_send_voice_notes?: boolean;
   /** True, if the user is allowed to send polls and checklists */
   can_send_polls?: boolean;
-  /** True, if the user is allowed to send animations, games, stickers and use inline bots */
+  /** True, if the user is allowed to send animations, games, stickers, widgets and use inline bots */
   can_send_other_messages?: boolean;
   /** True, if the user is allowed to add web page previews to their messages */
   can_add_web_page_previews?: boolean;
@@ -1225,4 +1247,46 @@ export interface Community {
   id: number;
   /** Name of the community */
   name: string;
+}
+
+/** This object describes the theme of the screen for sharing a link to a user or a chat. Currently, it can be one of
+
+- ChatShareThemeEmoji
+- ChatShareThemeUniqueGift */
+export type ChatShareTheme =
+  | ChatShareThemeEmoji
+  | ChatShareThemeUniqueGift;
+
+/** The theme with emoji placed on a background. */
+export interface ChatShareThemeEmoji {
+  /** Type of the theme, always "emoji" */
+  type: "emoji";
+  /** The emoji; 0-6 regular or custom emoji */
+  emojis: EmojiType[];
+  /** Identifier of the backdrop used as the background; omitted if the default background is used. Use getChatShareThemeBackdrops to get details about the backdrop. */
+  background_backdrop_id?: number;
+}
+
+/** The theme based on a unique gift owned by the user or the chat. */
+export interface ChatShareThemeUniqueGift {
+  /** Type of the theme, always "unique_gift" */
+  type: "unique_gift";
+  /** The gift */
+  gift: UniqueGift;
+}
+
+/** This object describes a backdrop, which can be used as the background of a theme of the screen for sharing a link to a user or a chat. */
+export interface ChatShareThemeBackdrop {
+  /** Unique identifier of the backdrop */
+  id: number;
+  /** Name of the backdrop */
+  name: string;
+  /** Colors of the backdrop */
+  colors: UniqueGiftBackdropColors;
+}
+
+/** This object contains a list of backdrops, which can be used as the background of a theme of the screen for sharing a link to a user or a chat. */
+export interface ChatShareThemeBackdrops {
+  /** The list of backdrops */
+  backdrops: ChatShareThemeBackdrop[];
 }

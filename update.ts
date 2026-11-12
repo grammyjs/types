@@ -1,3 +1,4 @@
+import type { SharedWidgetQuery, WidgetQuery } from "./widget.ts";
 import type { ChosenInlineResult, InlineQuery } from "./inline.ts";
 import type {
   BotSubscriptionUpdated,
@@ -81,6 +82,10 @@ export interface Update {
   inline_query?: InlineQuery;
   /** The result of an inline query that was chosen by a user and sent to their chat partner. Please see our documentation on the feedback collecting for details on how to enable these updates for your bot. */
   chosen_inline_result?: ChosenInlineResult;
+  /** New incoming query from a widget in a message sent by the bot or via the bot */
+  widget_query?: WidgetQuery;
+  /** New incoming query from a forwarded message with a shared widget */
+  shared_widget_query?: SharedWidgetQuery;
   /** New incoming callback query */
   callback_query?: CallbackQuery;
   /** New incoming shipping query. Only for invoices with flexible price. */
