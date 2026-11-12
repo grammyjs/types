@@ -420,6 +420,7 @@ export interface InputRichMessageMedia<F> {
 - RichTextEmailAddress
 - RichTextPhoneNumber
 - RichTextBankCardNumber
+- RichTextTonAddress
 - RichTextMention
 - RichTextHashtag
 - RichTextCashtag
@@ -449,6 +450,7 @@ export type RichText =
   | RichTextEmailAddress
   | RichTextPhoneNumber
   | RichTextBankCardNumber
+  | RichTextTonAddress
   | RichTextMention
   | RichTextHashtag
   | RichTextCashtag
@@ -1392,4 +1394,14 @@ export interface InputRichBlockThinking {
   type: "thinking";
   /** Text of the block. See https://t.me/addemoji/AIActions for examples of custom emoji that are recommended for usage in the block. */
   text: RichText;
+}
+
+/** An address in the TON blockchain. */
+export interface RichTextTonAddress {
+  /** Type of the rich text, always "ton_address" */
+  type: "ton_address";
+  /** Text of the address */
+  text: RichText;
+  /** The address */
+  address: string;
 }

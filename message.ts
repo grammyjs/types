@@ -1,3 +1,5 @@
+import type { TonWalletTransfer } from "./payment.ts";
+import type { Widget } from "./widget.ts";
 import type {
   Checklist,
   ChecklistTasksAdded,
@@ -30,7 +32,7 @@ import type {
   SuggestedPostRefunded,
   UniqueGiftInfo,
 } from "./payment.ts";
-import type { RichBlock } from "./rich.ts";
+import type { RichBlock, RichText } from "./rich.ts";
 
 type MsgWith<P extends keyof Message> = Record<P, NonNullable<Message[P]>>;
 
@@ -129,6 +131,7 @@ export declare namespace Message {
     & MsgWith<"text">
     & Partial<MsgWith<"entities">>;
   export type RichMessageMessage = CommonMessage & MsgWith<"rich_message">;
+  export type WidgetMessage = MediaMessage & MsgWith<"widget">;
   export type AnimationMessage = DocumentMessage & MsgWith<"animation">;
   export type AudioMessage = CaptionableMessage & MsgWith<"audio">;
   export type DocumentMessage = CaptionableMessage & MsgWith<"document">;
@@ -278,6 +281,12 @@ export declare namespace Message {
   export type GiftMessage =
     & ServiceMessage
     & MsgWith<"gift">;
+  export type TonWalletTransferMessage =
+    & ServiceMessage
+    & MsgWith<"ton_wallet_transfer">;
+  export type PaidMessagesWaivedMessage =
+    & ServiceMessage
+    & MsgWith<"paid_messages_waived">;
   export type UniqueGiftMessage =
     & ServiceMessage
     & MsgWith<"unique_gift">;
@@ -312,6 +321,8 @@ export interface Message extends Message.MediaMessage {
   entities?: MessageEntity[];
   /** Message is a rich formatted message */
   rich_message?: RichMessage;
+  /** Message is an HTML widget, information about the widget */
+  widget?: Widget;
   /** Message is an animation, information about the animation. For backward compatibility, when this field is set, the document field will also be set. */
   animation?: Animation;
   /** Message is an audio file, information about the file */
@@ -454,6 +465,10 @@ export interface Message extends Message.MediaMessage {
   unique_gift?: UniqueGiftInfo;
   /** Service message: the price for paid messages has changed in the chat */
   paid_message_price_changed?: PaidMessagePriceChanged;
+  /** Service message: a transfer with a TON wallet */
+  ton_wallet_transfer?: TonWalletTransfer;
+  /** Service message: the sender of the message used a link of the other user, which allows sending messages to the user without paying Telegram Stars */
+  paid_messages_waived?: PaidMessagesWaived;
   /** Service message: the price for paid messages in the corresponding direct messages chat of a channel has changed */
   direct_message_price_changed?: DirectMessagePriceChanged;
   /** Service message: video chat scheduled */
@@ -673,6 +688,8 @@ export declare namespace MessageEntity {
       | "url"
       | "email"
       | "phone_number"
+      | "ton_address"
+      | "bank_card_number"
       | "bold"
       | "italic"
       | "underline"
@@ -722,11 +739,13 @@ export type MessageEntity =
 
 /** This object contains information about the quoted part of a message that is replied to by the given message. */
 export interface TextQuote {
-  /** Text of the quoted part of a message that is replied to by the given message */
+  /** Rich text of the quote if it was chosen from a rich message. May contain only plain text, RichTextBold, RichTextItalic, RichTextUnderline, RichTextStrikethrough, RichTextSpoiler, RichTextSubscript, RichTextSuperscript, RichTextDateTime, RichTextCustomEmoji, RichTextMathematicalExpression, and arrays of them. */
+  rich_texts?: RichText[];
+  /** Text of the quoted part of a message that is replied to by the given message; may be empty if the quote was chosen from a rich message */
   text: string;
   /** Special entities that appear in the quote. Currently, only bold, italic, underline, strikethrough, spoiler, custom_emoji, and date_time entities are kept in quotes. */
   entities?: MessageEntity[];
-  /** Approximate quote position in the original message in UTF-16 code units as specified by the sender */
+  /** Approximate quote position in the original message in UTF-16 code units as specified by the sender. For quotes from rich messages, it is the position in the text formed by joining plain texts of all quotable texts of the message, separated by line feeds. */
   position: number;
   /** True, if the quote was chosen manually by the message sender. Otherwise, the quote was added automatically by the server. */
   is_manual?: true;
@@ -734,6 +753,8 @@ export interface TextQuote {
 
 /** This object contains information about a message that is being replied to, which may come from another chat or forum topic. */
 export interface ExternalReplyInfo {
+  /** Message is an HTML widget, information about the widget */
+  widget?: Widget;
   /** Origin of the message replied to by the given message */
   origin: MessageOrigin;
   /** Chat the original message belongs to. Available only if the chat is a supergroup or a channel. */
@@ -790,6 +811,8 @@ export interface ExternalReplyInfo {
 
 /** Describes reply parameters for the message that is being sent. */
 export interface ReplyParameters {
+  /** A list of quoted parts of the rich message to be replied to. Must contain one element for each quoted text of the message in the order of their appearance. Each of the following is a separate quoted text: the text of a paragraph, a heading, a preformatted block, a footer, or a mathematical expression; the text and the credit of a block quotation or a pull quotation; the summary of a details block; the caption and each cell of a table; the text and the credit of a caption of a media block, a collage, a slideshow, or a map. Texts of blocks nested in lists, block quotations, details, collages, and slideshows are separate quoted texts too. The first and the last elements can contain only a part of the corresponding text; all other elements must contain the whole text. Formatting of the quoted parts must be kept, and rich texts must be nested in the same way as in the message received from the server. Mathematical expressions must be quoted entirely. Buttons in RichBlockButtons, anchors and dividers can't be quoted. Up to 32 quoted texts with total length up to 1024 characters can be specified. Only plain text, RichTextBold, RichTextItalic, RichTextUnderline, RichTextStrikethrough, RichTextSpoiler, RichTextSubscript, RichTextSuperscript, RichTextDateTime, RichTextCustomEmoji, RichTextMathematicalExpression, and arrays of them are kept in the quote; other rich text types are replaced with their text. If non-empty, then quote, quote_parse_mode and quote_entities are ignored. */
+  quote_rich_texts?: RichText[];
   /** Identifier of the message that will be replied to in the current chat, or in the chat chat_id if it is specified. Required if ephemeral_message_id isn't specified. */
   message_id?: number;
   /** If the message to be replied to is from a different chat, unique identifier for the chat or username of the bot, supergroup or channel in the format `@username`. Not supported for messages sent on behalf of a business account, messages from channel direct messages chats and ephemeral messages. */
@@ -808,7 +831,7 @@ export interface ReplyParameters {
   quote_parse_mode?: ParseMode;
   /** A JSON-serialized list of special entities that appear in the quote. It can be specified instead of quote_parse_mode. */
   quote_entities?: MessageEntity[];
-  /** Position of the quote in the original message in UTF-16 code units */
+  /** Position of the quote in the original message in UTF-16 code units. For quotes from rich messages, it is the position in the text formed by joining plain texts of all quotable texts of the message, separated by line feeds. */
   quote_position?: number;
 }
 
@@ -1878,11 +1901,11 @@ export interface SuggestedPostParameters {
 }
 
 export interface EphemeralMessageParameters {
-  /** Identifier of the user who will receive the message. It is not guaranteed that the user will receive the message, especially if they are offline. See here for more details. */
-  receiver_user_id: number;
-  /** Identifier of the callback query which triggered the message, if any */
+  /** Identifier of the user who will receive the message; required unless the message is sent as an ephemeral reply to a callback query. If omitted, then the parameter chat_id of the method is ignored. If specified together with callback_query_id, then it must be the identifier of the user who pressed the button. Must be omitted for messages sent in chats where the bot isn't a member, unless the message is a reply to an ephemeral message. It is not guaranteed that the user will receive the message, especially if they are offline. See here for more details. */
+  receiver_user_id?: number;
+  /** Identifier of the callback query which triggered the message, if any. If specified and receiver_user_id is omitted, then the message is sent as an ephemeral reply to the callback query and will be shown only to the user who pressed the button. Ephemeral replies can't be sent to callback queries from messages in channel direct messages chats. The bot must still answer the callback query using answerCallbackQuery. */
   callback_query_id?: string;
-  /** Pass True if the ephemeral message must be shown in place of the original message */
+  /** Pass True if the ephemeral message must be shown in place of the original message. Must be False for callback queries from ephemeral messages, which must be edited using regular editEphemeralMessage... methods. */
   replace_callback_query_message?: boolean;
 }
 
@@ -1894,4 +1917,32 @@ export interface MessageGenerationStopped {
   message_thread_id?: number;
   /** Unique identifier of the message draft which was stopped */
   draft_id: number;
+}
+
+/** Describes a service message about the sender of the message using a link of the other user, which allows sending messages to the user without paying Telegram Stars. Currently holds no information. */
+export interface PaidMessagesWaived {
+}
+
+/** This object describes an emoji. Currently, it can be one of
+
+- EmojiTypeEmoji
+- EmojiTypeCustomEmoji */
+export type EmojiType =
+  | EmojiTypeEmoji
+  | EmojiTypeCustomEmoji;
+
+/** A regular emoji. */
+export interface EmojiTypeEmoji {
+  /** Type of the emoji, always "emoji" */
+  type: "emoji";
+  /** The emoji */
+  emoji: string;
+}
+
+/** A custom emoji. */
+export interface EmojiTypeCustomEmoji {
+  /** Type of the emoji, always "custom_emoji" */
+  type: "custom_emoji";
+  /** Identifier of the custom emoji. Use getCustomEmojiStickers to get full information about the sticker. */
+  custom_emoji_id: string;
 }

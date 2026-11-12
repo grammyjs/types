@@ -603,6 +603,8 @@ export interface InlineQueryResultCachedAudio {
 
 - InputTextMessageContent
 - InputRichMessageContent
+- InputWidgetMessageContent
+- InputSharedWidgetMessageContent
 - InputLocationMessageContent
 - InputVenueMessageContent
 - InputContactMessageContent
@@ -610,6 +612,8 @@ export interface InlineQueryResultCachedAudio {
 export type InputMessageContent =
   | InputTextMessageContent
   | InputRichMessageContent
+  | InputWidgetMessageContent
+  | InputSharedWidgetMessageContent
   | InputLocationMessageContent
   | InputVenueMessageContent
   | InputContactMessageContent
@@ -751,4 +755,46 @@ export interface InlineQueryResultsButton {
   web_app?: WebAppInfo;
   /** Deep-linking parameter for the /start message sent to the bot when a user presses the button. 1-64 characters, only `A-Z`, `a-z`, `0-9`, `_` and `-` are allowed. */
   start_parameter?: string;
+}
+
+/** Represents the content of a message with an HTML widget to be sent as the result of an inline query. Currently, widgets can't be sent in response to inline queries in the production environment. */
+export interface InputWidgetMessageContent {
+  /** HTML code of the widget, 1-32768 bytes. The code must not exceed 4096 bytes when compressed by zlib with the maximum compression level. */
+  html: string;
+  /** Width of the widget in logical pixels; omit if the widget must occupy the whole width of the message bubble. The width is clamped by the app to the range from 200 to the maximum width of the message bubble. */
+  width?: number;
+  /** Height of the widget in logical pixels; omit if the height of the widget isn't fixed. The height is clamped by the app to the range 50-600. */
+  height?: number;
+  /** Public data of the widget, 0-1024 bytes, which will be available wherever the widget is shown. If the widget is shared, then all messages with it will have the same public data. */
+  public_data?: string;
+  /** Data of the widget, which is specific to the message, 0-1024 bytes */
+  chat_data?: string;
+  /** Widget caption, 0-1024 characters after entities parsing */
+  caption?: string;
+  /** Mode for parsing entities in the widget caption. See formatting options for more details. */
+  parse_mode?: ParseMode;
+  /** List of special entities that appear in the caption, which can be specified instead of parse_mode */
+  caption_entities?: MessageEntity[];
+  /** Pass True if the caption must be shown above the widget */
+  show_caption_above_media?: boolean;
+  /** Pass True to allow the widget to send queries to the bot */
+  allow_queries?: boolean;
+  /** Pass True to create a shared widget. Each message sent from the result creates a separate shared widget, whose identifier is received by the bot only in the field widget_id of queries from the widget. To send an existing shared widget in response to an inline query, use InputSharedWidgetMessageContent instead. */
+  is_shared?: boolean;
+}
+
+/** Represents the content of a message with a shared widget to be sent as the result of an inline query. Currently, widgets can't be sent in response to inline queries in the production environment. */
+export interface InputSharedWidgetMessageContent {
+  /** Unique identifier of the shared widget created by the bot */
+  widget_id: string;
+  /** Data of the widget, which is specific to the message, 0-1024 bytes */
+  chat_data?: string;
+  /** Widget caption, 0-1024 characters after entities parsing */
+  caption?: string;
+  /** Mode for parsing entities in the widget caption. See formatting options for more details. */
+  parse_mode?: ParseMode;
+  /** List of special entities that appear in the caption, which can be specified instead of parse_mode */
+  caption_entities?: MessageEntity[];
+  /** Pass True if the caption must be shown above the widget */
+  show_caption_above_media?: boolean;
 }
