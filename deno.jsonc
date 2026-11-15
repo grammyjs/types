@@ -3,9 +3,11 @@
   "tasks": {
     "check": "deno cache --check=all mod.ts",
     "ok": "deno fmt && deno lint && deno task check",
-    "build": "deno -RW=. https://deno.land/x/deno2node@v1.14.0/src/cli.ts tsconfig.json",
-    "clean": "git clean -fX '*.d.ts'"
+    "build": "deno -RW=. https://deno.land/x/deno2node@v1.14.0/src/cli.ts tsconfig.json && deno task schemas",
+    "schemas": "deno run -RE -W=schemas.json --node-modules-dir=none scripts/schemas.ts",
+    "clean": "git clean -fX '*.d.ts' schemas.json"
   },
+  "imports": { "typescript": "npm:typescript@5.7.3" },
   "fmt": { "proseWrap": "preserve" },
   "lint": {
     "exclude": [

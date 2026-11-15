@@ -25,7 +25,8 @@
   },
   "files": [
     "*.d.ts",
-    "mod.js"
+    "mod.js",
+    "schemas.json"
   ],
   "homepage": "https://grammy.dev/",
   "devDependencies": {

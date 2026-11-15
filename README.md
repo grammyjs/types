@@ -75,6 +75,32 @@ This is possible by adding a type parameter to all affected types.
 grammY then import types parametrises these types with its version of `InputFile`, and re-exports the adjusted types.
 This is why you should always import Bot API as described here: <https://grammy.dev/guide/api.html#type-definitions-for-the-api>.
 
+## JSON Schemas
+
+The npm package also contains `schemas.json`, generated from `ApiMethods` during the build.
+It holds a JSON Schema (draft 2020-12) for the arguments of every method, for when the types are needed at runtime, e.g. to validate payloads or to describe the methods to tools.
+
+```jsonc
+{
+  "methods": {
+    "sendMessage": {
+      "description": "Use this method to send text messages. …",
+      "parameters": {/* JSON Schema */}
+    }
+  },
+  "$defs": { "InlineKeyboardMarkup": {/* … */} }
+}
+```
+
+Descriptions are the documentation strings from this package, and anything marked `@deprecated` gets `"deprecated": true`.
+Numbers are always `"number"`, since TypeScript has no integer type.
+Named types are shared via `$defs` and referenced as `#/$defs/<Name>` from the root of the document, so include `$defs` when using a single method's schema.
+Members of namespaces are qualified, e.g. `InlineKeyboardButton.CallbackButton`.
+Wherever a method accepts an `InputFile` (see above), the schema contains `{ "x-input-file": true }`, since what counts as a file depends on the library that sends it.
+
+The file is a build output, so it is not part of the repository and not available on deno.land.
+Run `deno task schemas` to generate it locally.
+
 ## Differences to the Bot API
 
 Some documentation strings are intentionally different from what is written on the website.
