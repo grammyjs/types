@@ -6,7 +6,12 @@ import type {
   ReactionType,
   Sticker,
 } from "./message.ts";
-import type { UniqueGiftColors } from "./payment.ts";
+import type {
+  TonWalletCard,
+  UniqueGift,
+  UniqueGiftBackdropColors,
+  UniqueGiftColors,
+} from "./payment.ts";
 import type { Update } from "./update.ts";
 
 /** Describes the current status of a webhook. */
@@ -330,6 +335,10 @@ export declare namespace ChatFullInfo {
     guard_bot?: undefined;
     /** The Community to which the chat belongs */
     community?: Community;
+    /** For private chats, the TON wallet card of the user, which is shown on their profile page */
+    ton_wallet_card?: TonWalletCard;
+    /** For private chats, supergroups and channels, the theme of the screen for sharing a link to the user or the chat; omitted if the default theme is used */
+    share_theme?: ChatShareTheme;
   }
   /** Internal type for group chats */
   export interface GroupChat {
@@ -439,6 +448,10 @@ export declare namespace ChatFullInfo {
     guard_bot?: User;
     /** The Community to which the chat belongs */
     community?: Community;
+    /** For private chats, the TON wallet card of the user, which is shown on their profile page */
+    ton_wallet_card?: undefined;
+    /** For private chats, supergroups and channels, the theme of the screen for sharing a link to the user or the chat; omitted if the default theme is used */
+    share_theme?: undefined;
   }
   /** Internal type for supergroup chats */
   export interface SupergroupChat {
@@ -548,6 +561,10 @@ export declare namespace ChatFullInfo {
     guard_bot?: User;
     /** The Community to which the chat belongs */
     community?: Community;
+    /** For private chats, the TON wallet card of the user, which is shown on their profile page */
+    ton_wallet_card?: undefined;
+    /** For private chats, supergroups and channels, the theme of the screen for sharing a link to the user or the chat; omitted if the default theme is used */
+    share_theme?: undefined;
   }
   /** Internal type for channel chats */
   export interface ChannelChat {
@@ -657,6 +674,10 @@ export declare namespace ChatFullInfo {
     guard_bot?: User;
     /** The Community to which the chat belongs */
     community?: Community;
+    /** For private chats, the TON wallet card of the user, which is shown on their profile page */
+    ton_wallet_card?: undefined;
+    /** For private chats, supergroups and channels, the theme of the screen for sharing a link to the user or the chat; omitted if the default theme is used */
+    share_theme?: undefined;
   }
 }
 
@@ -896,7 +917,7 @@ export interface ChatMemberRestricted {
   can_send_voice_notes: boolean;
   /** True, if the user is allowed to send polls and checklists */
   can_send_polls: boolean;
-  /** True, if the user is allowed to send animations, games, stickers and use inline bots */
+  /** True, if the user is allowed to send animations, games, stickers, widgets and use inline bots */
   can_send_other_messages: boolean;
   /** True, if the user is allowed to add web page previews to their messages */
   can_add_web_page_previews: boolean;
@@ -970,7 +991,7 @@ export interface ChatPermissions {
   can_send_voice_notes?: boolean;
   /** True, if the user is allowed to send polls and checklists */
   can_send_polls?: boolean;
-  /** True, if the user is allowed to send animations, games, stickers and use inline bots */
+  /** True, if the user is allowed to send animations, games, stickers, widgets and use inline bots */
   can_send_other_messages?: boolean;
   /** True, if the user is allowed to add web page previews to their messages */
   can_add_web_page_previews?: boolean;
@@ -1225,4 +1246,70 @@ export interface Community {
   id: number;
   /** Name of the community */
   name: string;
+}
+
+/** This object describes an emoji. Currently, it can be one of
+
+- EmojiTypeEmoji
+- EmojiTypeCustomEmoji */
+export type EmojiType =
+  | EmojiTypeEmoji
+  | EmojiTypeCustomEmoji;
+
+/** A regular emoji. */
+export interface EmojiTypeEmoji {
+  /** Type of the emoji, always “emoji” */
+  type: "emoji";
+  /** The emoji */
+  emoji: string;
+}
+
+/** A custom emoji. */
+export interface EmojiTypeCustomEmoji {
+  /** Type of the emoji, always “custom_emoji” */
+  type: "custom_emoji";
+  /** Identifier of the custom emoji. Use getCustomEmojiStickers to get full information about the sticker. */
+  custom_emoji_id: string;
+}
+
+/** This object describes the theme of the screen for sharing a link to a user or a chat. Currently, it can be one of
+
+- ChatShareThemeEmoji
+- ChatShareThemeUniqueGift */
+export type ChatShareTheme =
+  | ChatShareThemeEmoji
+  | ChatShareThemeUniqueGift;
+
+/** The theme with emoji placed on a background. */
+export interface ChatShareThemeEmoji {
+  /** Type of the theme, always “emoji” */
+  type: "emoji";
+  /** The emoji; 0-6 regular or custom emoji */
+  emojis: EmojiType[];
+  /** Identifier of the backdrop used as the background; omitted if the default background is used. Use getChatShareThemeBackdrops to get details about the backdrop. */
+  background_backdrop_id?: number;
+}
+
+/** The theme based on a unique gift owned by the user or the chat. */
+export interface ChatShareThemeUniqueGift {
+  /** Type of the theme, always “unique_gift” */
+  type: "unique_gift";
+  /** The gift */
+  gift: UniqueGift;
+}
+
+/** This object contains a list of backdrops, which can be used as the background of a theme of the screen for sharing a link to a user or a chat. */
+export interface ChatShareThemeBackdrops {
+  /** The list of backdrops */
+  backdrops: ChatShareThemeBackdrop[];
+}
+
+/** This object describes a backdrop, which can be used as the background of a theme of the screen for sharing a link to a user or a chat. */
+export interface ChatShareThemeBackdrop {
+  /** Unique identifier of the backdrop */
+  id: number;
+  /** Name of the backdrop */
+  name: string;
+  /** Colors of the backdrop */
+  colors: UniqueGiftBackdropColors;
 }

@@ -19,6 +19,7 @@ import type {
   GiftInfo,
   Invoice,
   PaidMessagePriceChanged,
+  PaidMessagesWaived,
   RefundedPayment,
   SuccessfulPayment,
   SuggestedPostApprovalFailed,
@@ -28,9 +29,10 @@ import type {
   SuggestedPostPaid,
   SuggestedPostPrice,
   SuggestedPostRefunded,
+  TonWalletTransfer,
   UniqueGiftInfo,
 } from "./payment.ts";
-import type { RichBlock } from "./rich.ts";
+import type { RichBlock, RichText } from "./rich.ts";
 
 type MsgWith<P extends keyof Message> = Record<P, NonNullable<Message[P]>>;
 
@@ -96,8 +98,6 @@ export declare namespace Message {
     edit_date?: number;
     /** True, if the message can't be forwarded */
     has_protected_content?: true;
-    /** True, if the caption must be shown above the message media */
-    show_caption_above_media?: true;
     /** True, if the message was sent by an implicit action, for example, as an away or a greeting business message, or as a scheduled message */
     is_from_offline?: true;
     /** Signature of the post author for messages in channels, or the custom title of an anonymous group administrator */
@@ -112,10 +112,12 @@ export declare namespace Message {
     reply_markup?: InlineKeyboardMarkup;
   }
   export interface CaptionableMessage extends CommonMessage {
-    /** Caption for the animation, audio, document, photo, video or voice */
+    /** Caption for the animation, audio, document, live photo, paid media, photo, video, voice, or widget */
     caption?: string;
     /** For messages with a caption, special entities like usernames, URLs, bot commands, etc. that appear in the caption */
     caption_entities?: MessageEntity[];
+    /** True, if the caption must be shown above the message media or the widget */
+    show_caption_above_media?: true;
   }
   export interface MediaMessage extends CaptionableMessage {
     /** The unique identifier inside this chat of a media message group this message belongs to */
@@ -140,6 +142,8 @@ export declare namespace Message {
   export type VideoMessage = MediaMessage & MsgWith<"video">;
   export type VideoNoteMessage = CommonMessage & MsgWith<"video_note">;
   export type VoiceMessage = CaptionableMessage & MsgWith<"voice">;
+  export type WidgetMessage = CaptionableMessage & MsgWith<"widget">;
+  export type SharedWidgetMessage = WidgetMessage & { widget: { id: string } };
   export type ContactMessage = CommonMessage & MsgWith<"contact">;
   export type DiceMessage = CommonMessage & MsgWith<"dice">;
   export type GameMessage = CommonMessage & MsgWith<"game">;
@@ -334,6 +338,8 @@ export interface Message extends Message.MediaMessage {
   video_note?: VideoNote;
   /** Message is a voice message, information about the file */
   voice?: Voice;
+  /** Message is an HTML widget, information about the widget */
+  widget?: Widget;
   /** Message is a shared contact, information about the contact */
   contact?: Contact;
   /** Message is a dice with random value */
@@ -354,6 +360,8 @@ export interface Message extends Message.MediaMessage {
   checklist_tasks_added?: ChecklistTasksAdded;
   /** Service message: chat or bot added to a Community */
   community_chat_added?: CommunityChatAdded;
+  /** Service message: chat was joined by a user from a Community */
+  community_chat_joined?: CommunityChatJoined;
   /** Service message: chat or bot removed from a Community */
   community_chat_removed?: CommunityChatRemoved;
   /** Information about suggested post parameters if the message is a suggested post in a channel direct messages chat. If the message is an approved or declined suggested post, then it can't be edited. */
@@ -368,14 +376,14 @@ export interface Message extends Message.MediaMessage {
   suggested_post_paid?: SuggestedPostPaid;
   /** Service message: payment for a suggested post was refunded */
   suggested_post_refunded?: SuggestedPostRefunded;
+  /** Service message: a transfer with a TON wallet */
+  ton_wallet_transfer?: TonWalletTransfer;
   /** Service message: chat owner has left */
   chat_owner_left?: ChatOwnerLeft;
   /** Service message: chat owner has changed */
   chat_owner_changed?: ChatOwnerChanged;
   /** New members that were added to the group or supergroup and information about them (the bot itself may be one of these members) */
   new_chat_members?: User[];
-  /** Service message: chat was joined by a user from a Community */
-  community_chat_joined?: CommunityChatJoined;
   /** A member was removed from the group, information about them (this member may be the bot itself) */
   left_chat_member?: User;
   /** A chat title was changed to this value */
@@ -454,6 +462,8 @@ export interface Message extends Message.MediaMessage {
   unique_gift?: UniqueGiftInfo;
   /** Service message: the price for paid messages has changed in the chat */
   paid_message_price_changed?: PaidMessagePriceChanged;
+  /** Service message: the sender of the message used a link of the other user, which allows sending messages to the user without paying Telegram Stars */
+  paid_messages_waived?: PaidMessagesWaived;
   /** Service message: the price for paid messages in the corresponding direct messages chat of a channel has changed */
   direct_message_price_changed?: DirectMessagePriceChanged;
   /** Service message: video chat scheduled */
@@ -657,7 +667,7 @@ export type ParseMode = "Markdown" | "MarkdownV2" | "HTML";
 
 export declare namespace MessageEntity {
   interface AbstractMessageEntity {
-    /** Type of the entity. Currently, can be “mention” (@username), “hashtag” (#hashtag or #hashtag@chatusername), “cashtag” ($USD or $USD@chatusername), “bot_command” (/start@jobs_bot), “url” (https://telegram.org), “email” (do-not-reply@telegram.org), “phone_number” (+1-212-555-0123), “bold” (bold text), “italic” (italic text), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users without usernames), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time). */
+    /** Type of the entity. Currently, can be “mention” (@username), “hashtag” (#hashtag or #hashtag@chatusername), “cashtag” ($USD or $USD@chatusername), “bot_command” (/start@jobs_bot), “url” (https://telegram.org), “email” (do-not-reply@telegram.org), “phone_number” (+1-212-555-0123), “bank_card_number” (bank card number), “ton_address” (address in the TON blockchain), “bold” (bold text), “italic” (italic text), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users without usernames), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time). */
     type: string;
     /** Offset in UTF-16 code units to the start of the entity */
     offset: number;
@@ -673,6 +683,8 @@ export declare namespace MessageEntity {
       | "url"
       | "email"
       | "phone_number"
+      | "bank_card_number"
+      | "ton_address"
       | "bold"
       | "italic"
       | "underline"
@@ -722,11 +734,13 @@ export type MessageEntity =
 
 /** This object contains information about the quoted part of a message that is replied to by the given message. */
 export interface TextQuote {
-  /** Text of the quoted part of a message that is replied to by the given message */
+  /** Text of the quoted part of a message that is replied to by the given message; may be empty if the quote was chosen from a rich message */
   text: string;
   /** Special entities that appear in the quote. Currently, only bold, italic, underline, strikethrough, spoiler, custom_emoji, and date_time entities are kept in quotes. */
   entities?: MessageEntity[];
-  /** Approximate quote position in the original message in UTF-16 code units as specified by the sender */
+  /** Rich text of the quote if it was chosen from a rich message. May contain only plain text, RichTextBold, RichTextItalic, RichTextUnderline, RichTextStrikethrough, RichTextSpoiler, RichTextSubscript, RichTextSuperscript, RichTextDateTime, RichTextCustomEmoji, RichTextMathematicalExpression, and arrays of them. */
+  rich_texts?: RichText[];
+  /** Approximate quote position in the original message in UTF-16 code units as specified by the sender. For quotes from rich messages, it is the position in the text formed by joining plain texts of all quotable texts of the message, separated by line feeds. */
   position: number;
   /** True, if the quote was chosen manually by the message sender. Otherwise, the quote was added automatically by the server. */
   is_manual?: true;
@@ -762,6 +776,8 @@ export interface ExternalReplyInfo {
   video_note?: VideoNote;
   /** Message is a voice message, information about the file */
   voice?: Voice;
+  /** Message is an HTML widget, information about the widget */
+  widget?: Widget;
   /** True, if the message media is covered by a spoiler animation */
   has_media_spoiler?: true;
   /** Message is a shared contact, information about the contact */
@@ -792,7 +808,7 @@ export interface ExternalReplyInfo {
 export interface ReplyParameters {
   /** Identifier of the message that will be replied to in the current chat, or in the chat chat_id if it is specified. Required if ephemeral_message_id isn't specified. */
   message_id?: number;
-  /** If the message to be replied to is from a different chat, unique identifier for the chat or username of the bot, supergroup or channel in the format `@username`. Not supported for messages sent on behalf of a business account, messages from channel direct messages chats and ephemeral messages. */
+  /** If the message to be replied to is from a different chat, unique identifier for the chat or username of the bot, supergroup, or channel in the format `@username`. Not supported for messages sent on behalf of a business account, messages from channel direct messages chats and ephemeral messages. */
   chat_id?: number | string;
   /** Identifier of the incoming ephemeral message that will be replied to in the current chat. A reply to an ephemeral message must itself be an ephemeral message. An ephemeral message may only be replied to within 15 seconds of being sent. Required if message_id isn't specified. */
   ephemeral_message_id?: number;
@@ -808,7 +824,9 @@ export interface ReplyParameters {
   quote_parse_mode?: ParseMode;
   /** A JSON-serialized list of special entities that appear in the quote. It can be specified instead of quote_parse_mode. */
   quote_entities?: MessageEntity[];
-  /** Position of the quote in the original message in UTF-16 code units */
+  /** A list of quoted parts of the rich message to be replied to. Must contain one element for each quoted text of the message in the order of their appearance. Each of the following is a separate quoted text: the text of a paragraph, a heading, a preformatted block, a footer, or a mathematical expression; the text and the credit of a block quotation or a pull quotation; the summary of a details block; the caption and each cell of a table; the text and the credit of a caption of a media block, a collage, a slideshow, or a map. Texts of blocks nested in lists, block quotations, details, collages, and slideshows are separate quoted texts too. The first and the last elements can contain only a part of the corresponding text; all other elements must contain the whole text. Formatting of the quoted parts must be kept, and rich texts must be nested in the same way as in the message received from the server. Mathematical expressions must be quoted entirely. Buttons in RichBlockButtons, anchors and dividers can't be quoted. Up to 32 quoted texts with total length up to 1024 characters can be specified. Only plain text, RichTextBold, RichTextItalic, RichTextUnderline, RichTextStrikethrough, RichTextSpoiler, RichTextSubscript, RichTextSuperscript, RichTextDateTime, RichTextCustomEmoji, RichTextMathematicalExpression, and arrays of them are kept in the quote; other rich text types are replaced with their text. If non-empty, then quote, quote_parse_mode and quote_entities are ignored. */
+  quote_rich_texts?: RichText[];
+  /** Position of the quote in the original message in UTF-16 code units. For quotes from rich messages, it is the position in the text formed by joining plain texts of all quotable texts of the message, separated by line feeds. */
   quote_position?: number;
 }
 
@@ -1023,7 +1041,7 @@ export interface VideoQuality {
   file_size?: number;
 }
 
-/** This object represents a video message (available in Telegram apps as of v.4.0). */
+/** This object represents a video message. */
 export interface VideoNote {
   /** Identifier for this file, which can be used to download or reuse the file */
   file_id: string;
@@ -1051,6 +1069,22 @@ export interface Voice {
   mime_type?: string;
   /** File size in bytes */
   file_size?: number;
+}
+
+/** This object describes an HTML widget. */
+export interface Widget {
+  /** Unique identifier of the shared widget, which can be used to send the widget again using the method sendSharedWidget; omitted if the widget isn't shared */
+  id?: string;
+  /** Width of the widget in logical pixels; omitted if the widget must occupy the whole width of the message bubble */
+  width?: number;
+  /** Height of the widget in logical pixels; omitted if the height of the widget isn't fixed */
+  height?: number;
+  /** HTML code of the widget */
+  html: string;
+  /** Public data of the widget, which is available wherever the widget is shown. All messages with a shared widget have the same public data. */
+  public_data?: string;
+  /** Data of the widget, which is specific to the message */
+  chat_data?: string;
 }
 
 /** This object represents a phone contact. */
@@ -1878,11 +1912,11 @@ export interface SuggestedPostParameters {
 }
 
 export interface EphemeralMessageParameters {
-  /** Identifier of the user who will receive the message. It is not guaranteed that the user will receive the message, especially if they are offline. See here for more details. */
-  receiver_user_id: number;
-  /** Identifier of the callback query which triggered the message, if any */
+  /** Identifier of the user who will receive the message; required unless the message is sent as an ephemeral reply to a callback query. If omitted, then the parameter chat_id of the method is ignored. If specified together with callback_query_id, then it must be the identifier of the user who pressed the button. Must be omitted for messages sent in chats where the bot isn't a member, unless the message is a reply to an ephemeral message. It is not guaranteed that the user will receive the message, especially if they are offline. See here for more details. */
+  receiver_user_id?: number;
+  /** Identifier of the callback query which triggered the message, if any. If specified and receiver_user_id is omitted, then the message is sent as an ephemeral reply to the callback query and will be shown only to the user who pressed the button. Ephemeral replies can't be sent to callback queries from messages in channel direct messages chats. The bot must still answer the callback query using answerCallbackQuery. */
   callback_query_id?: string;
-  /** Pass True if the ephemeral message must be shown in place of the original message */
+  /** Pass True if the ephemeral message must be shown in place of the original message. Must be False for callback queries from ephemeral messages, which must be edited using regular editEphemeralMessage… methods. */
   replace_callback_query_message?: boolean;
 }
 
