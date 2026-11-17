@@ -266,7 +266,7 @@ export type ApiMethods<F> = {
     protect_content?: boolean;
   }): MessageId[];
 
-  /** Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway winners messages, invoice messages, and widget messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success. */
+  /** Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway winners messages, invoice messages, and widget messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_ids is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success. */
   copyMessage(args: {
     /** Unique identifier for the target chat or username of the target bot, supergroup, or channel in the format `@username` */
     chat_id: number | string;
@@ -310,7 +310,7 @@ export type ApiMethods<F> = {
     reply_to_message_id?: number;
   }): MessageId;
 
-  /** Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, invoice messages, and widget messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessages, but the copied messages don't have a link to the original message. Album grouping is kept for copied messages. On success, an Array of MessageId of the sent messages is returned. */
+  /** Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, invoice messages, and widget messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_ids is known to the bot. The method is analogous to the method forwardMessages, but the copied messages don't have a link to the original message. Album grouping is kept for copied messages. On success, an Array of MessageId of the sent messages is returned. */
   copyMessages(args: {
     /** Unique identifier for the target chat or username of the target bot, supergroup, or channel in the format `@username` */
     chat_id: number | string;
@@ -2106,7 +2106,7 @@ export type ApiMethods<F> = {
 
   /** Use this method to edit data of a widget in a message sent by the bot or via the bot (for inline bots). Public data of a shared widget can be changed at most once per second. On success, True is returned. */
   editMessageWidgetData(args: {
-    /** Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target supergroup in the format @username. */
+    /** Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target supergroup in the format `@username`. */
     chat_id?: number | string;
     /** Required if inline_message_id is not specified. Identifier of the message with the widget. */
     message_id?: number;
