@@ -2414,6 +2414,14 @@ export type ApiMethods<F> = {
     star_count: number;
   }): true;
 
+  /** Deletes a regular gift owned by a managed business account without receiving Telegram Stars for it. Requires the can_convert_gifts_to_stars business bot right. The gift can be deleted only if it isn't limited (the field total_count of the Gift is omitted) and wasn't refunded. Returns True on success. */
+  deleteBusinessAccountGift(args: {
+    /** Unique identifier of the business connection */
+    business_connection_id: string;
+    /** Unique identifier of the regular gift that should be deleted */
+    owned_gift_id: string;
+  }): true;
+
   /** Posts a story on behalf of a managed business account. Requires the can_manage_stories business bot right. Returns Story on success. */
   postStory(args: {
     /** Unique identifier of the business connection */
@@ -2435,14 +2443,6 @@ export type ApiMethods<F> = {
     /** Pass True if the content of the story must be protected from forwarding and screenshotting */
     protect_content?: boolean;
   }): Story;
-
-  /** Deletes a regular gift owned by a managed business account without receiving Telegram Stars for it. Requires the can_convert_gifts_to_stars business bot right. The gift can be deleted only if it isn't limited (the field total_count of the Gift is omitted) and wasn't refunded. Returns True on success. */
-  deleteBusinessAccountGift(args: {
-    /** Unique identifier of the business connection */
-    business_connection_id: string;
-    /** Unique identifier of the regular gift that should be deleted */
-    owned_gift_id: string;
-  }): true;
 
   /** Reposts a story on behalf of a business account from another business account. Both business accounts must be managed by the same bot, and the story on the source account must have been posted (or reposted) by the bot. Requires the can_manage_stories business bot right for both business accounts. Returns Story on success. */
   repostStory(args: {
