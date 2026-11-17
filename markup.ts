@@ -293,7 +293,7 @@ export interface WidgetQuery {
   /** Global identifier, uniquely corresponding to the chat to which the message with the widget was sent */
   chat_instance: string;
   /** For widgets in inline messages, type of the chat to which the message was sent. Can be either “sender” for a private chat with the inline query sender, “private”, “group”, “supergroup”, or “channel”. */
-  chat_type?: string;
+  chat_type?: "sender" | Chat["type"];
   /** Type of the query */
   type: WidgetQueryType;
   /** Data of the query, 1-64 bytes */

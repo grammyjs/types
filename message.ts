@@ -178,6 +178,9 @@ export declare namespace Message {
   export type SuggestedPostRefundedMessage =
     & ServiceMessage
     & MsgWith<"suggested_post_refunded">;
+  export type TonWalletTransferMessage =
+    & ServiceMessage
+    & MsgWith<"ton_wallet_transfer">;
   export type ChatOwnerLeftMessage =
     & ServiceMessage
     & MsgWith<"chat_owner_left">;
@@ -291,6 +294,9 @@ export declare namespace Message {
   export type PaidMessagePriceChangedMessage =
     & ServiceMessage
     & MsgWith<"paid_message_price_changed">;
+  export type PaidMessagesWaivedMessage =
+    & ServiceMessage
+    & MsgWith<"paid_messages_waived">;
   export type VideoChatScheduledMessage =
     & ServiceMessage
     & MsgWith<"video_chat_scheduled">;
