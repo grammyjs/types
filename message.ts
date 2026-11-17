@@ -150,9 +150,6 @@ export declare namespace Message {
   export type PollMessage = CommonMessage & MsgWith<"poll">;
   export type VenueMessage = LocationMessage & MsgWith<"venue">;
   export type LocationMessage = CommonMessage & MsgWith<"location">;
-  export type DirectMessagePriceChangedMessage =
-    & ServiceMessage
-    & MsgWith<"direct_message_price_changed">;
   export type ChecklistMessage = CommonMessage & MsgWith<"checklist">;
   export type ChecklistTasksDoneMessage =
     & ServiceMessage
@@ -160,6 +157,9 @@ export declare namespace Message {
   export type ChecklistTasksAddedMessage =
     & ServiceMessage
     & MsgWith<"checklist_tasks_added">;
+  export type CommunityChatJoinedMessage =
+    & ServiceMessage
+    & MsgWith<"community_chat_joined">;
   export type SuggestedPostInfoMessage =
     & ServiceMessage
     & MsgWith<"suggested_post_info">;
@@ -190,9 +190,6 @@ export declare namespace Message {
   export type NewChatMembersMessage =
     & ServiceMessage
     & MsgWith<"new_chat_members">;
-  export type CommunityChatJoinedMessage =
-    & ServiceMessage
-    & MsgWith<"community_chat_joined">;
   export type LeftChatMemberMessage =
     & ServiceMessage
     & MsgWith<"left_chat_member">;
@@ -285,18 +282,21 @@ export declare namespace Message {
   export type GiftMessage =
     & ServiceMessage
     & MsgWith<"gift">;
-  export type UniqueGiftMessage =
-    & ServiceMessage
-    & MsgWith<"unique_gift">;
   export type GiftUpgradeSentMessage =
     & ServiceMessage
     & MsgWith<"gift_upgrade_sent">;
+  export type UniqueGiftMessage =
+    & ServiceMessage
+    & MsgWith<"unique_gift">;
   export type PaidMessagePriceChangedMessage =
     & ServiceMessage
     & MsgWith<"paid_message_price_changed">;
   export type PaidMessagesWaivedMessage =
     & ServiceMessage
     & MsgWith<"paid_messages_waived">;
+  export type DirectMessagePriceChangedMessage =
+    & ServiceMessage
+    & MsgWith<"direct_message_price_changed">;
   export type VideoChatScheduledMessage =
     & ServiceMessage
     & MsgWith<"video_chat_scheduled">;
