@@ -420,6 +420,7 @@ export interface InputRichMessageMedia<F> {
 - RichTextEmailAddress
 - RichTextPhoneNumber
 - RichTextBankCardNumber
+- RichTextTonAddress
 - RichTextMention
 - RichTextHashtag
 - RichTextCashtag

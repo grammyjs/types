@@ -380,7 +380,7 @@ export type ApiMethods<F> = {
   sendLivePhoto(args: {
     /** Unique identifier of the business connection on behalf of which the message will be sent */
     business_connection_id?: string;
-    /** Unique identifier for the target chat or username of the target channel (in the format @channelusername); required unless the message is sent as an ephemeral reply to a callback query */
+    /** Unique identifier for the target chat or username of the target bot, supergroup, or channel in the format `@username`; required unless the message is sent as an ephemeral reply to a callback query */
     chat_id?: number | string;
     /** Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only */
     message_thread_id?: number;
