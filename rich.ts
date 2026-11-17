@@ -1028,11 +1028,11 @@ export interface RichBlockMap {
   /** Location of the center of the map */
   location: Location;
   /** Map zoom level */
-  zoom?: number;
+  zoom: number;
   /** Expected width of the map */
-  width?: number;
+  width: number;
   /** Expected height of the map */
-  height?: number;
+  height: number;
   /** Caption of the block */
   caption?: RichBlockCaption;
 }
@@ -1328,11 +1328,11 @@ export interface InputRichBlockMap {
   /** Location of the center of the map */
   location: Location;
   /** Map zoom level; 0-24 */
-  zoom: number;
+  zoom?: number;
   /** Map width; 0-10000 */
-  width: number;
+  width?: number;
   /** Map height; 0-10000 */
-  height: number;
+  height?: number;
   /** Caption of the block */
   caption?: RichBlockCaption;
 }

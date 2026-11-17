@@ -723,7 +723,7 @@ export type ApiMethods<F> = {
   /** Use this method to send a message with an HTML widget. Currently, in the production environment, widgets can be sent only to private chats, and sent widgets automatically have protected content and therefore can't be forwarded. On success, the sent Message is returned. */
   sendWidget(args: {
     /** Unique identifier for the target chat or username of the target supergroup in the format `@username` */
-    chat_id?: number | string;
+    chat_id: number | string;
     /** Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only */
     message_thread_id?: number;
     /** HTML code of the widget, 1-32768 bytes. The code must not exceed 4096 bytes when compressed by zlib with the maximum compression level. */
@@ -769,7 +769,7 @@ export type ApiMethods<F> = {
   /** Use this method to send again a shared widget created by the bot. Currently, in the production environment, widgets can be sent only to private chats, and sent widgets automatically have protected content and therefore can't be forwarded. On success, the sent Message is returned. */
   sendSharedWidget(args: {
     /** Unique identifier for the target chat or username of the target supergroup in the format `@username` */
-    chat_id?: number | string;
+    chat_id: number | string;
     /** Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only */
     message_thread_id?: number;
     /** Unique identifier of the shared widget */
@@ -1894,7 +1894,7 @@ export type ApiMethods<F> = {
   /** Use this method to get information about a unique gift by its name. Returns a UniqueGift object on success. */
   getUniqueGift(args: {
     /** Unique name of the gift */
-    name?: string;
+    name: string;
   }): UniqueGift;
 
   /** Use this method to get information about the connection of the bot with a business account. Returns a BusinessConnection object on success. */
@@ -2123,7 +2123,7 @@ export type ApiMethods<F> = {
     /** Unique identifier of the shared widget */
     widget_id: string;
     /** New public data of the widget, 0-1024 bytes; pass an empty string to remove the public data */
-    public_data?: string;
+    public_data: string;
     /** The maximum amount of time in seconds that the public data of the widget may be cached client-side; 5-3600. If omitted, then the current value is kept, which is 30 by default. */
     cache_time?: number;
   }): true;

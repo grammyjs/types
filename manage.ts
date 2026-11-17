@@ -564,7 +564,7 @@ export declare namespace ChatFullInfo {
     /** For private chats, the TON wallet card of the user, which is shown on their profile page */
     ton_wallet_card?: undefined;
     /** For private chats, supergroups and channels, the theme of the screen for sharing a link to the user or the chat; omitted if the default theme is used */
-    share_theme?: undefined;
+    share_theme?: ChatShareTheme;
   }
   /** Internal type for channel chats */
   export interface ChannelChat {
@@ -677,7 +677,7 @@ export declare namespace ChatFullInfo {
     /** For private chats, the TON wallet card of the user, which is shown on their profile page */
     ton_wallet_card?: undefined;
     /** For private chats, supergroups and channels, the theme of the screen for sharing a link to the user or the chat; omitted if the default theme is used */
-    share_theme?: undefined;
+    share_theme?: ChatShareTheme;
   }
 }
 

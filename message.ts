@@ -135,7 +135,7 @@ export declare namespace Message {
   export type AudioMessage = CaptionableMessage & MsgWith<"audio">;
   export type DocumentMessage = CaptionableMessage & MsgWith<"document">;
   export type LivePhotoMessage = MediaMessage & MsgWith<"live_photo">;
-  export type PaidMediaMessage = CommonMessage & MsgWith<"paid_media">;
+  export type PaidMediaMessage = CaptionableMessage & MsgWith<"paid_media">;
   export type PhotoMessage = MediaMessage & MsgWith<"photo">;
   export type StickerMessage = CommonMessage & MsgWith<"sticker">;
   export type StoryMessage = CommonMessage & MsgWith<"story">;
