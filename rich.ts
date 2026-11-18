@@ -420,6 +420,7 @@ export interface InputRichMessageMedia<F> {
 - RichTextEmailAddress
 - RichTextPhoneNumber
 - RichTextBankCardNumber
+- RichTextTonAddress
 - RichTextMention
 - RichTextHashtag
 - RichTextCashtag
@@ -449,6 +450,7 @@ export type RichText =
   | RichTextEmailAddress
   | RichTextPhoneNumber
   | RichTextBankCardNumber
+  | RichTextTonAddress
   | RichTextMention
   | RichTextHashtag
   | RichTextCashtag
@@ -609,6 +611,16 @@ export interface RichTextBankCardNumber {
   text: RichText;
   /** The bank card number */
   bank_card_number: string;
+}
+
+/** An address in the TON blockchain. */
+export interface RichTextTonAddress {
+  /** Type of the rich text, always “ton_address” */
+  type: "ton_address";
+  /** Text of the address */
+  text: RichText;
+  /** The address */
+  address: string;
 }
 
 /** A mention by a username. */
@@ -1016,8 +1028,8 @@ export interface RichBlockMap {
   type: "map";
   /** Location of the center of the map */
   location: Location;
-  /** Map zoom level; 13-20 */
-  zoom: 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20;
+  /** Map zoom level */
+  zoom: number;
   /** Expected width of the map */
   width: number;
   /** Expected height of the map */
@@ -1317,11 +1329,11 @@ export interface InputRichBlockMap {
   /** Location of the center of the map */
   location: Location;
   /** Map zoom level; 0-24 */
-  zoom: number;
+  zoom?: number;
   /** Map width; 0-10000 */
-  width: number;
+  width?: number;
   /** Map height; 0-10000 */
-  height: number;
+  height?: number;
   /** Caption of the block */
   caption?: RichBlockCaption;
 }

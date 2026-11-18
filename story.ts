@@ -1,18 +1,18 @@
 import type { ReactionType } from "./message.ts";
 
-/** Describes the position of a clickable area within a story. */
-export interface StoryAreaPosition {
-  /** The abscissa of the area's center, as a percentage of the media width */
+/** Describes the position of a rectangle area on a story media or a TON wallet card. */
+export interface AreaPosition {
+  /** The abscissa of the area's center, as a percentage of the media or the card width */
   x_percentage: number;
-  /** The ordinate of the area's center, as a percentage of the media height */
+  /** The ordinate of the area's center, as a percentage of the media or the card height */
   y_percentage: number;
-  /** The width of the area's rectangle, as a percentage of the media width */
+  /** The width of the area's rectangle, as a percentage of the media or the card width */
   width_percentage: number;
-  /** The height of the area's rectangle, as a percentage of the media height */
+  /** The height of the area's rectangle, as a percentage of the media or the card height */
   height_percentage: number;
   /** The clockwise rotation angle of the rectangle, in degrees; 0-360 */
   rotation_angle: number;
-  /** The radius of the rectangle corner rounding, as a percentage of the media width */
+  /** The radius of the rectangle corner rounding, as a percentage of the media or the card width */
   corner_radius_percentage: number;
 }
 
@@ -97,7 +97,7 @@ export interface StoryAreaTypeUniqueGift {
 /** Describes a clickable area on a story media. */
 export interface StoryArea {
   /** Position of the area */
-  position: StoryAreaPosition;
+  position: AreaPosition;
   /** Type of the area */
   type: StoryAreaType;
 }
