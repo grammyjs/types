@@ -2013,8 +2013,8 @@ export type ApiMethods<F> = {
     inline_query_placeholder?: string;
     /** Pass True to request the location of the user with every inline query to the bot or False to stop requesting it */
     needs_inline_query_location?: boolean;
-    /** The number of chosen inline results received by the bot for each 1000 chosen results; 0-1000 */
-    inline_feedback_per_mille?: number;
+    /** Denominator of the share of chosen inline results received by the bot; the bot receives 1 out of inline_feedback_share_denominator chosen results. Must be one of 1, 10, 100, or 1000. Pass 0 to stop receiving chosen inline results. */
+    inline_feedback_share_denominator?: 0 | 1 | 10 | 100 | 1000;
     /** Pass True to allow adding the bot to groups or False to disallow it */
     can_join_groups?: boolean;
     /** Pass True to disable privacy mode for the bot or False to enable it */

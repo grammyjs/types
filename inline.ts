@@ -773,7 +773,7 @@ export interface InputSharedWidgetMessageContent {
 
 /** Represents a result of an inline query that was chosen by the user and sent to their chat partner.
 
-Note: It is necessary to enable inline feedback via `@BotFather` or using the parameter inline_feedback_per_mille of the method setMySettings in order to receive these objects in updates. */
+Note: It is necessary to enable inline feedback via `@BotFather` or using the parameter inline_feedback_share_denominator of the method setMySettings in order to receive these objects in updates. */
 export interface ChosenInlineResult {
   /** The unique identifier for the result that was chosen */
   result_id: string;
