@@ -80,6 +80,8 @@ export interface BotFullInfo {
   first_name: string;
   /** Bot's username */
   username?: string;
+  /** If non-empty, the list of all active usernames of the bot */
+  active_usernames?: string[];
   /** True, if the bot can be added to groups */
   can_join_groups: boolean;
   /** True, if privacy mode is disabled for the bot */
