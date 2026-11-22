@@ -21,7 +21,7 @@ export interface InlineQuery {
   offset: string;
   /** Type of the chat from which the inline query was sent. Can be either “sender” for a private chat with the inline query sender, “private”, “group”, “supergroup”, or “channel”. The chat type should be always known for requests sent from official clients and most third-party clients, unless the request was sent from a secret chat. */
   chat_type?: "sender" | Chat["type"];
-  /** Sender location, only for bots that request user location */
+  /** Sender location, only for bots that enabled user location requests via `@BotFather` or using the parameter needs_inline_query_location of the method setMySettings */
   location?: Location;
 }
 
@@ -773,13 +773,13 @@ export interface InputSharedWidgetMessageContent {
 
 /** Represents a result of an inline query that was chosen by the user and sent to their chat partner.
 
-Note: It is necessary to enable inline feedback via `@BotFather` in order to receive these objects in updates. */
+Note: It is necessary to enable inline feedback via `@BotFather` or using the parameter inline_feedback_share_denominator of the method setMySettings in order to receive these objects in updates. */
 export interface ChosenInlineResult {
   /** The unique identifier for the result that was chosen */
   result_id: string;
   /** The user that chose the result */
   from: User;
-  /** Sender location, only for bots that require user location */
+  /** Sender location, only for bots that enabled user location requests via `@BotFather` or using the parameter needs_inline_query_location of the method setMySettings */
   location?: Location;
   /** Identifier of the sent inline message. Available only if there is an inline keyboard attached to the message. Will be also received in callback queries and can be used to edit the message. */
   inline_message_id?: string;

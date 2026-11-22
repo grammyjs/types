@@ -869,12 +869,12 @@ export interface RichBlockBlockQuotation {
   credit?: RichText;
 }
 
-/** A block quotation, corresponding to the HTML tag \<blockquote> with custom attribute "collapsed". */
+/** A block quotation, corresponding to the HTML tag \<blockquote> with custom attribute "expandable". */
 export interface RichBlockExpandableBlockQuotation {
   /** Type of the block, always “expandable_blockquote” */
   type: "expandable_blockquote";
   /** Content of the block */
-  text: RichText;
+  blocks: RichBlock[];
   /** Credit of the block */
   credit?: RichText;
 }
@@ -1162,7 +1162,7 @@ export type InputRichBlock<F> =
   | InputRichBlockAnchor
   | InputRichBlockList<F>
   | InputRichBlockBlockQuotation<F>
-  | InputRichBlockExpandableBlockQuotation
+  | InputRichBlockExpandableBlockQuotation<F>
   | InputRichBlockPullQuotation
   | InputRichBlockCollage<F>
   | InputRichBlockSlideshow<F>
@@ -1254,12 +1254,12 @@ export interface InputRichBlockBlockQuotation<F> {
   credit?: RichText;
 }
 
-/** A block quotation, corresponding to the HTML tag \<blockquote> with custom attribute "collapsed". */
-export interface InputRichBlockExpandableBlockQuotation {
+/** A block quotation, corresponding to the HTML tag \<blockquote> with custom attribute "expandable". */
+export interface InputRichBlockExpandableBlockQuotation<F> {
   /** Type of the block, always “expandable_blockquote” */
   type: "expandable_blockquote";
   /** Content of the block */
-  text: RichText;
+  blocks: InputRichBlock<F>[];
   /** Credit of the block */
   credit?: RichText;
 }

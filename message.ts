@@ -430,7 +430,7 @@ export interface Message extends Message.MediaMessage {
   chat_shared?: ChatShared;
   /** The domain name of the website on which the user has logged in. */
   connected_website?: string;
-  /** Service message: the user allowed the bot to write messages after adding it to the attachment or side menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method requestWriteAccess */
+  /** Service message: the user allowed the bot to write messages after adding it to the attachment or side menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method requestWriteAccess, or the user was invited to the private chat with the bot by the owner of the bot */
   write_access_allowed?: WriteAccessAllowed;
   /** Telegram Passport data */
   passport_data?: PassportData;
@@ -1541,12 +1541,14 @@ export interface ChatShared {
   photo?: PhotoSize[];
 }
 
-/** This object represents a service message about a user allowing a bot to write messages after adding it to the attachment menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method requestWriteAccess. */
+/** This object represents a service message about a user allowing a bot to write messages after adding it to the attachment menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method requestWriteAccess, or about a user being invited to the private chat with the bot by the owner of the bot. */
 export interface WriteAccessAllowed {
   /** True, if the access was granted after the user accepted an explicit request from a Web App sent by the method requestWriteAccess */
   from_request?: boolean;
   /** Name of the Web App, if the access was granted when the Web App was launched from a link */
   web_app_name?: string;
+  /** The owner of the bot, if the access was granted when the owner invited the user to the private chat with the bot. Bot owners can invite up to 10 users at once by pressing the link `https://t.me/botinvite/<bot_username>`. */
+  inviter?: User;
   /** True, if the access was granted when the bot was added to the attachment or side menu */
   from_attachment_menu?: boolean;
 }
