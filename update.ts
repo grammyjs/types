@@ -81,7 +81,7 @@ export interface Update {
   message_reaction_count?: MessageReactionCountUpdated;
   /** New incoming inline query */
   inline_query?: InlineQuery;
-  /** The result of an inline query that was chosen by a user and sent to their chat partner. Please see our documentation on the feedback collecting for details on how to enable these updates for your bot. */
+  /** The result of an inline query that was chosen by a user and sent to their chat partner. Please see our documentation on the feedback collecting for details on how to enable these updates for your bot. The updates can also be enabled using the parameter inline_feedback_per_mille of the method setMySettings. */
   chosen_inline_result?: ChosenInlineResult;
   /** New incoming callback query */
   callback_query?: CallbackQuery;

@@ -70,29 +70,41 @@ export interface User {
   added_to_attachment_menu?: true;
 }
 
-/** This object represents a Telegram user or bot that was returned by `getMe`. */
-export interface UserFromGetMe extends User {
+/** This object contains full information about the bot itself. */
+export interface BotFullInfo {
+  /** Unique identifier for this bot. */
+  id: number;
+  /** Always True */
   is_bot: true;
-  username: string;
-  /** True, if the bot can be invited to groups. Returned only in getMe. */
+  /** Bot's first name */
+  first_name: string;
+  /** Bot's username */
+  username?: string;
+  /** True, if the bot can be added to groups */
   can_join_groups: boolean;
-  /** True, if privacy mode is disabled for the bot. Returned only in getMe. */
+  /** True, if privacy mode is disabled for the bot */
   can_read_all_group_messages: boolean;
-  /** True, if the bot supports guest queries from chats it is not a member of. Returned only in getMe. */
-  supports_guest_queries?: boolean;
-  /** True, if the bot supports inline queries. Returned only in getMe. */
+  /** True, if the bot supports guest queries from chats it is not a member of */
+  supports_guest_queries: boolean;
+  /** True, if the bot supports inline queries */
   supports_inline_queries: boolean;
-  /** True, if the bot can be connected to a user account to manage it. Returned only in getMe. */
+  /** Placeholder for inline queries, which is shown in the input field after the bot's username; omitted if the default placeholder is used */
+  inline_query_placeholder?: string;
+  /** True, if the bot requests the location of the user with every inline query */
+  needs_inline_query_location: boolean;
+  /** True, if the bot can be connected to a user account to manage it */
   can_connect_to_business: boolean;
-  /** True, if the bot has main Web App. Returned only in getMe. */
+  /** True, if the bot has a main Web App */
   has_main_web_app: boolean;
-  /** True, if the bot has forum topic mode enabled in private chats. Returned only in getMe. */
+  /** True, if the bot has forum topic mode enabled in private chats */
   has_topics_enabled: boolean;
-  /** True, if the bot allows users to create and delete topics in private chats. Returned only in getMe. */
+  /** True, if the bot allows users to create and delete topics in private chats */
   allows_users_to_create_topics: boolean;
-  /** True, if other bots can be created to be controlled by the bot. Returned only in getMe. */
+  /** True, if topics in private chats with the bot are shown in a sidebar */
+  has_topic_sidebar: boolean;
+  /** True, if other bots can be created to be controlled by the bot */
   can_manage_bots: boolean;
-  /** True, if the bot supports join request queries and can be assigned to process them. Returned only in getMe. */
+  /** True, if the bot supports join request queries and can be assigned to process them */
   supports_join_request_queries: boolean;
 }
 
